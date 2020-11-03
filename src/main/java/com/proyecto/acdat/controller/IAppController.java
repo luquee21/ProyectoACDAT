@@ -7,6 +7,7 @@ import java.sql.Timestamp;
 import java.util.List;
 
 public interface IAppController {
+    //comenta, reproduce, genero se borran
 
     //Artist
      boolean addArtist(String name, String nationality);
@@ -25,14 +26,6 @@ public interface IAppController {
      Disc selectDiscByName(String name);
      Disc selectDiscByDate(Date date);
      Disc isAvailableDisc(String name);
-
-     //Genre
-     boolean addGenre(String name);
-     boolean deleteGenre(String name);
-     boolean updateGenre(Genre oldGenre, Genre newGenre);
-     List<Genre> selectAllGenre();
-     Genre selectGenreByName(String name);
-     Genre isAvailableGenre(String name);
 
      //PlayList
      boolean addPlayList(String name, String description, String username);
@@ -68,7 +61,7 @@ public interface IAppController {
      List<User> selectAllUser();
      List<User> selectByEmail(String email);
      List<User> selectByName(String name);
-
+ 
 
 
 

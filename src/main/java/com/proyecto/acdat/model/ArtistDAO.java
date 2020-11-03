@@ -1,4 +1,4 @@
 package com.proyecto.acdat.model;
 
-public class ArtistDAO {
+public class ArtistDAO extends Artist {
 }

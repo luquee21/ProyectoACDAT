@@ -1,4 +1,4 @@
 package com.proyecto.acdat.model;
 
-public class PlayListDAO {
+public class PlayListDAO extends PlayList {
 }

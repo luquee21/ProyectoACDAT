@@ -1,4 +1,4 @@
 package com.proyecto.acdat.model;
 
-public class SongDAO extends Song {
+public class Comment {
 }
