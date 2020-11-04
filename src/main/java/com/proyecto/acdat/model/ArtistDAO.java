@@ -13,13 +13,6 @@ public class ArtistDAO extends Artist {
     private static final String SELECTBYNAME = "SELECT * FROM Artista WHERE nombre=?";
     private static final String SELECTBYNATIONALITY = "SELECT * FROM Artista WHERE nacionalidad=?";
 
-    public ArtistDAO(Artist artist) {
-        this.id = artist.id;
-        this.name = artist.name;
-        this.discs = artist.discs;
-        this.nationality = artist.nationality;
-    }
-
 
     @Override
     public int getId() {

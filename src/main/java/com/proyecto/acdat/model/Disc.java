@@ -1,12 +1,39 @@
 package com.proyecto.acdat.model;
 
-public class Disc {
-    int id;
-    String name;
-    Song[] songs;
+import java.sql.Blob;
+import java.sql.Date;
 
-    public Disc() {
+public class Disc {
+    private int id;
+    private String name;
+    private String photo;
+    private Song[] songs;
+    private Artist artist;
+    private Date date;
+
+    public Disc(int id, String name, Song[] songs) {
+        this.id = id;
+        this.name = name;
+        this.songs = songs;
     }
+
+    public Disc(int id, String name, String photo) {
+        this.id = id;
+        this.name = name;
+        this.photo = photo;
+    }
+
+    public Date getDate() { return date; }
+
+    public void setDate(Date date) { this.date = date; }
+
+    public String getPhoto() { return photo; }
+
+    public void setPhoto(String photo) { this.photo = photo; }
+
+    public Artist getArtist() { return artist; }
+
+    public void setArtist(Artist artist) { this.artist = artist; }
 
     public int getId() {
         return id;
