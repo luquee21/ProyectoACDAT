@@ -16,7 +16,6 @@ public interface IAppController {
      List<Artist> selectAllArtist();
      Artist selectArtistByName(String name);
      Artist selectArtistByNationality(String nationality);
-     Artist isAvailableArtist(String name);
 
      //Disc
      boolean addDisc(String name, String artist, Date date);
