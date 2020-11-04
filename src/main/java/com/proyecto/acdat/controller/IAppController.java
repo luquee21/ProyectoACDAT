@@ -23,8 +23,7 @@ public interface IAppController {
      boolean updateDisc(Disc oldDisc, Disc newDisc);
      List<Disc> selectAllDisc();
      Disc selectDiscByName(String name);
-     Disc selectDiscByDate(Date date);
-     Disc isAvailableDisc(String name);
+     Disc selectByArtist(Artist artist);
 
      //PlayList
      boolean addPlayList(String name, String description, String username);

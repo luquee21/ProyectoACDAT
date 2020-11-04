@@ -12,7 +12,11 @@ public class DiscDAO extends Disc {
 
     private static final String SELECTALL = "SELECT * FROM Disco";
     private static final String SELECTBYNAME = "SELECT * FROM Disco WHERE nombre=?";
-    private static final String SELECTBYARTIST = "SELECT * FROM Disco WHERE artista=?";
+    private static final String SELECTBYARTIST = "SELECT * FROM Disco WHERE id_artista=?";
+    private static final String ADDDISC = "INSERT INTO Disco (nombre, foto, id_artista, fecha_prod) VALUES (?, ?, ?, ?)";
+    private static final String UPDATEDISC = "UPDATE Disco set ";
+    private static final String DELETEDISC = "";
+
 
     @Override
     public int getId() {
@@ -78,6 +82,26 @@ public class DiscDAO extends Disc {
 
         }
 
-        return artist;
+        return disc;
+    }
+
+    public static List<Disc> selectByArtist(Artist artist) {
+        List<Disc> aux = new ArrayList<>();
+        Disc disc;
+        try {
+            java.sql.Connection conn = ConnectionUtils.getConnection();
+            PreparedStatement ps = conn.prepareStatement(SELECTBYARTIST);
+            ps.setInt(1, artist.getId());
+            ResultSet s = ps.executeQuery();
+
+            while (s.next()) {
+                disc = new Disc(s.getInt("id"), s.getString("nombre"), s.getString("nacionalidad"));
+                aux.add(disc);
+            }
+
+        } catch (SQLException ex) {
+
+        }
+        return aux;
     }
 }
