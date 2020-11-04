@@ -11,10 +11,7 @@ public class Disc {
     private Artist artist;
     private Date date;
 
-    public Disc(int id, String name, Song[] songs) {
-        this.id = id;
-        this.name = name;
-        this.songs = songs;
+    public Disc() {
     }
 
     public Disc(int id, String name, String photo) {

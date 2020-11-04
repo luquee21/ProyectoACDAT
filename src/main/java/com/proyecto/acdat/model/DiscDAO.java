@@ -13,9 +13,9 @@ public class DiscDAO extends Disc {
     private static final String SELECTALL = "SELECT * FROM Disco";
     private static final String SELECTBYNAME = "SELECT * FROM Disco WHERE nombre=?";
     private static final String SELECTBYARTIST = "SELECT * FROM Disco WHERE id_artista=?";
-    private static final String ADDDISC = "INSERT INTO Disco (nombre, foto, id_artista, fecha_prod) VALUES (?, ?, ?, ?)";
-    private static final String UPDATEDISC = "UPDATE Disco set ";
-    private static final String DELETEDISC = "";
+    private static final String INSERTDISC = "INSERT INTO Disco (nombre, foto, id_artista, fecha_prod) VALUES (?, ?, ?, ?)";
+    private static final String UPDATEDISC = "UPDATE Disco set nombre=?, foto=?, id_Artista=?, fecha_prod=?";
+    private static final String DELETEDISC = "DELETE from Disco where id=?";
 
 
     @Override
@@ -67,15 +67,15 @@ public class DiscDAO extends Disc {
         return aux;
     }
 
-    public static Disc selectByName(String name){
+    public static Disc selectByName(String name) {
         Disc disc = null;
         try {
             java.sql.Connection conn = ConnectionUtils.getConnection();
             PreparedStatement ps = conn.prepareStatement(SELECTBYNAME);
-            ps.setString(1,name);
+            ps.setString(1, name);
             ResultSet s = ps.executeQuery();
-            while(s.next()){
-                disc = new Disc(s.getInt("id"),s.getString("nombre"),s.getString("foto"));
+            while (s.next()) {
+                disc = new Disc(s.getInt("id"), s.getString("nombre"), s.getString("foto"));
             }
 
         } catch (SQLException ex) {
@@ -103,5 +103,63 @@ public class DiscDAO extends Disc {
 
         }
         return aux;
+    }
+
+    public static boolean addDisc(Disc disc) {
+        boolean result = false;
+        try {
+            java.sql.Connection conn = ConnectionUtils.getConnection();
+            PreparedStatement ps = conn.prepareStatement(INSERTDISC);
+            ps.setString(1, disc.getName());
+            ps.setString(2, disc.getPhoto());
+            ps.setInt(3, disc.getArtist().getId());
+            ps.setDate(4, disc.getDate());
+            int rs = ps.executeUpdate();
+            if (rs > 0) {
+                result = true;
+            }
+
+        } catch (SQLException ex) {
+        }
+
+        return result;
+    }
+
+    public static boolean deleteDisc(Disc disc) {
+        boolean result = false;
+        try {
+            java.sql.Connection conn = ConnectionUtils.getConnection();
+            PreparedStatement ps = conn.prepareStatement(DELETEDISC);
+            ps.setInt(1, disc.getId());
+            int rs = ps.executeUpdate();
+            if (rs > 0) {
+                result = true;
+            }
+
+        } catch (SQLException ex) {
+        }
+
+        return result;
+    }
+
+    public static boolean updateArtist(Disc disc) {
+        boolean result = false;
+        try {
+            java.sql.Connection conn = ConnectionUtils.getConnection();
+            PreparedStatement ps = conn.prepareStatement(UPDATEDISC);
+
+            ps.setString(1, disc.getName());
+            ps.setString(2, disc.getPhoto());
+            ps.setInt(3, disc.getArtist().getId());
+            ps.setDate(4, disc.getDate());
+            int rs = ps.executeUpdate();
+            if (rs > 0) {
+                result = true;
+            }
+
+        } catch (SQLException ex) {
+        }
+
+        return result;
     }
 }
