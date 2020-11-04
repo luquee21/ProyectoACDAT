@@ -130,4 +130,40 @@ public class SongDAO extends Song {
         return result;
     }
 
+    public static boolean deleteSong(Song song) {
+        boolean result = false;
+        try {
+            java.sql.Connection conn = ConnectionUtils.getConnection();
+            PreparedStatement ps = conn.prepareStatement(DELETESONG);
+            ps.setInt(1, song.getId());
+            int rs = ps.executeUpdate();
+            if (rs > 0) {
+                result = true;
+            }
+
+        } catch (SQLException ex) {
+        }
+
+        return result;
+    }
+
+    public static boolean updateSong(Song song) {
+        boolean result = false;
+        try {
+            java.sql.Connection conn = ConnectionUtils.getConnection();
+            PreparedStatement ps = conn.prepareStatement(UPDATESONG);
+            ps.setString(1, song.getName());
+            ps.setInt(2, song.getDuration());
+            ps.setInt(3, song.getId());
+            int rs = ps.executeUpdate();
+            if (rs > 0) {
+                result = true;
+            }
+
+        } catch (SQLException ex) {
+        }
+
+        return result;
+    }
+
 }
