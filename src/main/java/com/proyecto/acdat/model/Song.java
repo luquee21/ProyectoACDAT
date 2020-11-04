@@ -1,12 +1,18 @@
 package com.proyecto.acdat.model;
 
 public class Song {
-    int id;
-    String name;
-    int duration;
-    Disc disc;
+    private int id;
+    private String name;
+    private int duration;
+    private Disc disc;
 
     public Song() {
+    }
+
+    public Song(int id, String name, int duration) {
+        this.id = id;
+        this.name = name;
+        this.duration = duration;
     }
 
     public int getId() {

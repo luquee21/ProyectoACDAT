@@ -1,25 +1,22 @@
 package com.proyecto.acdat.model;
 
+import java.sql.Blob;
+
 public class Artist {
-    int id;
-    String name;
-    String nationality;
-    Disc[] discs;
+    private int id;
+    private String name;
+    private String nationality;
+    private String photo;
+    private Disc[] discs;
 
     public Artist() {
     }
 
-    public Artist(int id, String name, String nationality, Disc[] discs) {
+    public Artist(int id, String name, String nationality, String photo) {
         this.id = id;
         this.name = name;
         this.nationality = nationality;
-        this.discs = discs;
-    }
-
-    public Artist(int id, String name, String nationality) {
-        this.id = id;
-        this.name = name;
-        this.nationality = nationality;
+        this.photo = photo;
     }
 
     public int getId() {
@@ -44,6 +41,14 @@ public class Artist {
 
     public void setNationality(String nationality) {
         this.nationality = nationality;
+    }
+
+    public String getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
     }
 
     public Disc[] getDiscs() {

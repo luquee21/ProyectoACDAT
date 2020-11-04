@@ -10,49 +10,47 @@ public interface IAppController {
     //comenta, reproduce, genero se borran
 
     //Artist
-     boolean addArtist(String name, String nationality);
+     boolean addArtist(Artist artist);
      boolean deleteArtist(int id);
-     boolean updateArtist(Artist oldArtist, Artist newArtist);
+     boolean updateArtist(Artist artist);
      List<Artist> selectAllArtist();
      Artist selectArtistByName(String name);
      Artist selectArtistByNationality(String nationality);
-     Artist isAvailableArtist(String name);
 
      //Disc
-     boolean addDisc(String name, String artist, Date date);
+     boolean addDisc(Disc disc);
      boolean deleteDisc(int id);
-     boolean updateDisc(Disc oldDisc, Disc newDisc);
+     boolean updateDisc(Disc disc);
      List<Disc> selectAllDisc();
      Disc selectDiscByName(String name);
-     Disc selectDiscByDate(Date date);
-     Disc isAvailableDisc(String name);
+     Disc selectByArtist(Artist artist);
 
      //PlayList
-     boolean addPlayList(String name, String description, String username);
+     boolean addPlayList(PlayList playList);
      boolean addSongToPlayList(Song song, int id);
      boolean addSubToPlayList(User user, int id);
      boolean deleteSongToPlayList(Song song, int id);
      boolean deleteSubOfPlayList(User user, int id);
      boolean deletePlayList(int id);
-     boolean updatePlayList(PlayList oldPlayList, PlayList newPlayList);
+     boolean updatePlayList(PlayList playList);
      List<PlayList> selectAllPlayList();
      List<PlayList> selectPlayListByName(String name);
      List<PlayList> selectPlayListByUserName(String username);
 
      //Song
-     boolean addSong(String name, int duration, String genre, String disc_name);
+     boolean addSong(Song song);
      boolean deleteSong(int id);
-     boolean updateSong(Song oldSong, Song newSong);
+     boolean updateSong(Song song);
      List<Song> selectAllSong();
      List<Song> selectSongByName(String name);
      List<Song> selectSongByGenre(String genre);
      List<Song> selectAllSongByDisc(String disc_name);
 
      //User
-     boolean addUser(String email, String name);
+     boolean addUser(User user);
      boolean addHistory(Song song, int id_user, Timestamp timestamp);
      boolean deleteUser(String email);
-     boolean updateUser(User oldUser, User newUser);
+     boolean updateUser(User user);
      List<User> selectAllUser();
      List<User> selectByEmail(String email);
      List<User> selectByName(String name);
