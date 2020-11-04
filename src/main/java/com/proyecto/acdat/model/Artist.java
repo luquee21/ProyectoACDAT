@@ -9,6 +9,19 @@ public class Artist {
     public Artist() {
     }
 
+    public Artist(int id, String name, String nationality, Disc[] discs) {
+        this.id = id;
+        this.name = name;
+        this.nationality = nationality;
+        this.discs = discs;
+    }
+
+    public Artist(int id, String name, String nationality) {
+        this.id = id;
+        this.name = name;
+        this.nationality = nationality;
+    }
+
     public int getId() {
         return id;
     }
