@@ -31,18 +31,13 @@ public interface IAppController {
      boolean addPlayList(String name, String description, String username);
      boolean addSongToPlayList(Song song, int id);
      boolean addSubToPlayList(User user, int id);
-     boolean addCommentToPlayList(User user, int id_playlist, String message, Timestamp timestamp);
-     boolean deleteCommentToPlayList(int id);
      boolean deleteSongToPlayList(Song song, int id);
      boolean deleteSubOfPlayList(User user, int id);
      boolean deletePlayList(int id);
-     boolean updateCommentOfPlayList(int id, String message);
-     boolean deleteCommentOfPlayList(int id);
      boolean updatePlayList(PlayList oldPlayList, PlayList newPlayList);
      List<PlayList> selectAllPlayList();
      List<PlayList> selectPlayListByName(String name);
      List<PlayList> selectPlayListByUserName(String username);
-     PlayList isAvailablePlayList(String name);
 
      //Song
      boolean addSong(String name, int duration, String genre, String disc_name);

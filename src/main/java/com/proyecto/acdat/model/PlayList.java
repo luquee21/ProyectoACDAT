@@ -8,7 +8,7 @@ public class PlayList {
     User[] subscribers;
     User creator;
 
-    public PlayList() {
+    public PlayList(int id,String name,String description) {
     }
 
     public int getId() {
