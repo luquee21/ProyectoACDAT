@@ -54,7 +54,6 @@ public interface IAppController {
 
      //User
      boolean addUser(String email, String name);
-     boolean addHistory(Song song, int id_user, Timestamp timestamp);
      boolean deleteUser(String email);
      boolean updateUser(User oldUser, User newUser);
      List<User> selectAllUser();

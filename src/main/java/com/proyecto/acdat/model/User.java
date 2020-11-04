@@ -1,13 +1,22 @@
 package com.proyecto.acdat.model;
 
 public class User {
-    int id;
-    String name;
-    String email;
-    PlayList[] playlists;
+    private int id;
+    private String name;
+    private String email;
+    private String photo;
+    private PlayList[] playlists;
 
     public User() {
     }
+
+    public User(int id, String name, String email, String photo) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+        this.photo = photo;
+    }
+
 
     public int getId() {
         return id;
@@ -19,6 +28,14 @@ public class User {
 
     public String getName() {
         return name;
+    }
+
+    public String getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
     }
 
     public void setName(String name) {
