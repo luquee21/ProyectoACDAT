@@ -12,13 +12,9 @@ public class ArtistDAO extends Artist {
     private static final String SELECTALL = "SELECT * FROM Artista";
     private static final String SELECTBYNAME = "SELECT * FROM Artista WHERE nombre=?";
     private static final String SELECTBYNATIONALITY = "SELECT * FROM Artista WHERE nacionalidad=?";
-
-    public ArtistDAO(Artist artist) {
-        this.id = artist.id;
-        this.name = artist.name;
-        this.discs = artist.discs;
-        this.nationality = artist.nationality;
-    }
+    private static final String INSERTARTIST = "INSERT INTO Artista (nombre,nacionalidad,foto) VALUES(?,?,?,?)";
+    private static final String DELETEARTIST = "DELETE FROM Artista WHERE nombre=?";
+    private static final String UPDATEARTIST = "UPDATE Artista SET nombre=?, nacionalidad=?, foto=? WHERE nombre=?";
 
 
     @Override
@@ -61,7 +57,7 @@ public class ArtistDAO extends Artist {
         super.setDiscs(discs);
     }
 
-    public static List<Artist> selectAll(String username) {
+    public static List<Artist> selectAll() {
         List<Artist> aux = new ArrayList<>();
         Artist artist;
         try {
@@ -70,7 +66,7 @@ public class ArtistDAO extends Artist {
             ResultSet s = ps.executeQuery();
 
             while (s.next()) {
-                artist = new Artist(s.getInt("id"), s.getString("nombre"), s.getString("nacionalidad"));
+                artist = new Artist(s.getInt("id"), s.getString("nombre"), s.getString("nacionalidad"), s.getString("foto"));
                 aux.add(artist);
             }
 
@@ -88,7 +84,7 @@ public class ArtistDAO extends Artist {
                 ps.setString(1,name);
                 ResultSet s = ps.executeQuery();
                 while(s.next()){
-                    artist = new Artist(s.getInt("id"),s.getString("nombre"),s.getString("nacionalidad"));
+                    artist = new Artist(s.getInt("id"),s.getString("nombre"),s.getString("nacionalidad"),s.getString("foto"));
                 }
 
             } catch (SQLException ex) {
@@ -103,12 +99,12 @@ public class ArtistDAO extends Artist {
         Artist artist;
         try {
             java.sql.Connection conn = ConnectionUtils.getConnection();
-            PreparedStatement ps = conn.prepareStatement(SELECTALL);
+            PreparedStatement ps = conn.prepareStatement(SELECTBYNATIONALITY);
             ps.setString(1,nationality);
             ResultSet s = ps.executeQuery();
 
             while (s.next()) {
-                artist = new Artist(s.getInt("id"), s.getString("nombre"), s.getString("nacionalidad"));
+                artist = new Artist(s.getInt("id"), s.getString("nombre"), s.getString("nacionalidad"), s.getString("foto"));
                 aux.add(artist);
             }
 
@@ -118,7 +114,60 @@ public class ArtistDAO extends Artist {
         return aux;
     }
 
-    public static boolean addArtist(){
+    public static boolean addArtist(Artist artist){
+        boolean result = false;
+        try {
+            java.sql.Connection conn = ConnectionUtils.getConnection();
+            PreparedStatement ps = conn.prepareStatement(INSERTARTIST);
+            ps.setString(1,artist.getName());
+            ps.setString(2,artist.getNationality());
+            ps.setString(3,artist.getPhoto());
+            int rs = ps.executeUpdate();
+            if(rs > 0){
+                result = true;
+            }
 
+        } catch (SQLException ex) {
+        }
+
+        return result;
+    }
+
+    public static boolean deleteArtist(Artist artist){
+        boolean result = false;
+        try {
+            java.sql.Connection conn = ConnectionUtils.getConnection();
+            PreparedStatement ps = conn.prepareStatement(DELETEARTIST);
+            ps.setString(1,artist.getName());
+            int rs = ps.executeUpdate();
+            if(rs > 0){
+                result = true;
+            }
+
+        } catch (SQLException ex) {
+        }
+
+        return result;
+    }
+
+    public static boolean updateArtist(Artist artist){
+        boolean result = false;
+        try {
+            java.sql.Connection conn = ConnectionUtils.getConnection();
+            PreparedStatement ps = conn.prepareStatement(UPDATEARTIST);
+
+            ps.setString(1,artist.getName());
+            ps.setString(2,artist.getNationality());
+            ps.setString(3,artist.getPhoto());
+            ps.setString(4,artist.getName());
+            int rs = ps.executeUpdate();
+            if(rs > 0){
+                result = true;
+            }
+
+        } catch (SQLException ex) {
+        }
+
+        return result;
     }
 }
