@@ -1,5 +1,6 @@
 package com.proyecto.acdat.gui;
 
+import com.proyecto.acdat.instance.MyInstance;
 import com.proyecto.acdat.utils.Utilities;
 
 public class Menu {
@@ -21,7 +22,6 @@ public class Menu {
                     SubMenuArtist.artist();
                     break;
                 case 2:
-
                     break;
                 case 3:
 

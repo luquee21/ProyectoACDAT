@@ -1,8 +1,11 @@
 package com.proyecto.acdat.gui;
 
+import com.proyecto.acdat.instance.MyInstance;
+import com.proyecto.acdat.model.Artist;
 import com.proyecto.acdat.utils.Utilities;
 
 public class SubMenuArtist {
+
 
     public static void artist() {
         int option = 0;
@@ -41,7 +44,12 @@ public class SubMenuArtist {
 
     public static void addArtist() {
         String name = Utilities.getString("Introduce el nombre del artista");
-        String
+        String nationality = Utilities.getString("Introduce la nacionalidad");
+        String photo = Utilities.getString("Introduce la foto");
+        Artist
+        MyInstance.getInstance().addArtist()
+
+
     }
 
 }
