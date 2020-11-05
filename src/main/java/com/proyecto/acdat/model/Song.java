@@ -9,8 +9,7 @@ public class Song {
     public Song() {
     }
 
-    public Song(int id, String name, int duration) {
-        this.id = id;
+    public Song(String name, int duration) {
         this.name = name;
         this.duration = duration;
     }

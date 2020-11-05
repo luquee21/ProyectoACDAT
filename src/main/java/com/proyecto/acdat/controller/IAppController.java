@@ -43,7 +43,6 @@ public interface IAppController {
      boolean updateSong(Song song);
      List<Song> selectAllSong();
      List<Song> selectSongByName(String name);
-     List<Song> selectSongByGenre(String genre);
      List<Song> selectAllSongByDisc(String disc_name);
 
      //User

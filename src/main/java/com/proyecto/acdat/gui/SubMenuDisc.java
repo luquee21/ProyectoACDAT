@@ -49,7 +49,7 @@ public class SubMenuDisc {
         if(MyInstance.getInstance().addDisc(new Disc(name, photo))){
             Utilities.P("Disco creado con éxito");
         }else{
-            Utilities.P("No se ha podido crear el artista");
+            Utilities.P("No se ha podido crear el disco");
         }
     }
 
