@@ -22,7 +22,7 @@ public class SubMenuDisc {
 
             switch (option){
                 case 1:
-                    addDsic();
+                    addDisc();
                     break;
                 case 2:
                     deleteDisc();
@@ -42,7 +42,7 @@ public class SubMenuDisc {
         }while(option!=5);
     }
 
-    public static void addDsic(){
+    public static void addDisc(){
         Utilities.P("---- Añadir Disco ----");
         String name = Utilities.getString("Inserte el nombre del disco");
         String photo = Utilities.getString("Introduce la foto");
@@ -58,7 +58,7 @@ public class SubMenuDisc {
         do {
             Utilities.P("---- Borrar Disco ----");
             Utilities.P("1) Listar todos los discos antes de borrar");
-            Utilities.P("2) Borrar disco por nombre");
+            Utilities.P("2) Borrar disco");
             Utilities.P("3) Volver atrás");
 
             switch (option) {
@@ -70,11 +70,15 @@ public class SubMenuDisc {
                     break;
                 case 2:
                     String name = Utilities.getString("Introduce el nombre del disco que deseas borrar");
-                    Disc disc = MyInstance.getInstance().selectDiscByName(name);
-                    if (disc == null) {
+                    List<Disc> discsByName = MyInstance.getInstance().selectDiscByName(name);
+                    if (discsByName == null) {
                         Utilities.P("El disco introducido no existe, comprueba el nombre");
                     } else {
-                        if (MyInstance.getInstance().deleteDisc(disc.getId())) {
+                        for(Disc disc : discsByName){
+                            Utilities.P(disc.toString());
+                        }
+                        int id = Utilities.getInt("Por favor, inserte la id del disco a borrar");
+                        if (MyInstance.getInstance().deleteDisc(id)) {
                             Utilities.P("Disco borrado con éxito");
                         } else {
                             Utilities.P("No se ha podido borrar el disco");
@@ -114,11 +118,13 @@ public class SubMenuDisc {
                     break;
                 case 2:
                     String name = Utilities.getString("Introduce el nombre del disco");
-                    Disc disc = MyInstance.getInstance().selectDiscByName(name);
-                    if(disc== null){
+                    List<Disc> listDiscs = MyInstance.getInstance().selectDiscByName(name);
+                    if(listDiscs== null){
                         Utilities.P("No hay ningún disco con ese nombre");
                     } else {
-                        Utilities.P(disc.toString());
+                        for(Disc a : listDiscs){
+                            Utilities.P(a.toString());
+                        }
                     }
                     break;
                 case 3:
@@ -137,7 +143,46 @@ public class SubMenuDisc {
                     disc();
                     break;
             }
-        } while (option != 3);
+        } while (option != 4);
+    }
+
+    public static void updateDisc(){
+        Utilities.P("---- Actualizar Disco ----");
+        String oldname = Utilities.getString("Introduce el nombre del disco: ");
+        List<Disc> listDiscs = MyInstance.getInstance().selectDiscByName(oldname);
+        Disc oldDisc = null;
+        if(listDiscs== null){
+            Utilities.P("No hay ningún disco con ese nombre");
+        } else {
+            for (Disc a : listDiscs) {
+                Utilities.P(a.toString());
+            }
+        }
+        int id = Utilities.getInt("Por favor, inserte el id del disco que desea modificar: ");
+        for(Disc a : listDiscs){
+            if(a.getId() == id){
+                oldDisc = a;
+            }
+        }
+        if(oldDisc == null){
+            Utilities.P("No hay ningún disco con ese id");
+        } else {
+            String name = Utilities.getString("Introduce el nuevo nombre del disco: ");
+            String photo = Utilities.getString("Introduce la nueva foto: ");
+            Disc newDisc = new Disc(name, photo);
+
+            if(oldDisc.equals(newDisc)){
+                Utilities.P("No puede ser igual");
+
+            } else {
+                if(MyInstance.getInstance().updateDisc(newDisc)){
+                    Utilities.P("Se ha actualizado con éxito");
+                } else {
+                    Utilities.P("No se ha podido actualizar");
+                }
+            }
+
+        }
     }
 
 }

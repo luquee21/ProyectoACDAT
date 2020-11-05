@@ -57,7 +57,7 @@ public class DiscDAO extends Disc {
             ResultSet s = ps.executeQuery();
 
             while (s.next()) {
-                disc = new Disc(s.getInt("id"), s.getString("nombre"), s.getString("foto"));
+                disc = new Disc( s.getString("nombre"), s.getString("foto"));
                 aux.add(disc);
             }
 
@@ -67,7 +67,8 @@ public class DiscDAO extends Disc {
         return aux;
     }
 
-    public static Disc selectByName(String name) {
+    public static List<Disc> selectByName(String name) {
+        List<Disc> discs = null;
         Disc disc = null;
         try {
             java.sql.Connection conn = ConnectionUtils.getConnection();
@@ -75,14 +76,15 @@ public class DiscDAO extends Disc {
             ps.setString(1, name);
             ResultSet s = ps.executeQuery();
             while (s.next()) {
-                disc = new Disc(s.getInt("id"), s.getString("nombre"), s.getString("foto"));
+                disc = new Disc(s.getString("nombre"), s.getString("foto"));
+                discs.add(disc);
             }
 
         } catch (SQLException ex) {
 
         }
 
-        return disc;
+        return discs;
     }
 
     public static List<Disc> selectByArtist(Artist artist) {
@@ -95,7 +97,7 @@ public class DiscDAO extends Disc {
             ResultSet s = ps.executeQuery();
 
             while (s.next()) {
-                disc = new Disc(s.getInt("id"), s.getString("nombre"), s.getString("nacionalidad"));
+                disc = new Disc(s.getString("nombre"), s.getString("nacionalidad"));
                 aux.add(disc);
             }
 
@@ -125,12 +127,12 @@ public class DiscDAO extends Disc {
         return result;
     }
 
-    public static boolean deleteDisc(Disc disc) {
+    public static boolean deleteDisc(int id) {
         boolean result = false;
         try {
             java.sql.Connection conn = ConnectionUtils.getConnection();
             PreparedStatement ps = conn.prepareStatement(DELETEDISC);
-            ps.setInt(1, disc.getId());
+            ps.setInt(1, id);
             int rs = ps.executeUpdate();
             if (rs > 0) {
                 result = true;
