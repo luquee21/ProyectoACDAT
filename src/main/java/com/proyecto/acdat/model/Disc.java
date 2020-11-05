@@ -54,4 +54,6 @@ public class Disc {
     public void setSongs(Song[] songs) {
         this.songs = songs;
     }
+
+
 }
