@@ -33,7 +33,7 @@ public class AppController implements IAppController{
     }
 
     @Override
-    public Artist selectArtistByNationality(String nationality) {
+    public List<Artist> selectArtistByNationality(String nationality) {
         return null;
     }
 

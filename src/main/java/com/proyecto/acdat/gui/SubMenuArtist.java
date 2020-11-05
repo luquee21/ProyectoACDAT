@@ -123,8 +123,8 @@ public class SubMenuArtist {
                     break;
                 case 3:
                     String nationality = Utilities.getString("Introduce la nacionalidad");
-                    artist = MyInstance.getInstance().selectArtistByNationality(nationality);
-                    if(artist== null){
+                    artists = MyInstance.getInstance().selectArtistByNationality(nationality);
+                    if(artists== null){
                         Utilities.P("No hay ningún artista con esa nacionalidad");
                     } else {
                         for(Artist a : artists){

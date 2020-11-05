@@ -14,8 +14,7 @@ public class Disc {
     public Disc() {
     }
 
-    public Disc(int id, String name, String photo) {
-        this.id = id;
+    public Disc(String name, String photo) {
         this.name = name;
         this.photo = photo;
     }
