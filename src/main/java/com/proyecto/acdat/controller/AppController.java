@@ -5,36 +5,53 @@ import com.proyecto.acdat.model.*;
 import java.sql.Timestamp;
 import java.util.List;
 
-public class AppController implements IAppController{
+public class AppController implements IAppController {
 
     @Override
     public boolean addArtist(Artist artist) {
-        return false;
+        boolean result = false;
+        if (ArtistDAO.addArtist(artist)) {
+            result = true;
+        }
+        return result;
     }
 
     @Override
-    public boolean deleteArtist(int id) {
-        return false;
+    public boolean deleteArtist(String name) {
+        boolean result = false;
+        if (ArtistDAO.deleteArtist(name)) {
+            result = true;
+        }
+        return result;
+
     }
 
     @Override
     public boolean updateArtist(Artist artist) {
-        return false;
+        boolean result = false;
+        if(ArtistDAO.updateArtist(artist)){
+            result = true;
+        }
+        return result;
     }
 
     @Override
     public List<Artist> selectAllArtist() {
-        return null;
+        List<Artist> artists = ArtistDAO.selectAll();
+        return artists;
     }
 
     @Override
     public Artist selectArtistByName(String name) {
-        return null;
+        Artist artist = ArtistDAO.selectByName(name);
+        return artist;
     }
 
+
     @Override
-    public Artist selectArtistByNationality(String nationality) {
-        return null;
+    public List<Artist> selectArtistByNationality(String nationality) {
+        List<Artist> artists = ArtistDAO.selectByNationality(nationality);
+        return artists;
     }
 
     @Override

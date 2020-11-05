@@ -11,7 +11,7 @@ public interface IAppController {
 
     //Artist
      boolean addArtist(Artist artist);
-     boolean deleteArtist(int id);
+     boolean deleteArtist(String name);
      boolean updateArtist(Artist artist);
      List<Artist> selectAllArtist();
      Artist selectArtistByName(String name);

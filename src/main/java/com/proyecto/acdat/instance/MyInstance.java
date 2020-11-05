@@ -6,6 +6,7 @@ public class MyInstance {
     private static AppController appController;
 
     public static AppController getInstance(){
+
         if(appController == null){
             appController = new AppController();
         }

@@ -133,12 +133,12 @@ public class ArtistDAO extends Artist {
         return result;
     }
 
-    public static boolean deleteArtist(Artist artist){
+    public static boolean deleteArtist(String name){
         boolean result = false;
         try {
             java.sql.Connection conn = ConnectionUtils.getConnection();
             PreparedStatement ps = conn.prepareStatement(DELETEARTIST);
-            ps.setString(1,artist.getName());
+            ps.setString(1,name);
             int rs = ps.executeUpdate();
             if(rs > 0){
                 result = true;
