@@ -64,7 +64,7 @@ public class SongDAO extends Song {
             PreparedStatement ps = conn.prepareStatement(SELECTALL);
             ResultSet s = ps.executeQuery();
             while (s.next()) {
-                song = new Song(s.getInt("id"), s.getString("nombre"), s.getInt("duracion"));
+                song = new Song(s.getString("nombre"), s.getInt("duracion"));
                 aux.add(song);
             }
 
@@ -83,7 +83,7 @@ public class SongDAO extends Song {
             ps.setString(1, name);
             ResultSet s = ps.executeQuery();
             while (s.next()) {
-                song = new Song(s.getInt("id"), s.getString("nombre"), s.getInt("duracion"));
+                song = new Song(s.getString("nombre"), s.getInt("duracion"));
             }
 
         } catch (SQLException ex) {
@@ -102,7 +102,7 @@ public class SongDAO extends Song {
             ps.setInt(1, id_disc);
             ResultSet s = ps.executeQuery();
             while (s.next()) {
-                song = new Song(s.getInt("id"), s.getString("nombre"), s.getInt("duracion"));
+                song = new Song(s.getString("nombre"), s.getInt("duracion"));
                 aux.add(song);
             }
 

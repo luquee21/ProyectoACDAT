@@ -1,9 +1,4 @@
 package com.proyecto.acdat.model;
-
-import com.proyecto.acdat.utils.Utilities;
-
-import java.sql.Blob;
-import java.util.Arrays;
 import java.util.List;
 
 public class Artist {
@@ -11,7 +6,7 @@ public class Artist {
     private String name;
     private String nationality;
     private String photo;
-    private Disc[] discs;
+    private List<Disc> disc;
 
     public Artist() {
     }
@@ -54,16 +49,16 @@ public class Artist {
         this.photo = photo;
     }
 
-    public Disc[] getDiscs() {
-        return discs;
+    public List<Disc> getDisc() {
+        return disc;
     }
 
-    public void setDiscs(Disc[] discs) {
-        this.discs = discs;
+    public void setDisc(List<Disc> disc) {
+        this.disc = disc;
     }
 
     @Override
     public String toString() {
-        return "[Artista] = id: " + id + ", nombre: " + name + ", nacionalidad: " + nationality;
+        return "[Artista] = id: " + id + ", nombre: " + name + ", nacionalidad: " + nationality + ", discos: " + disc;
     }
 }

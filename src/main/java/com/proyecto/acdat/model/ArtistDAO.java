@@ -12,7 +12,7 @@ public class ArtistDAO extends Artist {
     private static final String SELECTALL = "SELECT * FROM Artista";
     private static final String SELECTBYNAME = "SELECT * FROM Artista WHERE nombre=?";
     private static final String SELECTBYNATIONALITY = "SELECT * FROM Artista WHERE nacionalidad=?";
-    private static final String INSERTARTIST = "INSERT INTO Artista (nombre,nacionalidad,foto) VALUES(?,?,?,?)";
+    private static final String INSERTARTIST = "INSERT INTO Artista (nombre,nacionalidad,foto) VALUES(?,?,?)";
     private static final String DELETEARTIST = "DELETE FROM Artista WHERE nombre=?";
     private static final String UPDATEARTIST = "UPDATE Artista SET nombre=?, nacionalidad=?, foto=? WHERE nombre=?";
 
@@ -48,13 +48,13 @@ public class ArtistDAO extends Artist {
     }
 
     @Override
-    public Disc[] getDiscs() {
-        return super.getDiscs();
+    public List<Disc> getDisc() {
+        return super.getDisc();
     }
 
     @Override
-    public void setDiscs(Disc[] discs) {
-        super.setDiscs(discs);
+    public void setDisc(List<Disc> disc) {
+        super.setDisc(disc);
     }
 
     public static List<Artist> selectAll() {

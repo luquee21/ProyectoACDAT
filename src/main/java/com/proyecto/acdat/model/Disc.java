@@ -2,6 +2,7 @@ package com.proyecto.acdat.model;
 
 import java.sql.Blob;
 import java.sql.Date;
+import java.util.Arrays;
 
 public class Disc {
     private int id;
@@ -17,6 +18,13 @@ public class Disc {
     public Disc(String name, String photo) {
         this.name = name;
         this.photo = photo;
+    }
+
+    public Disc(String name, String photo, Date date) {
+        this.name = name;
+        this.photo = photo;
+        this.artist = artist;
+        this.date = date;
     }
 
     public Date getDate() { return date; }
@@ -55,5 +63,15 @@ public class Disc {
         this.songs = songs;
     }
 
-
+    @Override
+    public String toString() {
+        return "Disc{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", photo='" + photo + '\'' +
+                ", songs=" + Arrays.toString(songs) +
+                ", artist=" + artist +
+                ", date=" + date +
+                '}';
+    }
 }

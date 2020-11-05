@@ -130,7 +130,7 @@ public class SubMenuDisc {
                 case 3:
                     String artistName = Utilities.getString("Introduce el nombre del artista");
                     Artist artist = MyInstance.getInstance().selectArtistByName(artistName);
-                    discs = (List<Disc>) MyInstance.getInstance().selectByArtist(artist);
+                    discs = (List<Disc>) MyInstance.getInstance().selectDiscByArtist(artist);
                     if(discs== null){
                         Utilities.P("No hay ningún disco de ese artista");
                     } else {

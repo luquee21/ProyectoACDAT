@@ -22,6 +22,7 @@ public class Menu {
                     SubMenuArtist.artist();
                     break;
                 case 2:
+                    SubMenuDisc.disc();
                     break;
                 case 3:
                     break;

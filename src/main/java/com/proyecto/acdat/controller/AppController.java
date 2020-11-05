@@ -94,7 +94,7 @@ public class AppController implements IAppController {
     }
 
     @Override
-    public List<Disc> selectByArtist(Artist artist) {
+    public List<Disc> selectDiscByArtist(Artist artist) {
         List<Disc> discs = DiscDAO.selectByArtist(artist);
         return discs;
     }
@@ -174,10 +174,6 @@ public class AppController implements IAppController {
         return null;
     }
 
-    @Override
-    public List<Song> selectSongByGenre(String genre) {
-        return null;
-    }
 
     @Override
     public List<Song> selectAllSongByDisc(String disc_name) {

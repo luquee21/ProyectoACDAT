@@ -2,8 +2,11 @@ package com.proyecto.acdat.gui;
 
 import com.proyecto.acdat.instance.MyInstance;
 import com.proyecto.acdat.model.Artist;
+import com.proyecto.acdat.model.Disc;
 import com.proyecto.acdat.utils.Utilities;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class SubMenuArtist {
@@ -100,7 +103,8 @@ public class SubMenuArtist {
 
     private static void listArtist() {
         int option = 0;
-        List<Artist> artists = null;
+        List<Artist> artists;
+        List<Disc> discs;
         do {
             Utilities.P("---- Listar Artista ----");
             Utilities.P("1) Listar todos los artistas");
@@ -112,18 +116,36 @@ public class SubMenuArtist {
             switch (option) {
                 case 1:
                     artists = MyInstance.getInstance().selectAllArtist();
+                    discs = MyInstance.getInstance().selectAllDisc();
+                    List<Disc> aux = new ArrayList<>();
                     if (artists == null) {
                         Utilities.P("No hay ningún artista creado");
                     } else {
-                        for(Artist a : artists){
-                            Utilities.P(a.toString());
+                        for(int i = 0; i < artists.size(); i++){
+                            for(int x = 0; x < discs.size(); x++){
+                                if(x==0){
+                                    aux.clear();
+                                }
+                                if(artists.get(i).getId() == discs.get(x).getArtist().getId()){
+                                    aux.add(discs.get(i));
+                                    if(discs.size()-x == 1){
+                                        artists.get(i).setDisc(aux);
+                                    }
+                                }
+                            }
                         }
+
                     }
                     break;
                 case 2:
                     String name = Utilities.getString("Introduce el nombre del artista: ");
                     Artist artist = MyInstance.getInstance().selectArtistByName(name);
-                    if(artist== null){
+                    discs = MyInstance.getInstance().selectDiscByArtist(artist);
+                    if(discs!=null){
+                        artist.setDisc(discs);
+                    }
+                    artist.setDisc(discs);
+                    if(artist == null){
                         Utilities.P("No hay ningún artista con ese nombre");
                     } else {
                         Utilities.P(artist.toString());

@@ -57,7 +57,7 @@ public class DiscDAO extends Disc {
             ResultSet s = ps.executeQuery();
 
             while (s.next()) {
-                disc = new Disc( s.getString("nombre"), s.getString("foto"));
+                disc = new Disc( s.getString("nombre"), s.getString("foto"),s.getDate("fecha_prod"));
                 aux.add(disc);
             }
 
