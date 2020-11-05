@@ -52,8 +52,8 @@ public interface IAppController {
      boolean deleteUser(String email);
      boolean updateUser(User user);
      List<User> selectAllUser();
-     List<User> selectByEmail(String email);
-     List<User> selectByName(String name);
+     User selectUserByEmail(String email);
+     List<User> selectUserByName(String name);
  
 
 

@@ -44,7 +44,7 @@ public class SubMenuArtist {
         } while (option != 5);
     }
 
-    public static void addArtist() {
+    private static void addArtist() {
         Utilities.P("---- Añadir Artista ----");
         String name = Utilities.getString("Introduce el nombre del artista: ");
         String nationality = Utilities.getString("Introduce la nacionalidad: ");
@@ -56,17 +56,24 @@ public class SubMenuArtist {
         }
     }
 
-    public static void deleteArtist() {
+    private static void deleteArtist() {
         int option = 0;
         do {
             Utilities.P("---- Borrar Artista ----");
             Utilities.P("1) Listar todos los artistas antes de borrar");
             Utilities.P("2) Borrar artista por nombre");
             Utilities.P("3) Volver atrás");
-
+            option=Utilities.getInt();
             switch (option) {
                 case 1:
-
+                    List<Artist> artists = MyInstance.getInstance().selectAllArtist();
+                    if(artists == null){
+                        Utilities.P("No hay ningún artista creado");
+                    } else {
+                        for(Artist a : artists){
+                            Utilities.P(a.toString());
+                        }
+                    }
                     break;
                 case 2:
                     String name = Utilities.getString("Introduce el nombre del artista que deseas borrar: ");
@@ -91,7 +98,7 @@ public class SubMenuArtist {
         } while (option != 3);
     }
 
-    public static void listArtist() {
+    private static void listArtist() {
         int option = 0;
         List<Artist> artists = null;
         do {
@@ -101,6 +108,7 @@ public class SubMenuArtist {
             Utilities.P("3) Listar artista por nacionalidad");
             Utilities.P("4) Volver atrás");
             Utilities.P("------------------------");
+            option=Utilities.getInt();
             switch (option) {
                 case 1:
                     artists = MyInstance.getInstance().selectAllArtist();
@@ -139,7 +147,7 @@ public class SubMenuArtist {
         } while (option != 3);
     }
 
-    public static void updateArtist(){
+    private static void updateArtist(){
         Utilities.P("---- Actualizar Artista ----");
         String oldname = Utilities.getString("Introduce el nombre del artista: ");
         Artist oldArtist = MyInstance.getInstance().selectArtistByName(oldname);

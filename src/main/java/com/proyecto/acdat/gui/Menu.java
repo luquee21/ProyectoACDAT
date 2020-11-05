@@ -24,13 +24,11 @@ public class Menu {
                 case 2:
                     break;
                 case 3:
-
                     break;
                 case 4:
-
                     break;
                 case 5:
-
+                    SubMenuUser.user();
                     break;
                 case 6:
                     Utilities.P("Adios");

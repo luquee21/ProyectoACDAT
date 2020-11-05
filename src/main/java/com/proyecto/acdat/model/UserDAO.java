@@ -65,7 +65,7 @@ public class UserDAO extends User {
             ResultSet s = ps.executeQuery();
 
             while (s.next()) {
-                user = new User(s.getInt("id"), s.getString("nombre"), s.getString("email"), s.getString("foto"));
+                user = new User(s.getString("nombre"), s.getString("email"), s.getString("foto"));
                 aux.add(user);
             }
 
@@ -75,7 +75,8 @@ public class UserDAO extends User {
         return aux;
     }
 
-    public static User selectByName(String name){
+    public static List<User> selectByName(String name){
+        List<User> users = new ArrayList<>();
         User user = null;
         try {
             java.sql.Connection conn = ConnectionUtils.getConnection();
@@ -83,14 +84,15 @@ public class UserDAO extends User {
             ps.setString(1,name);
             ResultSet s = ps.executeQuery();
             while(s.next()){
-                user = new User(s.getInt("id"),s.getString("nombre"),s.getString("correo"),s.getString("foto"));
+                user = new User(s.getString("nombre"),s.getString("correo"),s.getString("foto"));
+                users.add(user);
             }
 
         } catch (SQLException ex) {
 
         }
 
-        return user;
+        return users;
     }
 
     public static User selectByEmail(String email){
@@ -101,7 +103,7 @@ public class UserDAO extends User {
             ps.setString(1,email);
             ResultSet s = ps.executeQuery();
             while(s.next()){
-                user = new User(s.getInt("id"),s.getString("nombre"),s.getString("correo"),s.getString("foto"));
+                user = new User(s.getString("nombre"),s.getString("correo"),s.getString("foto"));
             }
 
         } catch (SQLException ex) {
@@ -130,12 +132,12 @@ public class UserDAO extends User {
         return result;
     }
 
-    public static boolean deleteUser(User user){
+    public static boolean deleteUser(String email){
         boolean result = false;
         try {
             java.sql.Connection conn = ConnectionUtils.getConnection();
             PreparedStatement ps = conn.prepareStatement(DELETEUSER);
-            ps.setInt(1,user.getId());
+            ps.setString(1,email);
             int rs = ps.executeUpdate();
             if(rs > 0){
                 result = true;

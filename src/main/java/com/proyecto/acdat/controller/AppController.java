@@ -171,7 +171,11 @@ public class AppController implements IAppController {
 
     @Override
     public boolean addUser(User user) {
-        return false;
+        boolean result = false;
+        if(UserDAO.addUser(user)){
+            result = true;
+        }
+        return result;
     }
 
     @Override
@@ -181,26 +185,37 @@ public class AppController implements IAppController {
 
     @Override
     public boolean deleteUser(String email) {
-        return false;
+        boolean result = false;
+        if(UserDAO.deleteUser(email)){
+            result = true;
+        }
+        return result;
     }
 
     @Override
     public boolean updateUser(User user) {
-        return false;
+        boolean result = false;
+        if(UserDAO.updateUser(user)){
+            result = true;
+        }
+        return result;
     }
 
     @Override
     public List<User> selectAllUser() {
-        return null;
+        List<User> users = UserDAO.selectAll();
+        return users;
     }
 
     @Override
-    public List<User> selectByEmail(String email) {
-        return null;
+    public User selectUserByEmail(String email) {
+        User user = UserDAO.selectByEmail(email);
+        return user;
     }
 
     @Override
-    public List<User> selectByName(String name) {
-        return null;
+    public List<User> selectUserByName(String name) {
+        List<User> users = UserDAO.selectByName(name);
+        return users;
     }
 }
