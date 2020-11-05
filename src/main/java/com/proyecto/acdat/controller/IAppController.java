@@ -22,8 +22,8 @@ public interface IAppController {
      boolean deleteDisc(int id);
      boolean updateDisc(Disc disc);
      List<Disc> selectAllDisc();
-     Disc selectDiscByName(String name);
-     Disc selectByArtist(Artist artist);
+     List<Disc> selectDiscByName(String name);
+     List<Disc> selectByArtist(Artist artist);
 
      //PlayList
      boolean addPlayList(PlayList playList);

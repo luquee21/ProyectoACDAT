@@ -56,32 +56,47 @@ public class AppController implements IAppController {
 
     @Override
     public boolean addDisc(Disc disc) {
-        return false;
+        boolean result = false;
+        if (DiscDAO.addDisc(disc)) {
+            result = true;
+        }
+        return result;
     }
 
     @Override
     public boolean deleteDisc(int id) {
-        return false;
+        boolean result = false;
+        if (DiscDAO.deleteDisc(id)) {
+            result = true;
+        }
+        return result;
     }
 
     @Override
     public boolean updateDisc(Disc disc) {
-        return false;
+        boolean result = false;
+        if(DiscDAO.updateArtist(disc)){
+            result = true;
+        }
+        return result;
     }
 
     @Override
     public List<Disc> selectAllDisc() {
-        return null;
+        List<Disc> discs = DiscDAO.selectAll();
+        return discs;
     }
 
     @Override
-    public Disc selectDiscByName(String name) {
-        return null;
+    public List<Disc> selectDiscByName(String name) {
+        List<Disc> discs = DiscDAO.selectByName(name);
+        return discs;
     }
 
     @Override
-    public Disc selectByArtist(Artist artist) {
-        return null;
+    public List<Disc> selectByArtist(Artist artist) {
+        List<Disc> discs = DiscDAO.selectByArtist(artist);
+        return discs;
     }
 
     @Override
