@@ -1,6 +1,10 @@
 package com.proyecto.acdat.model;
 
+import com.proyecto.acdat.utils.Utilities;
+
 import java.sql.Blob;
+import java.util.Arrays;
+import java.util.List;
 
 public class Artist {
     private int id;
@@ -12,8 +16,7 @@ public class Artist {
     public Artist() {
     }
 
-    public Artist(int id, String name, String nationality, String photo) {
-        this.id = id;
+    public Artist(String name, String nationality, String photo) {
         this.name = name;
         this.nationality = nationality;
         this.photo = photo;
@@ -57,5 +60,10 @@ public class Artist {
 
     public void setDiscs(Disc[] discs) {
         this.discs = discs;
+    }
+
+    @Override
+    public String toString() {
+        return "[Artista] = id: " + id + ", nombre: " + name + ", nacionalidad: " + nationality;
     }
 }

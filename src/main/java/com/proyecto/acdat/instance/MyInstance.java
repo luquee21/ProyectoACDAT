@@ -3,7 +3,7 @@ package com.proyecto.acdat.instance;
 import com.proyecto.acdat.controller.AppController;
 
 public class MyInstance {
-    public static AppController appController;
+    private static AppController appController;
 
     public static AppController getInstance(){
         if(appController == null){

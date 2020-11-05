@@ -15,7 +15,7 @@ public interface IAppController {
      boolean updateArtist(Artist artist);
      List<Artist> selectAllArtist();
      Artist selectArtistByName(String name);
-     Artist selectArtistByNationality(String nationality);
+     List<Artist> selectArtistByNationality(String nationality);
 
      //Disc
      boolean addDisc(Disc disc);
