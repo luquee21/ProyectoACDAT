@@ -15,6 +15,27 @@ public class Menu {
             Utilities.P("5) Menu Usuario");
             Utilities.P("6) Salir");
             option = Utilities.getInt();
+
+            switch(option){
+                case 1:
+                    SubMenuArtist.artist();
+                    break;
+                case 2:
+
+                    break;
+                case 3:
+
+                    break;
+                case 4:
+
+                    break;
+                case 5:
+
+                    break;
+                case 6:
+                    Utilities.P("Adios");
+                    break;
+            }
         }while(option!=6);
     }
 }
