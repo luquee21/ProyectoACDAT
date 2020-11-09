@@ -65,19 +65,18 @@ public class UserDAO extends User {
             ResultSet s = ps.executeQuery();
 
             while (s.next()) {
-                user = new User(s.getString("nombre"), s.getString("email"), s.getString("foto"));
+                user = new User(s.getString("nombre"), s.getString("correo"), s.getString("foto"));
                 aux.add(user);
             }
 
         } catch (SQLException ex) {
-
         }
         return aux;
     }
 
     public static List<User> selectByName(String name){
         List<User> users = new ArrayList<>();
-        User user = null;
+        User user;
         try {
             java.sql.Connection conn = ConnectionUtils.getConnection();
             PreparedStatement ps = conn.prepareStatement(SELECTBYNAME);
@@ -96,7 +95,7 @@ public class UserDAO extends User {
     }
 
     public static User selectByEmail(String email){
-        User user = null;
+        User user=null;
         try {
             java.sql.Connection conn = ConnectionUtils.getConnection();
             PreparedStatement ps = conn.prepareStatement(SELECTBYEMAIL);

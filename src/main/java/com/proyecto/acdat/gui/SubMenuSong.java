@@ -140,7 +140,7 @@ public class SubMenuSong {
                         int id = Utilities.getInt("Introduce el id del disco deseado");
                         List<Song> aux = MyInstance.getInstance().selectAllSongByDisc(id);
                         if(aux!=null){
-                            Artists
+
                             for(Song s: aux){
                                 Utilities.P(s.toString());
                             }

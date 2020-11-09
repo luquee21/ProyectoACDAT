@@ -63,12 +63,13 @@ public class Song {
 
     @Override
     public String toString() {
-        return "Song{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", duration=" + duration +
-                ", disc=" + disc +
-                ", artist=" + artist +
-                '}';
+        String print;
+
+        if(disc == null && artist == null){
+            print = "[Cancion] = id: " + id + ", nombre: " + name + ", duracion: " + duration;
+        } else {
+            print = "[Cancion] = id: " + id + ", nombre: " + name + ", duracion: " + duration + " |"  + disc + " " + artist;
+        }
+        return print;
     }
 }

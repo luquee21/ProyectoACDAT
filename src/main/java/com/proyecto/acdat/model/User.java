@@ -56,4 +56,9 @@ public class User {
     public void setPlaylists(PlayList[] playlists) {
         this.playlists = playlists;
     }
+
+    @Override
+    public String toString() {
+        return "[Usuario] = id: " + id + ", nombre: " + name + ", email: " + email;
+    }
 }

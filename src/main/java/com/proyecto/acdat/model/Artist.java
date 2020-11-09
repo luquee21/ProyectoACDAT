@@ -11,6 +11,13 @@ public class Artist {
     public Artist() {
     }
 
+    public Artist(int id,String name, String nationality, String photo) {
+        this.id=id;
+        this.name = name;
+        this.nationality = nationality;
+        this.photo = photo;
+    }
+
     public Artist(String name, String nationality, String photo) {
         this.name = name;
         this.nationality = nationality;
@@ -59,6 +66,13 @@ public class Artist {
 
     @Override
     public String toString() {
-        return "[Artista] = id: " + id + ", nombre: " + name + ", nacionalidad: " + nationality + ", discos: " + disc;
+        String print;
+        if(disc == null){
+            print =  "[Artista] = id: " + id + ", nombre: " + name + ", nacionalidad: " + nationality;
+        } else {
+            print = "[Artista] = id: " + id + ", nombre: " + name + ", nacionalidad: " + nationality + " | " + disc;
+        }
+
+        return print;
     }
 }

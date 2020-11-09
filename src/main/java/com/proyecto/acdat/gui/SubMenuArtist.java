@@ -121,20 +121,22 @@ public class SubMenuArtist {
                     if (artists == null) {
                         Utilities.P("No hay ningún artista creado");
                     } else {
-                        for(int i = 0; i < artists.size(); i++){
-                            for(int x = 0; x < discs.size(); x++){
-                                if(x==0){
-                                    aux.clear();
-                                }
-                                if(artists.get(i).getId() == discs.get(x).getArtist().getId()){
-                                    aux.add(discs.get(i));
-                                    if(discs.size()-x == 1){
-                                        artists.get(i).setDisc(aux);
+                        if(!discs.isEmpty()){
+                            //ME FALTA VINCULAR ARTISTAS CON SU DISCO XD
+                            for(int i = 0; i < artists.size(); i++){
+                                for(int x = 0; x < discs.size(); x++){
+                                    if(x==0){
+                                        aux.clear();
+                                    }
+                                    if(artists.get(i).getId() == discs.get(x).getArtist().getId()){
+                                        aux.add(discs.get(i));
+                                        if(discs.size()-x == 1){
+                                            artists.get(i).setDisc(aux);
+                                        }
                                     }
                                 }
                             }
                         }
-
                     }
                     break;
                 case 2:
@@ -145,11 +147,8 @@ public class SubMenuArtist {
                         artist.setDisc(discs);
                     }
                     artist.setDisc(discs);
-                    if(artist == null){
-                        Utilities.P("No hay ningún artista con ese nombre");
-                    } else {
-                        Utilities.P(artist.toString());
-                    }
+                    Utilities.P(artist.toString());
+
                     break;
                 case 3:
                     String nationality = Utilities.getString("Introduce la nacionalidad");
@@ -159,6 +158,8 @@ public class SubMenuArtist {
                     if (artists == null) {
                         Utilities.P("No hay ningún artista con esa nacionalidad");
                     } else {
+
+                        //FALTA VINCULAR ARTISTA CON SU DISCO
                         for(int i = 0; i < artists.size(); i++){
                             for(int x = 0; x < discs.size(); x++){
                                 if(x==0){

@@ -1,5 +1,6 @@
 package com.proyecto.acdat.model;
 
+import java.sql.Array;
 import java.sql.Blob;
 import java.sql.Date;
 import java.util.Arrays;
@@ -27,17 +28,29 @@ public class Disc {
         this.date = date;
     }
 
-    public Date getDate() { return date; }
+    public Date getDate() {
+        return date;
+    }
 
-    public void setDate(Date date) { this.date = date; }
+    public void setDate(Date date) {
+        this.date = date;
+    }
 
-    public String getPhoto() { return photo; }
+    public String getPhoto() {
+        return photo;
+    }
 
-    public void setPhoto(String photo) { this.photo = photo; }
+    public void setPhoto(String photo) {
+        this.photo = photo;
+    }
 
-    public Artist getArtist() { return artist; }
+    public Artist getArtist() {
+        return artist;
+    }
 
-    public void setArtist(Artist artist) { this.artist = artist; }
+    public void setArtist(Artist artist) {
+        this.artist = artist;
+    }
 
     public int getId() {
         return id;
@@ -65,13 +78,12 @@ public class Disc {
 
     @Override
     public String toString() {
-        return "Disc{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", photo='" + photo + '\'' +
-                ", songs=" + Arrays.toString(songs) +
-                ", artist=" + artist +
-                ", date=" + date +
-                '}';
+        String print;
+        if(songs == null && artist == null ){
+            print = "[Disco] = id: " + id + ", nombre: " + name + ", fecha: " + date;
+        } else {
+            print = "[Disco] = id: " + id + ", nombre: " + name + ", fecha: " + date + " | " + artist + " | " + Arrays.toString(songs);
+        }
+        return print;
     }
 }

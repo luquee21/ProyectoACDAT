@@ -60,7 +60,7 @@ public class SubMenuDisc {
             Utilities.P("1) Listar todos los discos antes de borrar");
             Utilities.P("2) Borrar disco");
             Utilities.P("3) Volver atrás");
-
+            option=Utilities.getInt();
             switch (option) {
                 case 1:
                     List<Disc> discs = MyInstance.getInstance().selectAllDisc();
@@ -105,6 +105,8 @@ public class SubMenuDisc {
             Utilities.P("3) Listar discos por artista");
             Utilities.P("4) Volver atrás");
             Utilities.P("------------------------");
+            option=Utilities.getInt();
+
             switch (option) {
                 case 1:
                     discs = MyInstance.getInstance().selectAllDisc();

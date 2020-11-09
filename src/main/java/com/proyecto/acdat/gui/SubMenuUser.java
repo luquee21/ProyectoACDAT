@@ -75,7 +75,7 @@ public class SubMenuUser {
         switch (option){
             case 1:
                 users = MyInstance.getInstance().selectAllUser();
-                if(users==null){
+                if(users.isEmpty()){
                     Utilities.P("No hay ningún usuario creado");
                 } else {
                     for(User u: users){

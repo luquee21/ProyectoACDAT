@@ -66,7 +66,7 @@ public class ArtistDAO extends Artist {
             ResultSet s = ps.executeQuery();
 
             while (s.next()) {
-                artist = new Artist(s.getString("nombre"), s.getString("nacionalidad"), s.getString("foto"));
+                artist = new Artist(s.getInt("id"),s.getString("nombre"), s.getString("nacionalidad"), s.getString("foto"));
                 aux.add(artist);
             }
 
@@ -84,7 +84,7 @@ public class ArtistDAO extends Artist {
                 ps.setString(1,name);
                 ResultSet s = ps.executeQuery();
                 while(s.next()){
-                    artist = new Artist(s.getString("nombre"),s.getString("nacionalidad"),s.getString("foto"));
+                    artist = new Artist(s.getInt("id"),s.getString("nombre"),s.getString("nacionalidad"),s.getString("foto"));
                 }
 
             } catch (SQLException ex) {
@@ -104,7 +104,7 @@ public class ArtistDAO extends Artist {
             ResultSet s = ps.executeQuery();
 
             while (s.next()) {
-                artist = new Artist(s.getString("nombre"), s.getString("nacionalidad"), s.getString("foto"));
+                artist = new Artist(s.getInt("id"),s.getString("nombre"), s.getString("nacionalidad"), s.getString("foto"));
                 aux.add(artist);
             }
 
