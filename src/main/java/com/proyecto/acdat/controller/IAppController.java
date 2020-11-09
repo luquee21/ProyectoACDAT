@@ -35,7 +35,7 @@ public interface IAppController {
      boolean updatePlayList(PlayList playList);
      List<PlayList> selectAllPlayList();
      List<PlayList> selectPlayListByName(String name);
-     List<PlayList> selectPlayListByUserName(String username);
+     List<PlayList> selectPlayListByUserName(User user);
 
      //Song
      boolean addSong(Song song);
@@ -43,7 +43,8 @@ public interface IAppController {
      boolean updateSong(Song song);
      List<Song> selectAllSong();
      List<Song> selectSongByName(String name);
-     List<Song> selectAllSongByDisc(String disc_name);
+     List<Song> selectAllSongOfArtist(String name);
+     List<Song> selectAllSongByDisc(int id);
 
      //User
      boolean addUser(User user);

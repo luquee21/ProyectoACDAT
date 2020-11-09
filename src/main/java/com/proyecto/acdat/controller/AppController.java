@@ -9,94 +9,63 @@ public class AppController implements IAppController {
 
     @Override
     public boolean addArtist(Artist artist) {
-        boolean result = false;
-        if (ArtistDAO.addArtist(artist)) {
-            result = true;
-        }
-        return result;
+        return ArtistDAO.addArtist(artist);
     }
 
     @Override
     public boolean deleteArtist(String name) {
-        boolean result = false;
-        if (ArtistDAO.deleteArtist(name)) {
-            result = true;
-        }
-        return result;
-
+        return ArtistDAO.deleteArtist(name);
     }
 
     @Override
     public boolean updateArtist(Artist artist) {
-        boolean result = false;
-        if(ArtistDAO.updateArtist(artist)){
-            result = true;
-        }
-        return result;
+        return ArtistDAO.updateArtist(artist);
     }
 
     @Override
     public List<Artist> selectAllArtist() {
-        List<Artist> artists = ArtistDAO.selectAll();
-        return artists;
+        return ArtistDAO.selectAll();
     }
 
     @Override
     public Artist selectArtistByName(String name) {
-        Artist artist = ArtistDAO.selectByName(name);
-        return artist;
+        return ArtistDAO.selectByName(name);
     }
 
 
     @Override
     public List<Artist> selectArtistByNationality(String nationality) {
-        List<Artist> artists = ArtistDAO.selectByNationality(nationality);
-        return artists;
+        return ArtistDAO.selectByNationality(nationality);
     }
 
     @Override
     public boolean addDisc(Disc disc) {
-        boolean result = false;
-        if (DiscDAO.addDisc(disc)) {
-            result = true;
-        }
-        return result;
+        return DiscDAO.addDisc(disc);
     }
 
     @Override
     public boolean deleteDisc(int id) {
-        boolean result = false;
-        if (DiscDAO.deleteDisc(id)) {
-            result = true;
-        }
-        return result;
+        return DiscDAO.deleteDisc(id);
     }
 
     @Override
     public boolean updateDisc(Disc disc) {
-        boolean result = false;
-        if(DiscDAO.updateArtist(disc)){
-            result = true;
-        }
-        return result;
+       return DiscDAO.updateDisc(disc);
     }
 
     @Override
     public List<Disc> selectAllDisc() {
-        List<Disc> discs = DiscDAO.selectAll();
-        return discs;
+        return DiscDAO.selectAll();
     }
 
     @Override
     public List<Disc> selectDiscByName(String name) {
-        List<Disc> discs = DiscDAO.selectByName(name);
-        return discs;
+        return DiscDAO.selectByName(name);
     }
 
     @Override
     public List<Disc> selectDiscByArtist(Artist artist) {
-        List<Disc> discs = DiscDAO.selectByArtist(artist);
-        return discs;
+        return DiscDAO.selectByArtist(artist);
     }
 
     @Override
@@ -136,57 +105,57 @@ public class AppController implements IAppController {
 
     @Override
     public List<PlayList> selectAllPlayList() {
-        return null;
+        return PlayListDAO.selectAll();
     }
 
     @Override
     public List<PlayList> selectPlayListByName(String name) {
-        return null;
+        return PlayListDAO.selectPlayListByName(name);
     }
 
     @Override
-    public List<PlayList> selectPlayListByUserName(String username) {
-        return null;
+    public List<PlayList> selectPlayListByUserName(User user) {
+        return PlayListDAO.selectPlayListByUserName(user);
     }
 
     @Override
     public boolean addSong(Song song) {
-        return false;
+        return SongDAO.addSong(song);
     }
 
     @Override
     public boolean deleteSong(int id) {
-        return false;
+        return SongDAO.deleteSong(id);
     }
 
     @Override
     public boolean updateSong(Song song) {
-        return false;
+        return SongDAO.updateSong(song);
     }
 
     @Override
     public List<Song> selectAllSong() {
-        return null;
+        return SongDAO.selectAll();
     }
 
     @Override
     public List<Song> selectSongByName(String name) {
-        return null;
+        return SongDAO.selectByName(name);
     }
 
+    @Override
+    public List<Song> selectAllSongOfArtist(String name) {
+        return SongDAO.selectAllSongOfArtist(name);
+    }
 
     @Override
-    public List<Song> selectAllSongByDisc(String disc_name) {
-        return null;
+    public List<Song> selectAllSongByDisc(int id) {
+        return SongDAO.selectAllSongByDisc(id);
     }
 
     @Override
     public boolean addUser(User user) {
-        boolean result = false;
-        if(UserDAO.addUser(user)){
-            result = true;
-        }
-        return result;
+        return UserDAO.addUser(user);
     }
 
     @Override
@@ -196,37 +165,26 @@ public class AppController implements IAppController {
 
     @Override
     public boolean deleteUser(String email) {
-        boolean result = false;
-        if(UserDAO.deleteUser(email)){
-            result = true;
-        }
-        return result;
+        return UserDAO.deleteUser(email);
     }
 
     @Override
     public boolean updateUser(User user) {
-        boolean result = false;
-        if(UserDAO.updateUser(user)){
-            result = true;
-        }
-        return result;
+        return UserDAO.updateUser(user);
     }
 
     @Override
     public List<User> selectAllUser() {
-        List<User> users = UserDAO.selectAll();
-        return users;
+        return UserDAO.selectAll();
     }
 
     @Override
     public User selectUserByEmail(String email) {
-        User user = UserDAO.selectByEmail(email);
-        return user;
+        return UserDAO.selectByEmail(email);
     }
 
     @Override
     public List<User> selectUserByName(String name) {
-        List<User> users = UserDAO.selectByName(name);
-        return users;
+        return UserDAO.selectByName(name);
     }
 }

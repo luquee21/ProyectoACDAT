@@ -154,12 +154,25 @@ public class SubMenuArtist {
                 case 3:
                     String nationality = Utilities.getString("Introduce la nacionalidad");
                     artists = MyInstance.getInstance().selectArtistByNationality(nationality);
-                    if(artists== null){
+                    discs = MyInstance.getInstance().selectAllDisc();
+                    List<Disc> aux2 = new ArrayList<>();
+                    if (artists == null) {
                         Utilities.P("No hay ningún artista con esa nacionalidad");
                     } else {
-                        for(Artist a : artists){
-                            Utilities.P(a.toString());
+                        for(int i = 0; i < artists.size(); i++){
+                            for(int x = 0; x < discs.size(); x++){
+                                if(x==0){
+                                    aux2.clear();
+                                }
+                                if(artists.get(i).getId() == discs.get(x).getArtist().getId()){
+                                    aux2.add(discs.get(i));
+                                    if(discs.size()-x == 1){
+                                        artists.get(i).setDisc(aux2);
+                                    }
+                                }
+                            }
                         }
+
                     }
                     break;
                 case 4:
@@ -184,7 +197,6 @@ public class SubMenuArtist {
 
             if(oldArtist.equals(newArtist)){
                 Utilities.P("No puede ser igual");
-
             } else {
                 if(MyInstance.getInstance().updateArtist(newArtist)){
                     Utilities.P("Se ha actualizado con éxito");

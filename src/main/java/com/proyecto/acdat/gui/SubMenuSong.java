@@ -9,7 +9,7 @@ import com.proyecto.acdat.utils.Utilities;
 import java.util.List;
 
 public class SubMenuSong {
-    public static void disc() {
+    public static void song() {
         int option = 0;
         do {
             Utilities.P("---- Canción ----");
@@ -42,7 +42,7 @@ public class SubMenuSong {
         } while (option != 5);
     }
 
-    public static void addSong() {
+    private static void addSong() {
         Utilities.P("---- Añadir Canción ----");
         String name = Utilities.getString("Inserte el nombre de la canción");
         int duration = Utilities.getInt("Introduce la duración");
@@ -53,15 +53,15 @@ public class SubMenuSong {
         }
     }
 
-    public static void deleteSong() {
+    private static void deleteSong() {
         int option = 0;
-        List<Song> songs = null;
+        List<Song> songs;
         do {
             Utilities.P("---- Borrar Canción ----");
             Utilities.P("1) Listar todas las canciones antes de borrar");
             Utilities.P("2) Borrar canción");
             Utilities.P("3) Volver atrás");
-
+            option = Utilities.getInt();
             switch (option) {
                 case 1:
                     songs = MyInstance.getInstance().selectAllSong();
@@ -87,7 +87,7 @@ public class SubMenuSong {
                     }
                     break;
                 case 3:
-                    disc();
+                    song();
                     break;
                 default:
                     Utilities.P("Introduzca una opción válida");
@@ -96,24 +96,26 @@ public class SubMenuSong {
         } while (option != 3);
     }
 
-    public static void listSong() {
+    private static void listSong() {
         int option = 0;
-        List<Song> songs = null;
+        List<Song> songs;
         do {
             Utilities.P("---- Listar Canciones ----");
-            Utilities.P("1) Listar todos las canciones");
+            Utilities.P("1) Listar todas las canciones");
             Utilities.P("2) Listar canciones por nombre");
             Utilities.P("3) Listar canciones por disco");
-            Utilities.P("4) Volver atrás");
+            Utilities.P("4) Listar canciones de un artista");
+            Utilities.P("5) Volver atrás");
             Utilities.P("------------------------");
+            option = Utilities.getInt();
             switch (option) {
                 case 1:
                     songs = MyInstance.getInstance().selectAllSong();
                     if (songs == null) {
                         Utilities.P("No hay ningún disco creado");
                     } else {
-                        for (Song song : songs) {
-                            Utilities.P(song.toString());
+                        for (Song s : songs) {
+                            Utilities.P(s.toString());
                         }
                     }
                     break;
@@ -131,34 +133,47 @@ public class SubMenuSong {
                 case 3:
                     String discName = Utilities.getString("Introduce el nombre del disco");
                     List<Disc> discs = MyInstance.getInstance().selectDiscByName(discName);
-                    Disc choosenDisc = null;
-                    int id = Utilities.getInt("Por favor, inserte la id del disco deseado");
-                    for(Disc disc : discs){
-                        if(disc.getId() == id){
-                            choosenDisc = disc;
-                        }
+                    for (Disc d : discs) {
+                        Utilities.P(d.toString());
                     }
-                    if (choosenDisc == null) {
-                        Utilities.P("No hay ningún disco de ese artista");
+                    if(!discs.isEmpty()){
+                        int id = Utilities.getInt("Introduce el id del disco deseado");
+                        List<Song> aux = MyInstance.getInstance().selectAllSongByDisc(id);
+                        if(aux!=null){
+                            Artists
+                            for(Song s: aux){
+                                Utilities.P(s.toString());
+                            }
+                        }
                     } else {
-                        for (Song song : choosenDisc.getSongs()) {
-                            Utilities.P(song.toString());
-                        }
+                        Utilities.P("No hay ningun disco con ese nombre");
                     }
+
+
                     break;
                 case 4:
-                    disc();
+                    songs = MyInstance.getInstance().selectAllSongOfArtist(Utilities.getString("Introduce el nombre del artista"));
+                    if (songs == null) {
+                        Utilities.P("No hay canciones de ese artista");
+                    } else {
+                        for (Song s : songs) {
+                            Utilities.P(s.toString());
+                        }
+                    }
+                    break;
+                case 5:
+                    song();
                     break;
             }
-        } while (option != 4);
+        } while (option != 5);
     }
 
-    public static void updateSong(){
+    private static void updateSong() {
         Utilities.P("---- Actualizar Canción ----");
         String oldname = Utilities.getString("Introduce el nombre de la canción: ");
         List<Song> songs = MyInstance.getInstance().selectSongByName(oldname);
         Song oldSong = null;
-        if(songs == null){
+        if (songs == null) {
             Utilities.P("No hay ningún disco con ese nombre");
         } else {
             for (Song song : songs) {
@@ -166,23 +181,23 @@ public class SubMenuSong {
             }
         }
         int id = Utilities.getInt("Por favor, inserte el id de la canción que desea modificar: ");
-        for(Song song : songs){
-            if(song.getId() == id){
+        for (Song song : songs) {
+            if (song.getId() == id) {
                 oldSong = song;
             }
         }
-        if(oldSong == null){
+        if (oldSong == null) {
             Utilities.P("No hay ninguna canción con ese id");
         } else {
             String name = Utilities.getString("Introduce el nuevo nombre de la canción: ");
             int duration = Utilities.getInt("Introduce la nueva duración: ");
             Song newSong = new Song(name, duration);
 
-            if(oldSong.equals(newSong)){
+            if (oldSong.equals(newSong)) {
                 Utilities.P("No puede ser igual");
 
             } else {
-                if(MyInstance.getInstance().updateSong(newSong)){
+                if (MyInstance.getInstance().updateSong(newSong)) {
                     Utilities.P("Se ha actualizado con éxito");
                 } else {
                     Utilities.P("No se ha podido actualizar");

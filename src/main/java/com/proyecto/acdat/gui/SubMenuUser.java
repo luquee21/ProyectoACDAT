@@ -1,7 +1,6 @@
 package com.proyecto.acdat.gui;
 
 import com.proyecto.acdat.instance.MyInstance;
-import com.proyecto.acdat.model.Artist;
 import com.proyecto.acdat.model.User;
 import com.proyecto.acdat.utils.Utilities;
 

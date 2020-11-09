@@ -1,6 +1,5 @@
 package com.proyecto.acdat.gui;
 
-import com.proyecto.acdat.instance.MyInstance;
 import com.proyecto.acdat.utils.Utilities;
 
 public class Menu {
@@ -27,6 +26,7 @@ public class Menu {
                 case 3:
                     break;
                 case 4:
+                    SubMenuSong.song();
                     break;
                 case 5:
                     SubMenuUser.user();

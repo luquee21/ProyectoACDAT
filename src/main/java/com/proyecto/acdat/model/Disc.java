@@ -20,10 +20,10 @@ public class Disc {
         this.photo = photo;
     }
 
-    public Disc(String name, String photo, Date date) {
+    public Disc(int id, String name, String photo, Date date) {
+        this.id = id;
         this.name = name;
         this.photo = photo;
-        this.artist = artist;
         this.date = date;
     }
 

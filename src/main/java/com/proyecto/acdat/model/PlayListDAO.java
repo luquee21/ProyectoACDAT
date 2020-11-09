@@ -97,8 +97,9 @@ public class PlayListDAO extends PlayList {
         return aux;
     }
 
-    public static PlayList selectPlayListByName(String name){
+    public static List<PlayList> selectPlayListByName(String name){
         PlayList playList = null;
+        List<PlayList> aux = new ArrayList<>();
         try {
             java.sql.Connection conn = ConnectionUtils.getConnection();
             PreparedStatement ps = conn.prepareStatement(SELECTBYNAME);
@@ -106,13 +107,14 @@ public class PlayListDAO extends PlayList {
             ResultSet s = ps.executeQuery();
             while(s.next()){
                 playList = new PlayList(s.getInt("id"),s.getString("name"),s.getString("description"));
+                aux.add(playList);
             }
 
         } catch (SQLException ex) {
 
         }
 
-        return playList;
+        return aux;
     }
 
     public static List<PlayList> selectPlayListByUserName(User user) {

@@ -57,7 +57,7 @@ public class DiscDAO extends Disc {
             ResultSet s = ps.executeQuery();
 
             while (s.next()) {
-                disc = new Disc( s.getString("nombre"), s.getString("foto"),s.getDate("fecha_prod"));
+                disc = new Disc(s.getInt("id"),s.getString("nombre"), s.getString("foto"),s.getDate("fecha_prod"));
                 aux.add(disc);
             }
 
@@ -68,15 +68,15 @@ public class DiscDAO extends Disc {
     }
 
     public static List<Disc> selectByName(String name) {
-        List<Disc> discs = null;
-        Disc disc = null;
+        List<Disc> discs = new ArrayList<>();
+        Disc disc;
         try {
             java.sql.Connection conn = ConnectionUtils.getConnection();
             PreparedStatement ps = conn.prepareStatement(SELECTBYNAME);
             ps.setString(1, name);
             ResultSet s = ps.executeQuery();
             while (s.next()) {
-                disc = new Disc(s.getString("nombre"), s.getString("foto"));
+                disc = new Disc(s.getInt("id"),s.getString("nombre"), s.getString("foto"),s.getDate("fecha_prod"));
                 discs.add(disc);
             }
 
@@ -97,7 +97,7 @@ public class DiscDAO extends Disc {
             ResultSet s = ps.executeQuery();
 
             while (s.next()) {
-                disc = new Disc(s.getString("nombre"), s.getString("nacionalidad"));
+                disc = new Disc(s.getInt("id"),s.getString("nombre"), s.getString("foto"),s.getDate("fecha_prod"));
                 aux.add(disc);
             }
 
@@ -144,7 +144,7 @@ public class DiscDAO extends Disc {
         return result;
     }
 
-    public static boolean updateArtist(Disc disc) {
+    public static boolean updateDisc(Disc disc) {
         boolean result = false;
         try {
             java.sql.Connection conn = ConnectionUtils.getConnection();
