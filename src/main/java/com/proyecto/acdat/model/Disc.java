@@ -40,9 +40,7 @@ public class Disc {
         return photo;
     }
 
-    public void setPhoto(String photo) {
-        this.photo = photo;
-    }
+    public void setPhoto(String photo) { this.photo = photo; }
 
     public Artist getArtist() {
         return artist;

@@ -16,6 +16,9 @@ public class PlayListDAO extends PlayList {
     private static final String INSERTPLAYLIST = "INSERT INTO Lista (nombre,descripcion,id_usuario) VALUES(?,?,?,?)";
     private static final String DELETEPLAYLIST = "DELETE FROM Lista WHERE id=?";
     private static final String UPDATEPLAYLIST = "UPDATE Lista SET nombre=?, descripcion=?, id_usuario=? WHERE id=?";
+    private static final String INSERTSUB = "INSERT INTO Suscripcion (id_usuario, id_lista) values(?,?)";
+    private static final String DELETESUB = "DELETE FROM Suscripcion WHERE id_usuario=?";
+
 
     public PlayListDAO(int id, String name, String description) {
         super(id, name, description);
@@ -196,6 +199,26 @@ public class PlayListDAO extends PlayList {
 
         return result;
     }
+
+    boolean addSubToPlayList(User user, int id){
+        boolean result=false;
+        try {
+            java.sql.Connection conn = ConnectionUtils.getConnection();
+            PreparedStatement ps = conn.prepareStatement(INSERTSUB);
+            ps.setInt(1, user.getId());
+            ps.setInt(2, id);
+            int rs = ps.executeUpdate();
+            if(rs > 0){
+                result = true;
+            }
+
+        } catch (SQLException ex) {
+        }
+
+        return result;
+    }
+
+
 
 
 }
