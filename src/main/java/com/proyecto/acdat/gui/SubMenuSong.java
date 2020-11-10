@@ -155,8 +155,8 @@ public class SubMenuSong {
                 case 2:
                     String name = Utilities.getString("Introduce el nombre de la canción");
                     songs = MyInstance.getInstance().selectSongByName(name);
-                    if (songs == null) {
-                        Utilities.P("No hay ningún disco con ese nombre");
+                    if (songs.isEmpty()) {
+                        Utilities.P("No hay ninguna canción con ese nombre");
                     } else {
                         for (Song song : songs) {
                             Utilities.P(song.toString());
@@ -186,7 +186,7 @@ public class SubMenuSong {
                     break;
                 case 4:
                     songs = MyInstance.getInstance().selectAllSongOfArtist(Utilities.getString("Introduce el nombre del artista"));
-                    if (songs == null) {
+                    if (songs.isEmpty()) {
                         Utilities.P("No hay canciones de ese artista");
                     } else {
                         for (Song s : songs) {
@@ -206,25 +206,23 @@ public class SubMenuSong {
         String oldname = Utilities.getString("Introduce el nombre de la canción: ");
         List<Song> songs = MyInstance.getInstance().selectSongByName(oldname);
         Song oldSong = null;
-        if (songs == null) {
-            Utilities.P("No hay ningún disco con ese nombre");
+        if (songs.isEmpty()) {
+            Utilities.P("No hay ninguna cancion con ese nombre");
         } else {
             for (Song song : songs) {
                 Utilities.P(song.toString());
             }
-        }
-        int id = Utilities.getInt("Por favor, inserte el id de la canción que desea modificar: ");
-        for (Song song : songs) {
-            if (song.getId() == id) {
-                oldSong = song;
+            int id = Utilities.getInt("Por favor, inserte el id de la canción que desea modificar: ");
+            for (Song song : songs) {
+                if (song.getId() == id) {
+                    oldSong = song;
+                }else{
+                    Utilities.P("No hay ninguna canción con ese id");
+                }
             }
-        }
-        if (oldSong == null) {
-            Utilities.P("No hay ninguna canción con ese id");
-        } else {
             String name = Utilities.getString("Introduce el nuevo nombre de la canción: ");
-            int duration = Utilities.getInt("Introduce la nueva duración: ");
-            Song newSong = new Song(name, duration);
+            int duration = Utilities.getInt("Introduce la nueva duracion: ");
+            Song newSong = new Song(id, name,duration);
 
             if (oldSong.equals(newSong)) {
                 Utilities.P("No puede ser igual");
@@ -236,7 +234,6 @@ public class SubMenuSong {
                     Utilities.P("No se ha podido actualizar");
                 }
             }
-
         }
     }
 }

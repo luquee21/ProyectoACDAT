@@ -6,8 +6,20 @@ public class Song {
     private int duration;
     private Disc disc;
     private Artist artist;
+    private int id_disc;
 
-    public Song() {
+    public int getId_disc() {
+        return id_disc;
+    }
+
+    public void setId_disc(int id_disc) {
+        this.id_disc = id_disc;
+    }
+
+    public Song(int id, String name, int duration) {
+        this.id = id;
+        this.name = name;
+        this.duration = duration;
     }
 
     public Song(String name, int duration) {
@@ -17,14 +29,14 @@ public class Song {
     public Song(String name, int duration, int id_disc) {
         this.name = name;
         this.duration = duration;
-        this.disc.setId(id_disc);
+        this.id_disc= id_disc;
     }
 
     public Song(int id, String name, int duration, int id_disco) {
         this.id = id;
         this.name = name;
         this.duration = duration;
-        this.disc.setId(id_disco);
+        this.id_disc= id_disc;
     }
 
 

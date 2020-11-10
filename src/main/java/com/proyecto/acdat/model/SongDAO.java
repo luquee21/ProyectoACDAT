@@ -18,6 +18,49 @@ public class SongDAO extends Song {
     private static final String DELETEALLSONGOFDISC = "DELETE FROM Cancion WHERE id_disco=?";
     private static final String UPDATESONG = "UPDATE Cancion SET nombre=?, duracion=? WHERE id=?";
 
+    public SongDAO(int id, String name, int duration) {
+        super(id, name, duration);
+    }
+
+    @Override
+    public int getId() {
+        return super.getId();
+    }
+
+    @Override
+    public void setId(int id) {
+        super.setId(id);
+    }
+
+    @Override
+    public String getName() {
+        return super.getName();
+    }
+
+    @Override
+    public void setName(String name) {
+        super.setName(name);
+    }
+
+    @Override
+    public int getDuration() {
+        return super.getDuration();
+    }
+
+    @Override
+    public void setDuration(int duration) {
+        super.setDuration(duration);
+    }
+
+    @Override
+    public Disc getDisc() {
+        return super.getDisc();
+    }
+
+    @Override
+    public void setDisc(Disc disc) {
+        super.setDisc(disc);
+    }
 
     public static List<Song> selectAll() {
         List<Song> aux = new ArrayList<>();
@@ -118,7 +161,7 @@ public class SongDAO extends Song {
             PreparedStatement ps = conn.prepareStatement(INSERTSONG);
             ps.setString(1, song.getName());
             ps.setInt(2, song.getDuration());
-            ps.setInt(3, song.getDisc().getId());
+            ps.setInt(3, song.getId_disc());
             int rs = ps.executeUpdate();
             if (rs > 0) {
                 result = true;
