@@ -9,9 +9,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PlayListDAO extends PlayList {
+
     private static final String SELECTALL = "SELECT * FROM Lista";
     private static final String SELECTBYNAME = "SELECT * FROM Lista WHERE nombre=?";
     private static final String SELECTBYUSERNAME = "SELECT * FROM Lista WHERE id_usuario=?";
+    private static final String INSERTPLAYLIST = "INSERT INTO Lista (nombre,descripcion,id_usuario) VALUES(?,?,?,?)";
+    private static final String DELETEPLAYLIST = "DELETE FROM Lista WHERE id=?";
+    private static final String UPDATEPLAYLIST = "UPDATE Lista SET nombre=?, descripcion=?, id_usuario=? WHERE id=?";
 
     public PlayListDAO(int id, String name, String description) {
         super(id, name, description);
@@ -136,4 +140,62 @@ public class PlayListDAO extends PlayList {
         }
         return aux;
     }
+
+    public static boolean addPlayList(PlayList playList){
+        boolean result = false;
+        try {
+            java.sql.Connection conn = ConnectionUtils.getConnection();
+            PreparedStatement ps = conn.prepareStatement(INSERTPLAYLIST);
+            ps.setString(1,playList.name);
+            ps.setString(2,playList.description);
+            ps.setInt(3,playList.creator.getId());
+            int rs = ps.executeUpdate();
+            if(rs > 0){
+                result = true;
+            }
+
+        } catch (SQLException ex) {
+        }
+
+        return result;
+    }
+
+    public static boolean deletePlayList(int id){
+        boolean result = false;
+        try {
+            java.sql.Connection conn = ConnectionUtils.getConnection();
+            PreparedStatement ps = conn.prepareStatement(DELETEPLAYLIST);
+            ps.setInt(1,id);
+            int rs = ps.executeUpdate();
+            if(rs > 0){
+                result = true;
+            }
+
+        } catch (SQLException ex) {
+        }
+
+        return result;
+    }
+
+    public static boolean updatePlayList(PlayList playList){
+        boolean result = false;
+        try {
+            java.sql.Connection conn = ConnectionUtils.getConnection();
+            PreparedStatement ps = conn.prepareStatement(UPDATEPLAYLIST);
+
+            ps.setString(1,playList.getName());
+            ps.setString(2,playList.description);
+            ps.setInt(3,playList.creator.getId());
+            int rs = ps.executeUpdate();
+            if(rs > 0){
+                result = true;
+            }
+
+        } catch (SQLException ex) {
+        }
+
+        return result;
+    }
+
+
 }
