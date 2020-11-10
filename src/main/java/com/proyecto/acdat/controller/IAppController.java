@@ -20,6 +20,7 @@ public interface IAppController {
      //Disc
      boolean addDisc(Disc disc);
      boolean deleteDisc(int id);
+     boolean deleteAllDiscOfArtist(int id);
      boolean updateDisc(Disc disc);
      List<Disc> selectAllDisc();
      List<Disc> selectDiscByName(String name);

@@ -59,8 +59,8 @@ public class SubMenuDisc {
             Utilities.P("---- Borrar Disco ----");
             Utilities.P("1) Listar todos los discos antes de borrar");
             Utilities.P("2) Borrar disco");
-            Utilities.P("3) Volver atrás");
-            Utilities.P("----------------------");
+            Utilities.P("3) Borrar todos los discos de un artista");
+            Utilities.P("4) Volver atrás");
             option=Utilities.getInt();
             switch (option) {
                 case 1:
@@ -87,6 +87,18 @@ public class SubMenuDisc {
                     }
                     break;
                 case 3:
+                    String artistName = Utilities.getString("Introduce el nombre del artista para borrar todos sus discos");
+                    Artist artist = MyInstance.getInstance().selectArtistByName(artistName);
+                    if(artist==null){
+                        Utilities.P("El artista introducido no existe, compruebe el nombre");
+                    }else{
+                        if(MyInstance.getInstance().deleteAllDiscOfArtist(artist.getId())){
+                            Utilities.P("Discos borrados con exito");
+                        }else{
+                            Utilities.P("No se han podido borrar los discos");
+                        }
+                    }
+                case 4:
                     disc();
                     break;
                 default:
@@ -98,7 +110,7 @@ public class SubMenuDisc {
 
     public static void listDisc() {
         int option = 0;
-        List<Disc> discs;
+        List<Disc> discs = null;
         do {
             Utilities.P("---- Listar Discos ----");
             Utilities.P("1) Listar todos los discos");
@@ -133,7 +145,7 @@ public class SubMenuDisc {
                 case 3:
                     String artistName = Utilities.getString("Introduce el nombre del artista");
                     Artist artist = MyInstance.getInstance().selectArtistByName(artistName);
-                    discs = MyInstance.getInstance().selectDiscByArtist(artist.getId());
+                    discs = (List<Disc>) MyInstance.getInstance().selectDiscByArtist(artist);
                     if(discs== null){
                         Utilities.P("No hay ningún disco de ese artista");
                     } else {

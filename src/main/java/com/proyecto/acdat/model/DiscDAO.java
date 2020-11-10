@@ -16,6 +16,7 @@ public class DiscDAO extends Disc {
     private static final String INSERTDISC = "INSERT INTO Disco (nombre, foto, id_artista, fecha_prod) VALUES (?, ?, ?, ?)";
     private static final String UPDATEDISC = "UPDATE Disco set nombre=?, foto=?, id_Artista=?, fecha_prod=?";
     private static final String DELETEDISC = "DELETE from Disco where id=?";
+    private static final String DELETEALLDISC = "DELETE from Disco where id_artista=?";
 
 
     @Override
@@ -144,6 +145,23 @@ public class DiscDAO extends Disc {
         return result;
     }
 
+    public static boolean deleteAllDiscOfArtist(int id) {
+        boolean result = false;
+        try {
+            java.sql.Connection conn = ConnectionUtils.getConnection();
+            PreparedStatement ps = conn.prepareStatement(DELETEALLDISC);
+            ps.setInt(1, id);
+            int rs = ps.executeUpdate();
+            if (rs > 0) {
+                result = true;
+            }
+
+        } catch (SQLException ex) {
+        }
+
+        return result;
+    }
+
     public static boolean updateDisc(Disc disc) {
         boolean result = false;
         try {
@@ -164,4 +182,5 @@ public class DiscDAO extends Disc {
 
         return result;
     }
+
 }
