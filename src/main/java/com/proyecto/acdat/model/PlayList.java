@@ -64,4 +64,20 @@ public class PlayList {
         PlayList playList = (PlayList) o;
         return id == playList.id;
     }
+
+    @Override
+    public String toString() {
+        String print;
+
+        if (songs == null && subscribers == null) {
+            print = "[PlayList] = id: " + id + ", nombre: " + name + ", descripcion: " + " | " + creator;
+        } else if (songs == null && subscribers != null) {
+            print = "[PlayList] = id: " + id + ", nombre: " + name + ", descripcion: " + " | " + creator + " | " + subscribers;
+        } else if (songs != null && subscribers == null) {
+            print = "[PlayList] = id: " + id + ", nombre: " + name + ", descripcion: " + " | " + creator + " | " + songs;
+        } else {
+            print = "[PlayList] = id: " + id + ", nombre: " + name + ", descripcion: " + " | " + creator + " | " + subscribers + " | " + songs;
+        }
+        return print;
+    }
 }
