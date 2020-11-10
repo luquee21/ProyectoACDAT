@@ -49,6 +49,9 @@ public class AppController implements IAppController {
     }
 
     @Override
+    public boolean deleteAllDiscOfArtist(int id) { return DiscDAO.deleteAllDiscOfArtist(id); }
+
+    @Override
     public boolean updateDisc(Disc disc) {
        return DiscDAO.updateDisc(disc);
     }
