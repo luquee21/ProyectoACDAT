@@ -77,4 +77,10 @@ public class User {
         return print;
 
     }
+
+    @Override
+    public boolean equals(Object o) {
+        User user = (User) o;
+        return id == user.id && email.equals(user.getEmail()) && photo.equals(user.getPhoto());
+    }
 }

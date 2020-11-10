@@ -1,5 +1,6 @@
 package com.proyecto.acdat.model;
 import java.util.List;
+import java.util.Objects;
 
 public class Artist {
     private int id;
@@ -74,5 +75,11 @@ public class Artist {
         }
 
         return print;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        Artist artist = (Artist) o;
+        return name.equals(artist.getName()) && nationality.equals(artist.getNationality()) && photo.equals(artist.getPhoto());
     }
 }

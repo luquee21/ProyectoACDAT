@@ -97,7 +97,7 @@ public class SubMenuArtist {
                     artist();
                     break;
                 default:
-                    Utilities.P("Introduzca una opción válida");
+                    Utilities.P("Por favor, introduce una opción válida");
                     break;
             }
         } while (option != 3);
@@ -187,6 +187,9 @@ public class SubMenuArtist {
                     break;
                 case 4:
                     artist();
+                    break;
+                default:
+                    Utilities.P("Por favor, introduce una opción válida");
                     break;
             }
         } while (option != 3);

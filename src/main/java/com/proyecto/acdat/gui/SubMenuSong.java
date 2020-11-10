@@ -123,7 +123,7 @@ public class SubMenuSong {
                     song();
                     break;
                 default:
-                    Utilities.P("Introduzca una opción válida");
+                    Utilities.P("Por favor, introduce una opción válida");
                     break;
             }
         } while (option != 4);
@@ -181,8 +181,6 @@ public class SubMenuSong {
                     } else {
                         Utilities.P("No hay ningun disco con ese nombre");
                     }
-
-
                     break;
                 case 4:
                     songs = MyInstance.getInstance().selectAllSongOfArtist(Utilities.getString("Introduce el nombre del artista"));
@@ -196,6 +194,9 @@ public class SubMenuSong {
                     break;
                 case 5:
                     song();
+                    break;
+                default:
+                    Utilities.P("Por favor, introduce una opción válida");
                     break;
             }
         } while (option != 5);

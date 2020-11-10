@@ -8,7 +8,7 @@ public class PlayList {
     User[] subscribers;
     User creator;
 
-    public PlayList(int id, String name, String description) {
+    public PlayList(int id,String name,String description) {
     }
 
     public int getId() {
@@ -60,18 +60,8 @@ public class PlayList {
     }
 
     @Override
-    public String toString() {
-        String print;
-
-        if (songs == null && subscribers == null) {
-            print = "[PlayList] = id: " + id + ", nombre: " + name + ", descripcion: " + " | " + creator;
-        } else if (songs == null && subscribers != null) {
-            print = "[PlayList] = id: " + id + ", nombre: " + name + ", descripcion: " + " | " + creator + " | " + subscribers;
-        } else if (songs != null && subscribers == null) {
-            print = "[PlayList] = id: " + id + ", nombre: " + name + ", descripcion: " + " | " + creator + " | " + songs;
-        } else {
-            print = "[PlayList] = id: " + id + ", nombre: " + name + ", descripcion: " + " | " + creator + " | " + subscribers + " | " + songs;
-        }
-        return print;
+    public boolean equals(Object o) {
+        PlayList playList = (PlayList) o;
+        return id == playList.id;
     }
 }
