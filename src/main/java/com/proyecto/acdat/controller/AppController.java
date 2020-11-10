@@ -122,9 +122,7 @@ public class AppController implements IAppController {
     }
 
     @Override
-    public List<PlayList> selectPlayListByUserName(User user) {
-        return PlayListDAO.selectPlayListByUserName(user);
-    }
+    public List<PlayList> selectPlayListByEmail(User user) { return PlayListDAO.selectPlayListByEmail(user); }
 
     @Override
     public boolean addSong(Song song) {

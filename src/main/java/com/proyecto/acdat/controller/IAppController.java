@@ -37,7 +37,7 @@ public interface IAppController {
      boolean updatePlayList(PlayList playList);
      List<PlayList> selectAllPlayList();
      List<PlayList> selectPlayListByName(String name);
-     List<PlayList> selectPlayListByUserName(User user);
+     List<PlayList> selectPlayListByEmail(User user);
 
      //Song
      boolean addSong(Song song);

@@ -12,7 +12,7 @@ public class PlayListDAO extends PlayList {
 
     private static final String SELECTALL = "SELECT * FROM Lista";
     private static final String SELECTBYNAME = "SELECT * FROM Lista WHERE nombre=?";
-    private static final String SELECTBYUSERNAME = "SELECT * FROM Lista WHERE id_usuario=?";
+    private static final String SELECTBYEMAIL = "SELECT * FROM Lista WHERE id_usuario=?";
     private static final String INSERTPLAYLIST = "INSERT INTO Lista (nombre,descripcion,id_usuario) VALUES(?,?,?,?)";
     private static final String DELETEPLAYLIST = "DELETE FROM Lista WHERE id=?";
     private static final String UPDATEPLAYLIST = "UPDATE Lista SET nombre=?, descripcion=?, id_usuario=? WHERE id=?";
@@ -126,12 +126,12 @@ public class PlayListDAO extends PlayList {
         return aux;
     }
 
-    public static List<PlayList> selectPlayListByUserName(User user) {
+    public static List<PlayList> selectPlayListByEmail(User user) {
         List<PlayList> aux = new ArrayList<>();
         PlayList playList;
         try {
             java.sql.Connection conn = ConnectionUtils.getConnection();
-            PreparedStatement ps = conn.prepareStatement(SELECTBYUSERNAME);
+            PreparedStatement ps = conn.prepareStatement(SELECTBYEMAIL);
             ps.setInt(1, user.getId());
             ResultSet s = ps.executeQuery();
 

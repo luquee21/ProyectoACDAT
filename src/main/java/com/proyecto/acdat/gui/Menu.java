@@ -24,6 +24,7 @@ public class Menu {
                     SubMenuDisc.disc();
                     break;
                 case 3:
+                    SubMenuPlayList.playlist();
                     break;
                 case 4:
                     SubMenuSong.song();

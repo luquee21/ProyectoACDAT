@@ -10,6 +10,11 @@ public class PlayList {
 
     public PlayList(int id,String name,String description) {
     }
+    public PlayList(String name,String description,User creator){
+    }
+    public PlayList(String name, String description){
+
+    }
 
     public int getId() {
         return id;
