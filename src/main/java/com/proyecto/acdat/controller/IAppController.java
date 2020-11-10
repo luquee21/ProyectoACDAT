@@ -2,7 +2,6 @@ package com.proyecto.acdat.controller;
 
 import com.proyecto.acdat.model.*;
 
-import java.sql.Timestamp;
 import java.util.List;
 
 public interface IAppController {
@@ -52,9 +51,11 @@ public interface IAppController {
 
      //User
      boolean addUser(User user);
-     boolean addHistory(Song song, int id_user, Timestamp timestamp);
      boolean deleteUser(String email);
-     boolean updateUser(User user);
+
+    boolean deleteAllPlayListOfUser(int id_user);
+
+    boolean updateUser(User user);
      List<User> selectAllUser();
      User selectUserByEmail(String email);
      List<User> selectUserByName(String name);

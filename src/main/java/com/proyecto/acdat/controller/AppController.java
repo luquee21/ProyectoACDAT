@@ -2,7 +2,6 @@ package com.proyecto.acdat.controller;
 
 import com.proyecto.acdat.model.*;
 
-import java.sql.Timestamp;
 import java.util.List;
 
 public class AppController implements IAppController {
@@ -173,13 +172,13 @@ public class AppController implements IAppController {
     }
 
     @Override
-    public boolean addHistory(Song song, int id_user, Timestamp timestamp) {
-        return false;
+    public boolean deleteUser(String email) {
+        return UserDAO.deleteUser(email);
     }
 
     @Override
-    public boolean deleteUser(String email) {
-        return UserDAO.deleteUser(email);
+    public boolean deleteAllPlayListOfUser(int id_user) {
+        return UserDAO.deleteAllPlayListOfUser(id_user);
     }
 
     @Override

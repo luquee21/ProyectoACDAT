@@ -14,7 +14,8 @@ public class UserDAO extends User {
     private static final String SELECTBYEMAIL = "SELECT * FROM Usuario WHERE correo=?";
     private static final String INSERTUSER = "INSERT INTO Usuario (correo,nombre,foto) VALUES(?,?,?)";
     private static final String DELETEUSER = "DELETE FROM Usuario WHERE id=?";
-    private static final String UPDATEUSER = "UPDATE Usuario SET nombre=? WHERE id=?";
+    private static final String DELETEALLPLAYLISTOFUSER = "DELETE FROM Lista WHERE id_usuario=?";
+    private static final String UPDATEUSER = "UPDATE Usuario SET nombre=?, foto=? WHERE id=?";
 
     public static List<User> selectAll() {
         List<User> aux = new ArrayList<>();
@@ -25,7 +26,7 @@ public class UserDAO extends User {
             ResultSet s = ps.executeQuery();
 
             while (s.next()) {
-                user = new User(s.getString("nombre"), s.getString("correo"), s.getString("foto"));
+                user = new User(s.getInt("id"), s.getString("nombre"), s.getString("correo"), s.getString("foto"));
                 aux.add(user);
             }
 
@@ -34,16 +35,33 @@ public class UserDAO extends User {
         return aux;
     }
 
-    public static List<User> selectByName(String name){
+    public static boolean deleteAllPlayListOfUser(int id_user) {
+        boolean result = false;
+        try {
+            java.sql.Connection conn = ConnectionUtils.getConnection();
+            PreparedStatement ps = conn.prepareStatement(DELETEALLPLAYLISTOFUSER);
+            ps.setInt(1, id_user);
+            int rs = ps.executeUpdate();
+            if (rs > 0) {
+                result = true;
+            }
+
+        } catch (SQLException ex) {
+        }
+
+        return result;
+    }
+
+    public static List<User> selectByName(String name) {
         List<User> users = new ArrayList<>();
         User user;
         try {
             java.sql.Connection conn = ConnectionUtils.getConnection();
             PreparedStatement ps = conn.prepareStatement(SELECTBYNAME);
-            ps.setString(1,name);
+            ps.setString(1, name);
             ResultSet s = ps.executeQuery();
-            while(s.next()){
-                user = new User(s.getString("nombre"),s.getString("correo"),s.getString("foto"));
+            while (s.next()) {
+                user = new User(s.getInt("id"), s.getString("nombre"), s.getString("correo"), s.getString("foto"));
                 users.add(user);
             }
 
@@ -62,7 +80,7 @@ public class UserDAO extends User {
             ps.setString(1,email);
             ResultSet s = ps.executeQuery();
             while(s.next()){
-                user = new User(s.getString("nombre"),s.getString("correo"),s.getString("foto"));
+                user = new User(s.getInt("id"), s.getString("nombre"), s.getString("correo"), s.getString("foto"));
             }
 
         } catch (SQLException ex) {
@@ -113,11 +131,12 @@ public class UserDAO extends User {
         try {
             java.sql.Connection conn = ConnectionUtils.getConnection();
             PreparedStatement ps = conn.prepareStatement(UPDATEUSER);
-            ps.setString(1,user.getName());
-            ps.setInt(2,user.getId());
+            ps.setString(1, user.getName());
+            ps.setString(2, user.getPhoto());
+            ps.setInt(3, user.getId());
 
             int rs = ps.executeUpdate();
-            if(rs > 0){
+            if (rs > 0) {
                 result = true;
             }
 

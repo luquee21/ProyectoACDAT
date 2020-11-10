@@ -1,6 +1,7 @@
 package com.proyecto.acdat.gui;
 
 import com.proyecto.acdat.instance.MyInstance;
+import com.proyecto.acdat.model.PlayList;
 import com.proyecto.acdat.model.User;
 import com.proyecto.acdat.utils.Utilities;
 
@@ -54,17 +55,58 @@ public class SubMenuUser {
     }
 
     private static void deleteUser() {
+        int option = 0;
         Utilities.P("---- Borrar Usuario ----");
-        String email = Utilities.getString("Introduce el email del usuario que deseas borrar: ");
-        if(MyInstance.getInstance().deleteUser(email)){
-            Utilities.P("Se ha borrado el usuario con éxito");
-        } else {
-            Utilities.P("No se ha podido borrar el usuario");
+        Utilities.P("1) Listar todos los usuarios antes de borrar");
+        Utilities.P("2) Borrar usuario por email");
+        Utilities.P("3) Borrar todas las playlist de un usuario por email");
+        Utilities.P("4) Volver atrás");
+        option = Utilities.getInt();
+        switch (option) {
+            case 1:
+                List<User> users = MyInstance.getInstance().selectAllUser();
+                if (users.isEmpty()) {
+                    Utilities.P("No hay usuarios creados");
+                } else {
+                    for (User u : users) {
+                        Utilities.P(u.toString());
+                    }
+                }
+                break;
+            case 2:
+                String email = Utilities.getString("Introduce el email del usuario que deseas borrar: ");
+                if (MyInstance.getInstance().deleteUser(email)) {
+                    Utilities.P("Se ha borrado el usuario con éxito");
+                } else {
+                    Utilities.P("No se ha podido borrar el usuario");
+                }
+                break;
+            case 3:
+                String aux = Utilities.getString("Introduce el email del usuario: ");
+                User user = MyInstance.getInstance().selectUserByEmail(aux);
+                if (user == null) {
+                    Utilities.P("No hay ningun usuario con ese email");
+                } else {
+                    if (MyInstance.getInstance().deleteAllPlayListOfUser(user.getId())) {
+                        Utilities.P("Se ha borrado con éxito");
+                    } else {
+                        Utilities.P("No se ha podido borrar");
+                    }
+                }
+                break;
+            case 4:
+                user();
+                break;
+            default:
+                Utilities.P("Introduce una opción válida");
+                break;
         }
+
     }
 
     private static void listUser() {
         int option = 0;
+        List<PlayList> playLists;
         Utilities.P("---- Listar Usuario ----");
         Utilities.P("1) Listar todos los usuarios");
         Utilities.P("2) Listar usuario por nombre");
@@ -72,13 +114,19 @@ public class SubMenuUser {
         Utilities.P("4) Volver atrás");
         option = Utilities.getInt();
         List<User> users;
-        switch (option){
+        switch (option) {
             case 1:
                 users = MyInstance.getInstance().selectAllUser();
-                if(users.isEmpty()){
+                if (users.isEmpty()) {
                     Utilities.P("No hay ningún usuario creado");
                 } else {
-                    for(User u: users){
+                    for (User u : users) {
+                        playLists = MyInstance.getInstance().selectAllPlayListByEmail(u.getEmail());
+                        if (playLists != null) {
+                            u.setPlayLists(playLists);
+                        }
+                    }
+                    for (User u : users) {
                         Utilities.P(u.toString());
                     }
                 }
@@ -86,10 +134,16 @@ public class SubMenuUser {
             case 2:
                 String name = Utilities.getString("Introduce el nombre de usuario: ");
                 users = MyInstance.getInstance().selectUserByName(name);
-                if(users==null){
+                if (users.isEmpty()) {
                     Utilities.P("No hay usuarios con ese nombre");
-                }else{
-                    for(User u : users){
+                } else {
+                    for (User u : users) {
+                        playLists = MyInstance.getInstance().selectAllPlayListByEmail(u.getEmail());
+                        if (playLists != null) {
+                            u.setPlayLists(playLists);
+                        }
+                    }
+                    for (User u : users) {
                         Utilities.P(u.toString());
                     }
                 }
@@ -97,9 +151,13 @@ public class SubMenuUser {
             case 3:
                 String email = Utilities.getString("Introduce el email de usuario: ");
                 User user = MyInstance.getInstance().selectUserByEmail(email);
-                if(user==null){
+                if (user == null) {
                     Utilities.P("No hay ningún usuario con ese email");
                 } else {
+                    playLists = MyInstance.getInstance().selectAllPlayListByEmail(u.getEmail());
+                    if (!playLists.isEmpty()) {
+                        user.setPlayLists(playLists);
+                    }
                     Utilities.P(user.toString());
                 }
                 break;
@@ -117,19 +175,19 @@ public class SubMenuUser {
         String oldemail = Utilities.getString("Introduce el email del usuario: ");
         User oldUser = MyInstance.getInstance().selectUserByEmail(oldemail);
 
-        if(oldUser==null){
+        if (oldUser == null) {
             Utilities.P("No hay ningún usuario con ese email");
-        }else{
+        } else {
             String name = Utilities.getString("Introduzca el nuevo nombre de usuario: ");
             String photo = Utilities.getString("Introduzca la nueva foto de usuario: ");
-            User newUser = new User(name,oldemail,photo);
+            User newUser = new User(oldUser.getId(), name, oldemail, photo);
 
-            if(oldUser.equals(newUser)){
+            if (oldUser.equals(newUser)) {
                 Utilities.P("No puede ser igual");
-            }else {
-                if(MyInstance.getInstance().updateUser(newUser)){
+            } else {
+                if (MyInstance.getInstance().updateUser(newUser)) {
                     Utilities.P("Se ha actualizado con éxito");
-                }else{
+                } else {
                     Utilities.P("No se ha podido actualizar");
                 }
             }
