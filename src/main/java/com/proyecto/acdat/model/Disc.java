@@ -1,8 +1,6 @@
 package com.proyecto.acdat.model;
 
-import java.sql.Array;
-import java.sql.Blob;
-import java.sql.Date;
+
 import java.util.Arrays;
 
 public class Disc {
@@ -12,7 +10,7 @@ public class Disc {
     private Song[] songs;
     private int id_artista;
     private Artist artist;
-    private Date date;
+    private String date;
 
     public Disc() {
     }
@@ -22,7 +20,14 @@ public class Disc {
         this.photo = photo;
     }
 
-    public Disc(int id, String name, String photo, Date date, int id_artista) {
+    public Disc(String name, String photo, String date, int id_artista) {
+        this.name = name;
+        this.photo = photo;
+        this.date = date;
+        this.id_artista = id_artista;
+    }
+
+    public Disc(int id, String name, String photo, String date, int id_artista) {
         this.id = id;
         this.id_artista=id_artista;
         this.name = name;
@@ -38,11 +43,11 @@ public class Disc {
         this.id_artista = id_artista;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 

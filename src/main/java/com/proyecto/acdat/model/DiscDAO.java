@@ -58,7 +58,7 @@ public class DiscDAO extends Disc {
             ResultSet s = ps.executeQuery();
 
             while (s.next()) {
-                disc = new Disc(s.getInt("id"),s.getString("nombre"), s.getString("foto"),s.getDate("fecha_prod"),s.getInt("id_artista"));
+                disc = new Disc(s.getInt("id"),s.getString("nombre"), s.getString("foto"),s.getString("fecha_prod"),s.getInt("id_artista"));
                 aux.add(disc);
             }
 
@@ -77,7 +77,7 @@ public class DiscDAO extends Disc {
             ps.setString(1, name);
             ResultSet s = ps.executeQuery();
             while (s.next()) {
-                disc = new Disc(s.getInt("id"),s.getString("nombre"), s.getString("foto"),s.getDate("fecha_prod"),s.getInt("id_artista"));
+                disc = new Disc(s.getInt("id"),s.getString("nombre"), s.getString("foto"),s.getString("fecha_prod"),s.getInt("id_artista"));
                 discs.add(disc);
             }
 
@@ -98,7 +98,7 @@ public class DiscDAO extends Disc {
             ResultSet s = ps.executeQuery();
 
             while (s.next()) {
-                disc = new Disc(s.getInt("id"),s.getString("nombre"), s.getString("foto"),s.getDate("fecha_prod"),s.getInt("id_artista"));
+                disc = new Disc(s.getInt("id"),s.getString("nombre"), s.getString("foto"),s.getString("fecha_prod"),s.getInt("id_artista"));
                 aux.add(disc);
             }
 
@@ -116,7 +116,7 @@ public class DiscDAO extends Disc {
             ps.setString(1, disc.getName());
             ps.setString(2, disc.getPhoto());
             ps.setInt(3, disc.getArtist().getId());
-            ps.setDate(4, disc.getDate());
+            ps.setString(4, disc.getDate());
             int rs = ps.executeUpdate();
             if (rs > 0) {
                 result = true;
@@ -171,7 +171,7 @@ public class DiscDAO extends Disc {
             ps.setString(1, disc.getName());
             ps.setString(2, disc.getPhoto());
             ps.setInt(3, disc.getArtist().getId());
-            ps.setDate(4, disc.getDate());
+            ps.setString(4, disc.getDate());
             int rs = ps.executeUpdate();
             if (rs > 0) {
                 result = true;

@@ -47,8 +47,8 @@ public class SubMenuSong {
         Utilities.P("---- Añadir Canción ----");
         String name = Utilities.getString("Inserte el nombre de la canción");
         int duration = Utilities.getInt("Introduce la duración");
-        name = Utilities.getString("Introduce el nombre del disco al que pertenece");
-        List<Disc> discs = MyInstance.getInstance().selectDiscByName(name);
+        String nameDisc = Utilities.getString("Introduce el nombre del disco al que pertenece");
+        List<Disc> discs = MyInstance.getInstance().selectDiscByName(nameDisc);
 
         if(discs.isEmpty()){
             Utilities.P("No existe el disco");

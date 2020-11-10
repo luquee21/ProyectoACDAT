@@ -5,6 +5,7 @@ import com.proyecto.acdat.model.Artist;
 import com.proyecto.acdat.model.Disc;
 import com.proyecto.acdat.utils.Utilities;
 
+import java.util.Date;
 import java.util.List;
 
 public class SubMenuDisc {
@@ -46,11 +47,19 @@ public class SubMenuDisc {
         Utilities.P("---- Añadir Disco ----");
         String name = Utilities.getString("Inserte el nombre del disco");
         String photo = Utilities.getString("Introduce la foto");
-        if(MyInstance.getInstance().addDisc(new Disc(name, photo))){
-            Utilities.P("Disco creado con éxito");
-        }else{
-            Utilities.P("No se ha podido crear el disco");
+        String date = Utilities.getString("Introduce la fecha(AÑO-MES-DIA // EJ: 2020-11-05)");
+        String artist = Utilities.getString("Introduce el nombre del artista");
+        Artist a = MyInstance.getInstance().selectArtistByName(artist);
+        if(a == null){
+            Utilities.P("El artista no existe");
+        } else {
+            if(MyInstance.getInstance().addDisc(new Disc(name, photo, date, a.getId()))){
+                Utilities.P("Disco creado con éxito");
+            }else{
+                Utilities.P("No se ha podido crear el disco");
+            }
         }
+
     }
 
     public static void deleteDisc() {
@@ -145,7 +154,7 @@ public class SubMenuDisc {
                 case 3:
                     String artistName = Utilities.getString("Introduce el nombre del artista");
                     Artist artist = MyInstance.getInstance().selectArtistByName(artistName);
-                    discs = (List<Disc>) MyInstance.getInstance().selectDiscByArtist(artist);
+                    discs = MyInstance.getInstance().selectDiscByArtist(artist.getId());
                     if(discs== null){
                         Utilities.P("No hay ningún disco de ese artista");
                     } else {
