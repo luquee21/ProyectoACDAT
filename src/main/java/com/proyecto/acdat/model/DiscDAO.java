@@ -14,40 +14,11 @@ public class DiscDAO extends Disc {
     private static final String SELECTBYNAME = "SELECT * FROM Disco WHERE nombre=?";
     private static final String SELECTBYARTIST = "SELECT * FROM Disco WHERE id_artista=?";
     private static final String INSERTDISC = "INSERT INTO Disco (nombre, foto, id_artista, fecha_prod) VALUES (?, ?, ?, ?)";
-    private static final String UPDATEDISC = "UPDATE Disco set nombre=?, foto=?, id_Artista=?, fecha_prod=?";
+    private static final String UPDATEDISC = "UPDATE Disco set nombre=?, foto=?, fecha_prod=? WHERE id_artista=?";
     private static final String DELETEDISC = "DELETE from Disco where id=?";
     private static final String DELETEALLDISC = "DELETE from Disco where id_artista=?";
 
 
-    @Override
-    public int getId() {
-        return super.getId();
-    }
-
-    @Override
-    public void setId(int id) {
-        super.setId(id);
-    }
-
-    @Override
-    public String getName() {
-        return super.getName();
-    }
-
-    @Override
-    public void setName(String name) {
-        super.setName(name);
-    }
-
-    @Override
-    public Song[] getSongs() {
-        return super.getSongs();
-    }
-
-    @Override
-    public void setSongs(Song[] songs) {
-        super.setSongs(songs);
-    }
 
     public static List<Disc> selectAll() {
         List<Disc> aux = new ArrayList<>();
@@ -115,7 +86,7 @@ public class DiscDAO extends Disc {
             PreparedStatement ps = conn.prepareStatement(INSERTDISC);
             ps.setString(1, disc.getName());
             ps.setString(2, disc.getPhoto());
-            ps.setInt(3, disc.getArtist().getId());
+            ps.setInt(3, disc.getId_artista());
             ps.setString(4, disc.getDate());
             int rs = ps.executeUpdate();
             if (rs > 0) {
@@ -170,8 +141,8 @@ public class DiscDAO extends Disc {
 
             ps.setString(1, disc.getName());
             ps.setString(2, disc.getPhoto());
-            ps.setInt(3, disc.getArtist().getId());
-            ps.setString(4, disc.getDate());
+            ps.setString(3, disc.getDate());
+            ps.setInt(4, disc.getId_artista());
             int rs = ps.executeUpdate();
             if (rs > 0) {
                 result = true;

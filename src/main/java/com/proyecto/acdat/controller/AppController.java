@@ -32,6 +32,11 @@ public class AppController implements IAppController {
         return ArtistDAO.selectByName(name);
     }
 
+    @Override
+    public Artist selectArtistById(int id) {
+        return ArtistDAO.selectById(id);
+    }
+
 
     @Override
     public List<Artist> selectArtistByNationality(String nationality) {

@@ -2,7 +2,6 @@ package com.proyecto.acdat.controller;
 
 import com.proyecto.acdat.model.*;
 
-import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.List;
 
@@ -15,7 +14,10 @@ public interface IAppController {
      boolean updateArtist(Artist artist, int id);
      List<Artist> selectAllArtist();
      Artist selectArtistByName(String name);
-     List<Artist> selectArtistByNationality(String nationality);
+
+ Artist selectArtistById(int id);
+
+ List<Artist> selectArtistByNationality(String nationality);
 
      //Disc
      boolean addDisc(Disc disc);

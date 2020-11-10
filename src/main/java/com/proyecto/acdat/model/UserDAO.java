@@ -16,46 +16,6 @@ public class UserDAO extends User {
     private static final String DELETEUSER = "DELETE FROM Usuario WHERE id=?";
     private static final String UPDATEUSER = "UPDATE Usuario SET nombre=? WHERE id=?";
 
-    @Override
-    public int getId() {
-        return super.getId();
-    }
-
-    @Override
-    public void setId(int id) {
-        super.setId(id);
-    }
-
-    @Override
-    public String getName() {
-        return super.getName();
-    }
-
-    @Override
-    public void setName(String name) {
-        super.setName(name);
-    }
-
-    @Override
-    public String getEmail() {
-        return super.getEmail();
-    }
-
-    @Override
-    public void setEmail(String email) {
-        super.setEmail(email);
-    }
-
-    @Override
-    public PlayList[] getPlaylists() {
-        return super.getPlaylists();
-    }
-
-    @Override
-    public void setPlaylists(PlayList[] playlists) {
-        super.setPlaylists(playlists);
-    }
-
     public static List<User> selectAll() {
         List<User> aux = new ArrayList<>();
         User user;

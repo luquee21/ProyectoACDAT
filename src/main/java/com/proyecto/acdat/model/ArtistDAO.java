@@ -11,51 +11,12 @@ import java.util.List;
 public class ArtistDAO extends Artist {
     private static final String SELECTALL = "SELECT * FROM Artista";
     private static final String SELECTBYNAME = "SELECT * FROM Artista WHERE nombre=?";
+    private static final String SELECTBYID = "SELECT * FROM Artista WHERE id=?";
     private static final String SELECTBYNATIONALITY = "SELECT * FROM Artista WHERE nacionalidad=?";
     private static final String INSERTARTIST = "INSERT INTO Artista (nombre,nacionalidad,foto) VALUES(?,?,?)";
     private static final String DELETEARTIST = "DELETE FROM Artista WHERE nombre=?";
     private static final String UPDATEARTIST = "UPDATE Artista SET nombre=?, nacionalidad=?, foto=? WHERE id=?";
 
-
-    @Override
-    public int getId() {
-        return super.getId();
-    }
-
-    @Override
-    public void setId(int id) {
-        super.setId(id);
-    }
-
-    @Override
-    public String getName() {
-        return super.getName();
-    }
-
-    @Override
-    public void setName(String name) {
-        super.setName(name);
-    }
-
-    @Override
-    public String getNationality() {
-        return super.getNationality();
-    }
-
-    @Override
-    public void setNationality(String nationality) {
-        super.setNationality(nationality);
-    }
-
-    @Override
-    public List<Disc> getDisc() {
-        return super.getDisc();
-    }
-
-    @Override
-    public void setDisc(List<Disc> disc) {
-        super.setDisc(disc);
-    }
 
     public static List<Artist> selectAll() {
         List<Artist> aux = new ArrayList<>();
@@ -83,13 +44,31 @@ public class ArtistDAO extends Artist {
                 PreparedStatement ps = conn.prepareStatement(SELECTBYNAME);
                 ps.setString(1,name);
                 ResultSet s = ps.executeQuery();
-                while(s.next()){
-                    artist = new Artist(s.getInt("id"),s.getString("nombre"),s.getString("nacionalidad"),s.getString("foto"));
+                while (s.next()) {
+                    artist = new Artist(s.getInt("id"), s.getString("nombre"), s.getString("nacionalidad"), s.getString("foto"));
                 }
 
             } catch (SQLException ex) {
 
             }
+
+            return artist;
+        }
+
+    public static Artist selectById(int id) {
+        Artist artist = null;
+        try {
+            java.sql.Connection conn = ConnectionUtils.getConnection();
+            PreparedStatement ps = conn.prepareStatement(SELECTBYID);
+            ps.setInt(1, id);
+            ResultSet s = ps.executeQuery();
+            while (s.next()) {
+                artist = new Artist(s.getInt("id"), s.getString("nombre"), s.getString("nacionalidad"), s.getString("foto"));
+            }
+
+        } catch (SQLException ex) {
+
+        }
 
         return artist;
     }
@@ -100,7 +79,7 @@ public class ArtistDAO extends Artist {
         try {
             java.sql.Connection conn = ConnectionUtils.getConnection();
             PreparedStatement ps = conn.prepareStatement(SELECTBYNATIONALITY);
-            ps.setString(1,nationality);
+            ps.setString(1, nationality);
             ResultSet s = ps.executeQuery();
 
             while (s.next()) {
