@@ -14,7 +14,7 @@ public class ArtistDAO extends Artist {
     private static final String SELECTBYNATIONALITY = "SELECT * FROM Artista WHERE nacionalidad=?";
     private static final String INSERTARTIST = "INSERT INTO Artista (nombre,nacionalidad,foto) VALUES(?,?,?)";
     private static final String DELETEARTIST = "DELETE FROM Artista WHERE nombre=?";
-    private static final String UPDATEARTIST = "UPDATE Artista SET nombre=?, nacionalidad=?, foto=? WHERE nombre=?";
+    private static final String UPDATEARTIST = "UPDATE Artista SET nombre=?, nacionalidad=?, foto=? WHERE id=?";
 
 
     @Override
@@ -150,7 +150,7 @@ public class ArtistDAO extends Artist {
         return result;
     }
 
-    public static boolean updateArtist(Artist artist){
+    public static boolean updateArtist(Artist artist, int id){
         boolean result = false;
         try {
             java.sql.Connection conn = ConnectionUtils.getConnection();
@@ -159,13 +159,14 @@ public class ArtistDAO extends Artist {
             ps.setString(1,artist.getName());
             ps.setString(2,artist.getNationality());
             ps.setString(3,artist.getPhoto());
-            ps.setString(4,artist.getName());
+            ps.setInt(4,id);
             int rs = ps.executeUpdate();
             if(rs > 0){
                 result = true;
             }
 
         } catch (SQLException ex) {
+
         }
 
         return result;

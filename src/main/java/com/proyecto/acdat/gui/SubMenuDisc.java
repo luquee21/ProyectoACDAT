@@ -60,6 +60,7 @@ public class SubMenuDisc {
             Utilities.P("1) Listar todos los discos antes de borrar");
             Utilities.P("2) Borrar disco");
             Utilities.P("3) Volver atrás");
+            Utilities.P("----------------------");
             option=Utilities.getInt();
             switch (option) {
                 case 1:
@@ -97,7 +98,7 @@ public class SubMenuDisc {
 
     public static void listDisc() {
         int option = 0;
-        List<Disc> discs = null;
+        List<Disc> discs;
         do {
             Utilities.P("---- Listar Discos ----");
             Utilities.P("1) Listar todos los discos");
@@ -132,7 +133,7 @@ public class SubMenuDisc {
                 case 3:
                     String artistName = Utilities.getString("Introduce el nombre del artista");
                     Artist artist = MyInstance.getInstance().selectArtistByName(artistName);
-                    discs = (List<Disc>) MyInstance.getInstance().selectDiscByArtist(artist);
+                    discs = MyInstance.getInstance().selectDiscByArtist(artist.getId());
                     if(discs== null){
                         Utilities.P("No hay ningún disco de ese artista");
                     } else {

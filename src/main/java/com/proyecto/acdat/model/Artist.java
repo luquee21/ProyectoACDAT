@@ -17,7 +17,7 @@ public class Artist {
         this.nationality = nationality;
         this.photo = photo;
     }
-
+    
     public Artist(String name, String nationality, String photo) {
         this.name = name;
         this.nationality = nationality;

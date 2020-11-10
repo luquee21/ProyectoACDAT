@@ -21,6 +21,7 @@ public class SubMenuArtist {
             Utilities.P("3) Listar artista");
             Utilities.P("4) Actualizar artista");
             Utilities.P("5) Volver atrás");
+            Utilities.P("-----------------");
             option = Utilities.getInt();
 
             switch (option) {
@@ -66,14 +67,15 @@ public class SubMenuArtist {
             Utilities.P("1) Listar todos los artistas antes de borrar");
             Utilities.P("2) Borrar artista por nombre");
             Utilities.P("3) Volver atrás");
-            option=Utilities.getInt();
+            Utilities.P("------------------------");
+            option = Utilities.getInt();
             switch (option) {
                 case 1:
                     List<Artist> artists = MyInstance.getInstance().selectAllArtist();
-                    if(artists == null){
+                    if (artists == null) {
                         Utilities.P("No hay ningún artista creado");
                     } else {
-                        for(Artist a : artists){
+                        for (Artist a : artists) {
                             Utilities.P(a.toString());
                         }
                     }
@@ -105,6 +107,7 @@ public class SubMenuArtist {
         int option = 0;
         List<Artist> artists;
         List<Disc> discs;
+        List<Disc> aux;
         do {
             Utilities.P("---- Listar Artista ----");
             Utilities.P("1) Listar todos los artistas");
@@ -112,38 +115,41 @@ public class SubMenuArtist {
             Utilities.P("3) Listar artista por nacionalidad");
             Utilities.P("4) Volver atrás");
             Utilities.P("------------------------");
-            option=Utilities.getInt();
+            option = Utilities.getInt();
             switch (option) {
                 case 1:
                     artists = MyInstance.getInstance().selectAllArtist();
                     discs = MyInstance.getInstance().selectAllDisc();
-                    List<Disc> aux = new ArrayList<>();
-                    if (artists == null) {
+                    if (artists.isEmpty()) {
                         Utilities.P("No hay ningún artista creado");
                     } else {
-                        if(!discs.isEmpty()){
-                            //ME FALTA VINCULAR ARTISTAS CON SU DISCO XD
-                            for(int i = 0; i < artists.size(); i++){
-                                for(int x = 0; x < discs.size(); x++){
-                                    if(x==0){
-                                        aux.clear();
-                                    }
-                                    if(artists.get(i).getId() == discs.get(x).getArtist().getId()){
-                                        aux.add(discs.get(i));
-                                        if(discs.size()-x == 1){
-                                            artists.get(i).setDisc(aux);
+                        if (!discs.isEmpty()) {
+                            for (Disc d : discs) {
+                                for (Artist a : artists) {
+                                    if (d.getId_artista() == a.getId()) {
+                                        aux = MyInstance.getInstance().selectDiscByArtist(a.getId());
+                                        if (!aux.isEmpty()) {
+                                            a.setDisc(aux);
                                         }
                                     }
                                 }
                             }
+                            for (Artist a : artists) {
+                                Utilities.P(a.toString());
+                            }
+                        } else {
+                            for (Artist a : artists) {
+                                Utilities.P(a.toString());
+                            }
                         }
+
                     }
                     break;
                 case 2:
                     String name = Utilities.getString("Introduce el nombre del artista: ");
                     Artist artist = MyInstance.getInstance().selectArtistByName(name);
-                    discs = MyInstance.getInstance().selectDiscByArtist(artist);
-                    if(discs!=null){
+                    discs = MyInstance.getInstance().selectDiscByArtist(artist.getId());
+                    if (!discs.isEmpty()) {
                         artist.setDisc(discs);
                     }
                     artist.setDisc(discs);
@@ -154,26 +160,29 @@ public class SubMenuArtist {
                     String nationality = Utilities.getString("Introduce la nacionalidad");
                     artists = MyInstance.getInstance().selectArtistByNationality(nationality);
                     discs = MyInstance.getInstance().selectAllDisc();
-                    List<Disc> aux2 = new ArrayList<>();
-                    if (artists == null) {
+
+                    if (artists.isEmpty()) {
                         Utilities.P("No hay ningún artista con esa nacionalidad");
                     } else {
-
-                        //FALTA VINCULAR ARTISTA CON SU DISCO
-                        for(int i = 0; i < artists.size(); i++){
-                            for(int x = 0; x < discs.size(); x++){
-                                if(x==0){
-                                    aux2.clear();
-                                }
-                                if(artists.get(i).getId() == discs.get(x).getArtist().getId()){
-                                    aux2.add(discs.get(i));
-                                    if(discs.size()-x == 1){
-                                        artists.get(i).setDisc(aux2);
+                        if (!discs.isEmpty()) {
+                            for (Disc d : discs) {
+                                for (Artist a : artists) {
+                                    if (d.getId_artista() == a.getId()) {
+                                        aux = MyInstance.getInstance().selectDiscByArtist(a.getId());
+                                        if (!aux.isEmpty()) {
+                                            a.setDisc(aux);
+                                        }
                                     }
                                 }
                             }
+                            for (Artist a : artists) {
+                                Utilities.P(a.toString());
+                            }
+                        } else {
+                            for (Artist a : artists) {
+                                Utilities.P(a.toString());
+                            }
                         }
-
                     }
                     break;
                 case 4:
@@ -183,23 +192,23 @@ public class SubMenuArtist {
         } while (option != 3);
     }
 
-    private static void updateArtist(){
+    private static void updateArtist() {
         Utilities.P("---- Actualizar Artista ----");
         String oldname = Utilities.getString("Introduce el nombre del artista: ");
         Artist oldArtist = MyInstance.getInstance().selectArtistByName(oldname);
 
-        if(oldArtist== null){
+        if (oldArtist == null) {
             Utilities.P("No hay ningún artista con ese nombre");
         } else {
             String name = Utilities.getString("Introduce el nuevo nombre del artista: ");
             String nationality = Utilities.getString("Introduce la nueva nacionalidad: ");
             String photo = Utilities.getString("Introduce la nueva foto: ");
-            Artist newArtist = new Artist(name,nationality,photo);
+            Artist newArtist = new Artist(name, nationality, photo);
 
-            if(oldArtist.equals(newArtist)){
+            if (oldArtist.equals(newArtist)) {
                 Utilities.P("No puede ser igual");
             } else {
-                if(MyInstance.getInstance().updateArtist(newArtist)){
+                if (MyInstance.getInstance().updateArtist(newArtist, oldArtist.getId())) {
                     Utilities.P("Se ha actualizado con éxito");
                 } else {
                     Utilities.P("No se ha podido actualizar");

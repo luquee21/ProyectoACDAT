@@ -57,7 +57,7 @@ public class DiscDAO extends Disc {
             ResultSet s = ps.executeQuery();
 
             while (s.next()) {
-                disc = new Disc(s.getInt("id"),s.getString("nombre"), s.getString("foto"),s.getDate("fecha_prod"));
+                disc = new Disc(s.getInt("id"),s.getString("nombre"), s.getString("foto"),s.getDate("fecha_prod"),s.getInt("id_artista"));
                 aux.add(disc);
             }
 
@@ -76,7 +76,7 @@ public class DiscDAO extends Disc {
             ps.setString(1, name);
             ResultSet s = ps.executeQuery();
             while (s.next()) {
-                disc = new Disc(s.getInt("id"),s.getString("nombre"), s.getString("foto"),s.getDate("fecha_prod"));
+                disc = new Disc(s.getInt("id"),s.getString("nombre"), s.getString("foto"),s.getDate("fecha_prod"),s.getInt("id_artista"));
                 discs.add(disc);
             }
 
@@ -87,17 +87,17 @@ public class DiscDAO extends Disc {
         return discs;
     }
 
-    public static List<Disc> selectByArtist(Artist artist) {
+    public static List<Disc> selectByArtist(int id) {
         List<Disc> aux = new ArrayList<>();
         Disc disc;
         try {
             java.sql.Connection conn = ConnectionUtils.getConnection();
             PreparedStatement ps = conn.prepareStatement(SELECTBYARTIST);
-            ps.setInt(1, artist.getId());
+            ps.setInt(1, id);
             ResultSet s = ps.executeQuery();
 
             while (s.next()) {
-                disc = new Disc(s.getInt("id"),s.getString("nombre"), s.getString("foto"),s.getDate("fecha_prod"));
+                disc = new Disc(s.getInt("id"),s.getString("nombre"), s.getString("foto"),s.getDate("fecha_prod"),s.getInt("id_artista"));
                 aux.add(disc);
             }
 

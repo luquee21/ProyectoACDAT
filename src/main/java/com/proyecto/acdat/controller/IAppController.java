@@ -12,7 +12,7 @@ public interface IAppController {
     //Artist
      boolean addArtist(Artist artist);
      boolean deleteArtist(String name);
-     boolean updateArtist(Artist artist);
+     boolean updateArtist(Artist artist, int id);
      List<Artist> selectAllArtist();
      Artist selectArtistByName(String name);
      List<Artist> selectArtistByNationality(String nationality);
@@ -23,7 +23,7 @@ public interface IAppController {
      boolean updateDisc(Disc disc);
      List<Disc> selectAllDisc();
      List<Disc> selectDiscByName(String name);
-     List<Disc> selectDiscByArtist(Artist artist);
+     List<Disc> selectDiscByArtist(int id);
 
      //PlayList
      boolean addPlayList(PlayList playList);
@@ -40,6 +40,7 @@ public interface IAppController {
      //Song
      boolean addSong(Song song);
      boolean deleteSong(int id);
+     boolean deleteAllSongOfDisc(int id);
      boolean updateSong(Song song);
      List<Song> selectAllSong();
      List<Song> selectSongByName(String name);

@@ -10,6 +10,7 @@ public class Disc {
     private String name;
     private String photo;
     private Song[] songs;
+    private int id_artista;
     private Artist artist;
     private Date date;
 
@@ -21,11 +22,20 @@ public class Disc {
         this.photo = photo;
     }
 
-    public Disc(int id, String name, String photo, Date date) {
+    public Disc(int id, String name, String photo, Date date, int id_artista) {
         this.id = id;
+        this.id_artista=id_artista;
         this.name = name;
         this.photo = photo;
         this.date = date;
+    }
+
+    public int getId_artista() {
+        return id_artista;
+    }
+
+    public void setId_artista(int id_artista) {
+        this.id_artista = id_artista;
     }
 
     public Date getDate() {

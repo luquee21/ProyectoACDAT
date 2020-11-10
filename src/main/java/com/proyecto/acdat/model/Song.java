@@ -10,16 +10,13 @@ public class Song {
     public Song() {
     }
 
-    public Song(String name, int duration) {
-        this.name = name;
-        this.duration = duration;
-    }
-
-    public Song(int id, String name, int duration) {
+    public Song(int id, String name, int duration, int id_disco) {
         this.id = id;
         this.name = name;
         this.duration = duration;
+        this.disc.setId(id_disco);
     }
+
 
     public Artist getArtist() {
         return artist;

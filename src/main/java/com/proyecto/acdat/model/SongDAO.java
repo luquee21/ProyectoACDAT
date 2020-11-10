@@ -15,6 +15,7 @@ public class SongDAO extends Song {
     private static final String SELECTALLSONGOFARTIST = "SELECT * FROM Cancion INNER JOIN Disco ON Cancion.id_disco = Disco.id INNER JOIN Artista ON Artista.id=Disco.id_artista WHERE Artista.nombre=?";
     private static final String INSERTSONG = "INSERT INTO Cancion (nombre,duracion,id_genero,id_disco) VALUES(?,?,NULL,?)";
     private static final String DELETESONG = "DELETE FROM Cancion WHERE id=?";
+    private static final String DELETEALLSONGOFDISC = "DELETE FROM Cancion WHERE id_disco=?";
     private static final String UPDATESONG = "UPDATE Cancion SET nombre=?, duracion=? WHERE id=?";
 
     @Override
@@ -65,7 +66,7 @@ public class SongDAO extends Song {
             PreparedStatement ps = conn.prepareStatement(SELECTALL);
             ResultSet s = ps.executeQuery();
             while (s.next()) {
-                song = new Song(s.getInt("id"),s.getString("nombre"), s.getInt("duracion"));
+                song = new Song(s.getInt("id"),s.getString("nombre"), s.getInt("duracion"), s.getInt("id_disco"));
                 aux.add(song);
             }
 
@@ -84,7 +85,7 @@ public class SongDAO extends Song {
             ps.setString(1, name);
             ResultSet s = ps.executeQuery();
             while (s.next()) {
-                song = new Song(s.getInt("id"),s.getString("nombre"), s.getInt("duracion"));
+                song = new Song(s.getInt("id"),s.getString("nombre"),s.getInt("duracion"), s.getInt("id_disco"));
                 aux.add(song);
             }
 
@@ -95,6 +96,22 @@ public class SongDAO extends Song {
         return aux;
     }
 
+    public static boolean deleteAllSongOfDisc(int id){
+        boolean result = false;
+        try {
+            java.sql.Connection conn = ConnectionUtils.getConnection();
+            PreparedStatement ps = conn.prepareStatement(DELETEALLSONGOFDISC);
+            ps.setInt(1, id);
+            int rs = ps.executeUpdate();
+            if (rs > 0) {
+                result = true;
+            }
+
+        } catch (SQLException ex) {
+        }
+
+        return result;
+    }
     public static List<Song> selectAllSongOfArtist(String name) {
         List<Song> aux = new ArrayList<>();
         Song song;
@@ -104,7 +121,7 @@ public class SongDAO extends Song {
             ps.setString(1, name);
             ResultSet s = ps.executeQuery();
             while (s.next()) {
-                song = new Song(s.getInt("id"),s.getString("nombre"), s.getInt("duracion"));
+                song = new Song(s.getInt("id"),s.getString("nombre"), s.getInt("duracion"), s.getInt("id_disco"));
                 aux.add(song);
             }
 
@@ -123,7 +140,7 @@ public class SongDAO extends Song {
             ps.setInt(1, id_disc);
             ResultSet s = ps.executeQuery();
             while (s.next()) {
-                song = new Song(s.getString("nombre"), s.getInt("duracion"));
+                song = new Song(s.getInt("id"),s.getString("nombre"), s.getInt("duracion"), s.getInt("id_disco"));
                 aux.add(song);
             }
 

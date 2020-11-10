@@ -18,8 +18,8 @@ public class AppController implements IAppController {
     }
 
     @Override
-    public boolean updateArtist(Artist artist) {
-        return ArtistDAO.updateArtist(artist);
+    public boolean updateArtist(Artist artist, int id) {
+        return ArtistDAO.updateArtist(artist, id);
     }
 
     @Override
@@ -48,6 +48,7 @@ public class AppController implements IAppController {
         return DiscDAO.deleteDisc(id);
     }
 
+
     @Override
     public boolean updateDisc(Disc disc) {
        return DiscDAO.updateDisc(disc);
@@ -64,8 +65,8 @@ public class AppController implements IAppController {
     }
 
     @Override
-    public List<Disc> selectDiscByArtist(Artist artist) {
-        return DiscDAO.selectByArtist(artist);
+    public List<Disc> selectDiscByArtist(int id) {
+        return DiscDAO.selectByArtist(id);
     }
 
     @Override
@@ -126,6 +127,11 @@ public class AppController implements IAppController {
     @Override
     public boolean deleteSong(int id) {
         return SongDAO.deleteSong(id);
+    }
+
+    @Override
+    public boolean deleteAllSongOfDisc(int id) {
+        return SongDAO.deleteAllSongOfDisc(id);
     }
 
     @Override

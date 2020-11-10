@@ -18,6 +18,7 @@ public class SubMenuSong {
             Utilities.P("3) Listar canción");
             Utilities.P("4) Actualizar canción");
             Utilities.P("5) Volver atrás");
+            Utilities.P("----------------");
             option = Utilities.getInt();
 
             switch (option) {
@@ -46,21 +47,36 @@ public class SubMenuSong {
         Utilities.P("---- Añadir Canción ----");
         String name = Utilities.getString("Inserte el nombre de la canción");
         int duration = Utilities.getInt("Introduce la duración");
-        if (MyInstance.getInstance().addSong(new Song(name, duration))) {
-            Utilities.P("Canción creada con éxito");
+        name = Utilities.getString("Introduce el nombre del disco al que pertenece");
+        List<Disc> discs = MyInstance.getInstance().selectDiscByName(name);
+
+        if(discs.isEmpty()){
+            Utilities.P("No existe el disco");
         } else {
-            Utilities.P("No se ha podido crear la canción");
+            for(Disc d : discs) {
+                Utilities.P(d.toString());
+            }
+            int id = Utilities.getInt("Introduce el id del disco al que pertenece");
+            if (MyInstance.getInstance().addSong(new Song(name, duration,id))) {
+                Utilities.P("Canción creada con éxito");
+            } else {
+                Utilities.P("No se ha podido crear la canción");
+            }
         }
+
     }
 
     private static void deleteSong() {
         int option = 0;
         List<Song> songs;
+        List<Disc> disc;
         do {
             Utilities.P("---- Borrar Canción ----");
             Utilities.P("1) Listar todas las canciones antes de borrar");
             Utilities.P("2) Borrar canción");
-            Utilities.P("3) Volver atrás");
+            Utilities.P("3) Borrar todas las canciones de un disco");
+            Utilities.P("4) Volver atrás");
+            Utilities.P("-----------------------");
             option = Utilities.getInt();
             switch (option) {
                 case 1:
@@ -87,13 +103,30 @@ public class SubMenuSong {
                     }
                     break;
                 case 3:
+                    String aux = Utilities.getString("Introduce el nombre del disco");
+                    disc = MyInstance.getInstance().selectDiscByName(aux);
+                    if(disc.isEmpty()){
+                        Utilities.P("No hay ningún disco con ese nombre");
+                    }else {
+                        for(Disc d: disc){
+                            Utilities.P(d.toString());
+                        }
+                    int id = Utilities.getInt("Introduce el id del disco");
+                        if(MyInstance.getInstance().deleteAllSongOfDisc(id)){
+                            Utilities.P("Se han borrado todas las canciones del disco");
+                        } else {
+                            Utilities.P("No se han borrado las canciones");
+                        }
+                    }
+                    break;
+                case 4:
                     song();
                     break;
                 default:
                     Utilities.P("Introduzca una opción válida");
                     break;
             }
-        } while (option != 3);
+        } while (option != 4);
     }
 
     private static void listSong() {
