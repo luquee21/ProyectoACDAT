@@ -61,4 +61,10 @@ public class User {
     public String toString() {
         return "[Usuario] = id: " + id + ", nombre: " + name + ", email: " + email;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        User user = (User) o;
+        return id == user.id && email.equals(user.getEmail()) && photo.equals(user.getPhoto());
+    }
 }

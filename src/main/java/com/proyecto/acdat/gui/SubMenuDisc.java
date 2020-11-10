@@ -39,6 +39,7 @@ public class SubMenuDisc {
                     break;
                 default:
                     Utilities.P("Por favor, introduce una opción válida");
+                    break;
             }
         }while(option!=5);
     }
@@ -111,7 +112,7 @@ public class SubMenuDisc {
                     disc();
                     break;
                 default:
-                    Utilities.P("Introduzca una opción válida");
+                    Utilities.P("Por favor, introduce una opción válida");
                     break;
             }
         } while (option != 3);
@@ -166,6 +167,9 @@ public class SubMenuDisc {
                 case 4:
                     disc();
                     break;
+                default:
+                    Utilities.P("Por favor, introduce una opción válida");
+                    break;
             }
         } while (option != 4);
     }
@@ -193,7 +197,7 @@ public class SubMenuDisc {
         } else {
             String name = Utilities.getString("Introduce el nuevo nombre del disco: ");
             String photo = Utilities.getString("Introduce la nueva foto: ");
-            Disc newDisc = new Disc(name, photo);
+            Disc newDisc = new Disc(oldDisc.getId(), name, photo);
 
             if(oldDisc.equals(newDisc)){
                 Utilities.P("No puede ser igual");

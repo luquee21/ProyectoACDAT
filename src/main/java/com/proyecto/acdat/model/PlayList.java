@@ -58,4 +58,10 @@ public class PlayList {
     public void setCreator(User creator) {
         this.creator = creator;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        PlayList playList = (PlayList) o;
+        return id == playList.id;
+    }
 }

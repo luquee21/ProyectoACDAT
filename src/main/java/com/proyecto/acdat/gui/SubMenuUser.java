@@ -107,7 +107,7 @@ public class SubMenuUser {
                 user();
                 break;
             default:
-                Utilities.P("Introduzca una opción válida");
+                Utilities.P("Por favor, introduce una opción válida");
                 break;
         }
     }

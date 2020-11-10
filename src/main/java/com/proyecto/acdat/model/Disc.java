@@ -20,6 +20,12 @@ public class Disc {
         this.photo = photo;
     }
 
+    public Disc(int id, String name, String photo) {
+        this.id = id;
+        this.name = name;
+        this.photo = photo;
+    }
+
     public Disc(String name, String photo, String date, int id_artista) {
         this.name = name;
         this.photo = photo;
@@ -98,5 +104,11 @@ public class Disc {
             print = "[Disco] = id: " + id + ", nombre: " + name + ", fecha: " + date + " | " + artist + " | " + Arrays.toString(songs);
         }
         return print;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        Disc disc = (Disc) o;
+        return id == disc.id && name.equals(disc.getName()) && photo.equals(disc.getPhoto());
     }
 }

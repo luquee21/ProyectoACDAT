@@ -91,4 +91,10 @@ public class Song {
         }
         return print;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        Song song = (Song) o;
+        return id == song.id && name.equals(song.getName()) && duration == song.getDuration();
+    }
 }
