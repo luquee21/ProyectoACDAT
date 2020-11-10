@@ -17,7 +17,9 @@ public class PlayListDAO extends PlayList {
     private static final String DELETEPLAYLIST = "DELETE FROM Lista WHERE id=?";
     private static final String UPDATEPLAYLIST = "UPDATE Lista SET nombre=?, descripcion=?, id_usuario=? WHERE id=?";
     private static final String INSERTSUB = "INSERT INTO Suscripcion (id_usuario, id_lista) values(?,?)";
-    private static final String DELETESUB = "DELETE FROM Suscripcion WHERE id_usuario=? and id_lista=?";
+    private static final String DELETESUB = "DELETE FROM Suscripcion WHERE id_usuario=?";
+    private static final String INSERTSONG = "INSERT INTO Lista_cancion (id_lista, id_cancion) values(?,?)";
+    private static final String DELETESONG = "DELETE FROM Lista_cancion WHERE id_cancion=?";
 
 
     public PlayListDAO(int id, String name, String description) {
@@ -233,6 +235,39 @@ public class PlayListDAO extends PlayList {
         } catch (SQLException ex) {
         }
 
+        return result;
+    }
+
+    boolean addSongToPlayList(Song song, int id){
+        boolean result = false;
+        try{
+            java.sql.Connection conn = ConnectionUtils.getConnection();
+            PreparedStatement ps = conn.prepareStatement(INSERTSONG);
+            ps.setInt(1, song.getId());
+            ps.setInt(2,id);
+            int rs = ps.executeUpdate();
+            if (rs > 0){
+                result = true;
+            }
+
+        }catch (SQLException ex){
+        }
+        return result;
+
+    }
+
+    boolean deleteSongToPlayList(Song song, int id){
+        boolean result=false;
+        try {
+            java.sql.Connection conn = ConnectionUtils.getConnection();
+            PreparedStatement ps = conn.prepareStatement(DELETESONG);
+            ps.setInt(1,song.getId());
+            ps.setInt(2,id);
+            int rs = ps.executeUpdate();
+            if(rs > 0){
+                result = true;
+            }
+        }catch (SQLException ex){}
         return result;
     }
 
