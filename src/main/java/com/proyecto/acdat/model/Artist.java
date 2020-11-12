@@ -1,6 +1,5 @@
 package com.proyecto.acdat.model;
 import java.util.List;
-import java.util.Objects;
 
 public class Artist {
     private int id;
@@ -58,7 +57,10 @@ public class Artist {
     }
 
     public List<Disc> getDisc() {
-        return DiscDAO.selectByArtist(this.id);
+        if (disc == null) {
+            disc = DiscDAO.selectByArtist(this.id);
+        }
+        return disc;
     }
 
     public void setDisc(List<Disc> disc) {
@@ -68,11 +70,13 @@ public class Artist {
     @Override
     public String toString() {
         String print;
-        if(disc == null){
-            print =  "[Artista] = id: " + id + ", nombre: " + name + ", nacionalidad: " + nationality;
+        if (disc == null || disc.isEmpty()) {
+            print = "[Artista] = id: " + id + ", nombre: " + name + ", nacionalidad: " + nationality;
         } else {
+            System.out.println("aki toy");
             print = "[Artista] = id: " + id + ", nombre: " + name + ", nacionalidad: " + nationality + " | " + disc;
         }
+
 
         return print;
     }

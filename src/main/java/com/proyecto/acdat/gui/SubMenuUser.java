@@ -1,7 +1,6 @@
 package com.proyecto.acdat.gui;
 
 import com.proyecto.acdat.instance.MyInstance;
-import com.proyecto.acdat.model.PlayList;
 import com.proyecto.acdat.model.User;
 import com.proyecto.acdat.utils.Utilities;
 
@@ -106,14 +105,20 @@ public class SubMenuUser {
 
     private static void listUser() {
         int option = 0;
-        List<PlayList> playLists;
-        Utilities.P("---- Listar Usuario ----");
-        Utilities.P("1) Listar todos los usuarios");
-        Utilities.P("2) Listar usuario por nombre");
-        Utilities.P("3) Listar usuario por email");
-        Utilities.P("4) Volver atrás");
-        option = Utilities.getInt();
+        String email;
         List<User> users;
+        User user;
+
+        Utilities.P("---- Listar Usuario ----");
+        Utilities.P("1) Listar todos los usuarios (con sus playlists)");
+        Utilities.P("2) Listar todos los usuarios (sin sus playlists)");
+        Utilities.P("3) Listar usuario por nombre (con sus playlists)");
+        Utilities.P("4) Listar usuario por nombre (sin sus playlists)");
+        Utilities.P("5) Listar usuario por email (con sus playlists)");
+        Utilities.P("6) Listar usuario por email (sin sus playlists)");
+        Utilities.P("7) Volver atrás");
+        option = Utilities.getInt();
+
         switch (option) {
             case 1:
                 users = MyInstance.getInstance().selectAllUser();
@@ -121,47 +126,61 @@ public class SubMenuUser {
                     Utilities.P("No hay ningún usuario creado");
                 } else {
                     for (User u : users) {
-                        playLists = MyInstance.getInstance().selectPlayListByEmail(u);
-                        if (playLists != null) {
-                            u.setPlayLists(playLists);
-                        }
-                    }
-                    for (User u : users) {
-                        Utilities.P(u.toString());
+                        Utilities.P(u.toString() + " " + u.getPlayLists());
                     }
                 }
                 break;
             case 2:
-                String name = Utilities.getString("Introduce el nombre de usuario: ");
-                users = MyInstance.getInstance().selectUserByName(name);
+                users = MyInstance.getInstance().selectAllUser();
                 if (users.isEmpty()) {
-                    Utilities.P("No hay usuarios con ese nombre");
+                    Utilities.P("No hay ningún usuario creado");
                 } else {
-                    for (User u : users) {
-                        playLists = MyInstance.getInstance().selectPlayListByEmail(u);
-                        if (playLists != null) {
-                            u.setPlayLists(playLists);
-                        }
-                    }
                     for (User u : users) {
                         Utilities.P(u.toString());
                     }
                 }
                 break;
             case 3:
-                String email = Utilities.getString("Introduce el email de usuario: ");
-                User user = MyInstance.getInstance().selectUserByEmail(email);
-                if (user == null) {
-                    Utilities.P("No hay ningún usuario con ese email");
+                String name = Utilities.getString("Introduce el nombre de usuario: ");
+                users = MyInstance.getInstance().selectUserByName(name);
+                if (users.isEmpty()) {
+                    Utilities.P("No hay usuarios con ese nombre");
                 } else {
-                    playLists = MyInstance.getInstance().selectPlayListByEmail(user);
-                    if (!playLists.isEmpty()) {
-                        user.setPlayLists(playLists);
+                    for (User u : users) {
+                        Utilities.P(u.toString() + " " + u.getPlayLists().toString());
                     }
-                    Utilities.P(user.toString());
                 }
                 break;
             case 4:
+                name = Utilities.getString("Introduce el nombre de usuario: ");
+                users = MyInstance.getInstance().selectUserByName(name);
+                if (users.isEmpty()) {
+                    Utilities.P("No hay usuarios con ese nombre");
+                } else {
+                    for (User u : users) {
+                        Utilities.P(u.toString());
+                    }
+                }
+                break;
+            case 5:
+                email = Utilities.getString("Introduce el email de usuario: ");
+                user = MyInstance.getInstance().selectUserByEmail(email);
+                if (user == null) {
+                    Utilities.P("No hay ningún usuario con ese email");
+                } else {
+                    Utilities.P(user.toString() + " " + user.getPlayLists());
+                }
+                break;
+            case 6:
+                email = Utilities.getString("Introduce el email de usuario: ");
+                user = MyInstance.getInstance().selectUserByEmail(email);
+                if (user == null) {
+                    Utilities.P("No hay ningún usuario con ese email");
+                } else {
+                    Utilities.P(user.toString());
+                }
+                break;
+            case 7:
                 user();
                 break;
             default:

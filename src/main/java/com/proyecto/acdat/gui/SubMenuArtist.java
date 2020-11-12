@@ -2,11 +2,8 @@ package com.proyecto.acdat.gui;
 
 import com.proyecto.acdat.instance.MyInstance;
 import com.proyecto.acdat.model.Artist;
-import com.proyecto.acdat.model.Disc;
 import com.proyecto.acdat.utils.Utilities;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class SubMenuArtist {
@@ -71,7 +68,7 @@ public class SubMenuArtist {
             option = Utilities.getInt();
             switch (option) {
                 case 1:
-                    List<Artist> artists = MyInstance.getInstance().selectAllArtist("eagle");
+                    List<Artist> artists = MyInstance.getInstance().selectAllArtist();
                     if (artists == null) {
                         Utilities.P("No hay ningún artista creado");
                     } else {
@@ -105,70 +102,75 @@ public class SubMenuArtist {
 
     private static void listArtist() {
         int option = 0;
+        String name, nationality;
+        Artist artist;
         List<Artist> artists;
-        List<Disc> discs;
-        List<Disc> aux;
+
         do {
             Utilities.P("---- Listar Artista ----");
-            Utilities.P("1) Listar todos los artistas");
-            Utilities.P("2) Listar artista por nombre");
-            Utilities.P("3) Listar artista por nacionalidad");
-            Utilities.P("4) Volver atrás");
+            Utilities.P("1) Listar todos los artistas (con discos)");
+            Utilities.P("2) Listar todos los artistas (sin discos)");
+            Utilities.P("3) Listar artista por nombre (con discos)");
+            Utilities.P("4) Listar artista por nombre (sin discos)");
+            Utilities.P("5) Listar artista por nacionalidad (con discos)");
+            Utilities.P("6) Listar artista por nacionalidad (sin discos)");
+            Utilities.P("7) Volver atrás");
             Utilities.P("------------------------");
             option = Utilities.getInt();
             switch (option) {
                 case 1:
-                    artists = MyInstance.getInstance().selectAllArtist("eagle");
-                    if(artists.isEmpty()){
+                    artists = MyInstance.getInstance().selectAllArtist();
+                    if (artists.isEmpty()) {
                         Utilities.P("No hay ningún artista creado");
                     } else {
-                        for(Artist artist : artists){
-                            Utilities.P(artist.toString());
+                        for (Artist a : artists) {
+                            Utilities.P(a.toString() + " " + a.getDisc());
                         }
                     }
-
                     break;
                 case 2:
-                    String name = Utilities.getString("Introduce el nombre del artista: ");
-                    Artist artist = MyInstance.getInstance().selectArtistByName(name);
-                    discs = MyInstance.getInstance().selectDiscByArtist(artist.getId());
-                    if (!discs.isEmpty()) {
-                        artist.setDisc(discs);
+                    artists = MyInstance.getInstance().selectAllArtist();
+                    if (artists.isEmpty()) {
+                        Utilities.P("No hay ningún artista creado");
+                    } else {
+                        for (Artist a : artists) {
+                            Utilities.P(a.toString());
+                        }
                     }
-                    artist.setDisc(discs);
-                    Utilities.P(artist.toString());
-
                     break;
                 case 3:
-                    String nationality = Utilities.getString("Introduce la nacionalidad");
+                    name = Utilities.getString("Introduce el nombre del artista: ");
+                    artist = MyInstance.getInstance().selectArtistByName(name);
+                    Utilities.P(artist.toString() + " " + artist.getDisc());
+                    break;
+                case 4:
+                    name = Utilities.getString("Introduce el nombre del artista: ");
+                    artist = MyInstance.getInstance().selectArtistByName(name);
+                    Utilities.P(artist.toString());
+                    break;
+                case 5:
+                    nationality = Utilities.getString("Introduce la nacionalidad");
                     artists = MyInstance.getInstance().selectArtistByNationality(nationality);
-                    discs = MyInstance.getInstance().selectAllDisc();
-
                     if (artists.isEmpty()) {
                         Utilities.P("No hay ningún artista con esa nacionalidad");
                     } else {
-                        if (!discs.isEmpty()) {
-                            for (Disc d : discs) {
-                                for (Artist a : artists) {
-                                    if (d.getId_artista() == a.getId()) {
-                                        aux = MyInstance.getInstance().selectDiscByArtist(a.getId());
-                                        if (!aux.isEmpty()) {
-                                            a.setDisc(aux);
-                                        }
-                                    }
-                                }
-                            }
-                            for (Artist a : artists) {
-                                Utilities.P(a.toString());
-                            }
-                        } else {
-                            for (Artist a : artists) {
-                                Utilities.P(a.toString());
-                            }
+                        for (Artist a : artists) {
+                            Utilities.P(a.toString() + " " + a.getDisc());
                         }
                     }
                     break;
-                case 4:
+                case 6:
+                    nationality = Utilities.getString("Introduce la nacionalidad");
+                    artists = MyInstance.getInstance().selectArtistByNationality(nationality);
+                    if (artists.isEmpty()) {
+                        Utilities.P("No hay ningún artista con esa nacionalidad");
+                    } else {
+                        for (Artist a : artists) {
+                            Utilities.P(a.toString());
+                        }
+                    }
+                    break;
+                case 7:
                     artist();
                     break;
                 default:

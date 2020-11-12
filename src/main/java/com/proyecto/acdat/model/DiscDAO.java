@@ -11,6 +11,7 @@ import java.util.List;
 public class DiscDAO extends Disc {
 
     private static final String SELECTALL = "SELECT * FROM Disco";
+    private static final String SELECTBYID = "SELECT * FROM Disco WHERE id = ?";
     private static final String SELECTBYNAME = "SELECT * FROM Disco WHERE nombre=?";
     private static final String SELECTBYARTIST = "SELECT * FROM Disco WHERE id_artista=?";
     private static final String INSERTDISC = "INSERT INTO Disco (nombre, foto, id_artista, fecha_prod) VALUES (?, ?, ?, ?)";
@@ -69,7 +70,7 @@ public class DiscDAO extends Disc {
             ResultSet s = ps.executeQuery();
 
             while (s.next()) {
-                disc = new Disc(s.getInt("id"),s.getString("nombre"), s.getString("foto"),s.getString("fecha_prod"),s.getInt("id_artista"));
+                disc = new Disc(s.getInt("id"), s.getString("nombre"), s.getString("foto"), s.getString("fecha_prod"), s.getInt("id_artista"));
                 aux.add(disc);
             }
 
@@ -77,6 +78,23 @@ public class DiscDAO extends Disc {
 
         }
         return aux;
+    }
+
+    public static Disc selectById(int id) {
+        Disc disc = null;
+        try {
+            java.sql.Connection conn = ConnectionUtils.getConnection();
+            PreparedStatement ps = conn.prepareStatement(SELECTBYID);
+            ps.setInt(1, id);
+            ResultSet s = ps.executeQuery();
+            while (s != null && s.next()) {
+                disc = new Disc(s.getInt("id"), s.getString("nombre"), s.getString("foto"), s.getString("fecha_prod"), s.getInt("id_artista"));
+            }
+
+        } catch (SQLException ex) {
+
+        }
+        return disc;
     }
 
     public static boolean addDisc(Disc disc) {

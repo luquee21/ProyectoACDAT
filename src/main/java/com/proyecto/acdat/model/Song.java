@@ -22,10 +22,6 @@ public class Song {
         this.duration = duration;
     }
 
-    public Song(String name, int duration) {
-        this.name = name;
-        this.duration = duration;
-    }
     public Song(String name, int duration, int id_disc) {
         this.name = name;
         this.duration = duration;
@@ -41,6 +37,9 @@ public class Song {
 
 
     public Artist getArtist() {
+        if (artist == null) {
+            artist = ArtistDAO.selectByIdSong(id);
+        }
         return artist;
     }
 
@@ -73,6 +72,9 @@ public class Song {
     }
 
     public Disc getDisc() {
+        if (disc == null) {
+            disc = DiscDAO.selectById(id_disc);
+        }
         return disc;
     }
 
@@ -83,7 +85,6 @@ public class Song {
     @Override
     public String toString() {
         String print;
-
         if(disc == null && artist == null){
             print = "[Cancion] = id: " + id + ", nombre: " + name + ", duracion: " + duration;
         } else {

@@ -59,6 +59,9 @@ public class User {
     }
 
     public List<PlayList> getPlayLists() {
+        if (playLists == null) {
+            playLists = PlayListDAO.selectPlayListByName(name);
+        }
         return playLists;
     }
 

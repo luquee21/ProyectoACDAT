@@ -15,11 +15,6 @@ public class Disc {
     public Disc() {
     }
 
-    public Disc(String name, String photo) {
-        this.name = name;
-        this.photo = photo;
-    }
-
     public Disc(int id, String name, String photo) {
         this.id = id;
         this.name = name;
@@ -66,6 +61,9 @@ public class Disc {
     }
 
     public Artist getArtist() {
+        if (artist == null) {
+            artist = ArtistDAO.selectById(id_artista);
+        }
         return artist;
     }
 
@@ -90,6 +88,9 @@ public class Disc {
     }
 
     public List<Song> getSongs() {
+        if (songs == null) {
+            songs = SongDAO.selectAllSongByDisc(id);
+        }
         return songs;
     }
 

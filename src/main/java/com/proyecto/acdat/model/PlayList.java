@@ -6,6 +6,7 @@ public class PlayList {
     String description;
     Song[] songs;
     User[] subscribers;
+    String email_creator; //FALTA
     User creator;
 
     public PlayList(int id,String name,String description) {
@@ -41,6 +42,7 @@ public class PlayList {
     }
 
     public Song[] getSongs() {
+        //FALTA
         return songs;
     }
 
@@ -49,6 +51,7 @@ public class PlayList {
     }
 
     public User[] getSubscribers() {
+        //FALTA
         return subscribers;
     }
 
@@ -57,7 +60,11 @@ public class PlayList {
     }
 
     public User getCreator() {
+        if (creator == null) {
+            creator = UserDAO.selectByEmail(email_creator);
+        }
         return creator;
+
     }
 
     public void setCreator(User creator) {

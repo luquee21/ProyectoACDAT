@@ -11,6 +11,7 @@ import java.util.List;
 public class ArtistDAO extends Artist {
     private static final String SELECTALL = "SELECT * FROM Artista";
     private static final String SELECTBYNAME = "SELECT * FROM Artista WHERE nombre=?";
+    private static final String SELECTBYIDSONG = "SELECT * FROM Artista INNER JOIN Disco ON Artista.id = Disco.id_artista INNER JOIN Cancion ON Cancion.id_disco = Disco.id WHERE Cancion.id = ?";
     private static final String SELECTBYID = "SELECT * FROM Artista WHERE id=?";
     private static final String SELECTBYNATIONALITY = "SELECT * FROM Artista WHERE nacionalidad=?";
     private static final String INSERTARTIST = "INSERT INTO Artista (nombre,nacionalidad,foto) VALUES(?,?,?)";
@@ -26,11 +27,14 @@ public class ArtistDAO extends Artist {
             PreparedStatement ps = conn.prepareStatement(SELECTALL);
             ResultSet s = ps.executeQuery();
 
-            while (s.next()) {
-                artist = new Artist(s.getInt("id"),s.getString("nombre"), s.getString("nacionalidad"), s.getString("foto"));
+            while (s != null && s.next()) {
+                artist = new Artist(s.getInt("id"), s.getString("nombre"), s.getString("nacionalidad"), s.getString("foto"));
                 aux.add(artist);
             }
+            if (s != null) {
                 s.close();
+            }
+
         } catch (SQLException ex) {
 
         }
@@ -42,12 +46,14 @@ public class ArtistDAO extends Artist {
             try {
                 java.sql.Connection conn = ConnectionUtils.getConnection();
                 PreparedStatement ps = conn.prepareStatement(SELECTBYNAME);
-                ps.setString(1,name);
+                ps.setString(1, name);
                 ResultSet s = ps.executeQuery();
-                while (s.next()) {
+                while (s != null && s.next()) {
                     artist = new Artist(s.getInt("id"), s.getString("nombre"), s.getString("nacionalidad"), s.getString("foto"));
                 }
-                s.close();
+                if (s != null) {
+                    s.close();
+                }
             } catch (SQLException ex) {
 
             }
@@ -62,10 +68,32 @@ public class ArtistDAO extends Artist {
             PreparedStatement ps = conn.prepareStatement(SELECTBYID);
             ps.setInt(1, id);
             ResultSet s = ps.executeQuery();
-            while (s.next()) {
+            while (s != null && s.next()) {
                 artist = new Artist(s.getInt("id"), s.getString("nombre"), s.getString("nacionalidad"), s.getString("foto"));
             }
-            s.close();
+            if (s != null) {
+                s.close();
+            }
+        } catch (SQLException ex) {
+
+        }
+
+        return artist;
+    }
+
+    public static Artist selectByIdSong(int id) {
+        Artist artist = null;
+        try {
+            java.sql.Connection conn = ConnectionUtils.getConnection();
+            PreparedStatement ps = conn.prepareStatement(SELECTBYIDSONG);
+            ps.setInt(1, id);
+            ResultSet s = ps.executeQuery();
+            while (s != null && s.next()) {
+                artist = new Artist(s.getInt("id"), s.getString("nombre"), s.getString("nacionalidad"), s.getString("foto"));
+            }
+            if (s != null) {
+                s.close();
+            }
         } catch (SQLException ex) {
 
         }
@@ -82,11 +110,13 @@ public class ArtistDAO extends Artist {
             ps.setString(1, nationality);
             ResultSet s = ps.executeQuery();
 
-            while (s.next()) {
-                artist = new Artist(s.getInt("id"),s.getString("nombre"), s.getString("nacionalidad"), s.getString("foto"));
+            while (s != null && s.next()) {
+                artist = new Artist(s.getInt("id"), s.getString("nombre"), s.getString("nacionalidad"), s.getString("foto"));
                 aux.add(artist);
             }
-            s.close();
+            if (s != null) {
+                s.close();
+            }
         } catch (SQLException ex) {
 
         }

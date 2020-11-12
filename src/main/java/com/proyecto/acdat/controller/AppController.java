@@ -22,18 +22,8 @@ public class AppController implements IAppController {
     }
 
     @Override
-    public List<Artist> selectAllArtist(String option) {
-        List<Artist> artists = ArtistDAO.selectAll();
-        if (!option.equals("lazy")) {
-            for (Artist a : artists) {
-                List<Disc> discs = DiscDAO.selectByArtist(a.getId());
-                if (!discs.isEmpty()) {
-                    a.setDisc(discs);
-                }
-            }
-        }
-
-        return artists;
+    public List<Artist> selectAllArtist() {
+        return ArtistDAO.selectAll();
 
     }
 

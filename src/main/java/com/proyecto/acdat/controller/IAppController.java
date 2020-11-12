@@ -5,34 +5,52 @@ import com.proyecto.acdat.model.*;
 import java.util.List;
 
 public interface IAppController {
-    //comenta, reproduce, genero se borran
+ //comenta, reproduce, genero se borran
 
-    //Artist
-     boolean addArtist(Artist artist);
-     boolean deleteArtist(String name);
-     boolean updateArtist(Artist artist, int id);
-     List<Artist> selectAllArtist(String option);
-     Artist selectArtistByName(String name);
-     Artist selectArtistById(int id);
-     List<Artist> selectArtistByNationality(String nationality);
+ //Artist
+ boolean addArtist(Artist artist);
 
-     //Disc
-     boolean addDisc(Disc disc);
-     boolean deleteDisc(int id);
-     boolean deleteAllDiscOfArtist(int id);
-     boolean updateDisc(Disc disc);
-     List<Disc> selectAllDisc();
-     List<Disc> selectDiscByName(String name);
-     List<Disc> selectDiscByArtist(int id);
+ boolean deleteArtist(String name);
 
-     //PlayList
-     boolean addPlayList(PlayList playList);
-     boolean addSongToPlayList(Song song, int id);
-     boolean addSubToPlayList(User user, int id);
-     boolean deleteSongToPlayList(Song song, int id);
-     boolean deleteSubOfPlayList(User user, int id);
-     boolean deletePlayList(int id);
-     boolean updatePlayList(PlayList playList);
+ boolean updateArtist(Artist artist, int id);
+
+ List<Artist> selectAllArtist();
+
+ Artist selectArtistByName(String name);
+
+ Artist selectArtistById(int id);
+
+ List<Artist> selectArtistByNationality(String nationality);
+
+ //Disc
+ boolean addDisc(Disc disc);
+
+ boolean deleteDisc(int id);
+
+ boolean deleteAllDiscOfArtist(int id);
+
+ boolean updateDisc(Disc disc);
+
+ List<Disc> selectAllDisc();
+
+ List<Disc> selectDiscByName(String name);
+
+ List<Disc> selectDiscByArtist(int id);
+
+ //PlayList
+ boolean addPlayList(PlayList playList);
+
+ boolean addSongToPlayList(Song song, int id);
+
+ boolean addSubToPlayList(User user, int id);
+
+ boolean deleteSongToPlayList(Song song, int id);
+
+ boolean deleteSubOfPlayList(User user, int id);
+
+ boolean deletePlayList(int id);
+
+ boolean updatePlayList(PlayList playList);
      List<PlayList> selectAllPlayList();
      List<PlayList> selectPlayListByName(String name);
      List<PlayList> selectPlayListByEmail(User user);
