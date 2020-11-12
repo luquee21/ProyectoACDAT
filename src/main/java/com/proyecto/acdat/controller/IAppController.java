@@ -11,12 +11,10 @@ public interface IAppController {
      boolean addArtist(Artist artist);
      boolean deleteArtist(String name);
      boolean updateArtist(Artist artist, int id);
-     List<Artist> selectAllArtist();
+     List<Artist> selectAllArtist(String option);
      Artist selectArtistByName(String name);
-
- Artist selectArtistById(int id);
-
- List<Artist> selectArtistByNationality(String nationality);
+     Artist selectArtistById(int id);
+     List<Artist> selectArtistByNationality(String nationality);
 
      //Disc
      boolean addDisc(Disc disc);

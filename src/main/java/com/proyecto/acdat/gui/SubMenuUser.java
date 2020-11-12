@@ -121,7 +121,7 @@ public class SubMenuUser {
                     Utilities.P("No hay ningún usuario creado");
                 } else {
                     for (User u : users) {
-                        playLists = MyInstance.getInstance().selectAllPlayListByEmail(u.getEmail());
+                        playLists = MyInstance.getInstance().selectPlayListByEmail(u);
                         if (playLists != null) {
                             u.setPlayLists(playLists);
                         }
@@ -138,7 +138,7 @@ public class SubMenuUser {
                     Utilities.P("No hay usuarios con ese nombre");
                 } else {
                     for (User u : users) {
-                        playLists = MyInstance.getInstance().selectAllPlayListByEmail(u.getEmail());
+                        playLists = MyInstance.getInstance().selectPlayListByEmail(u);
                         if (playLists != null) {
                             u.setPlayLists(playLists);
                         }
@@ -154,7 +154,7 @@ public class SubMenuUser {
                 if (user == null) {
                     Utilities.P("No hay ningún usuario con ese email");
                 } else {
-                    playLists = MyInstance.getInstance().selectAllPlayListByEmail(u.getEmail());
+                    playLists = MyInstance.getInstance().selectPlayListByEmail(user);
                     if (!playLists.isEmpty()) {
                         user.setPlayLists(playLists);
                     }

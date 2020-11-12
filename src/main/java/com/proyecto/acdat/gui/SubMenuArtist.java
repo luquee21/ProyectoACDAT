@@ -71,7 +71,7 @@ public class SubMenuArtist {
             option = Utilities.getInt();
             switch (option) {
                 case 1:
-                    List<Artist> artists = MyInstance.getInstance().selectAllArtist();
+                    List<Artist> artists = MyInstance.getInstance().selectAllArtist("eagle");
                     if (artists == null) {
                         Utilities.P("No hay ningún artista creado");
                     } else {
@@ -118,32 +118,15 @@ public class SubMenuArtist {
             option = Utilities.getInt();
             switch (option) {
                 case 1:
-                    artists = MyInstance.getInstance().selectAllArtist();
-                    discs = MyInstance.getInstance().selectAllDisc();
-                    if (artists.isEmpty()) {
+                    artists = MyInstance.getInstance().selectAllArtist("eagle");
+                    if(artists.isEmpty()){
                         Utilities.P("No hay ningún artista creado");
                     } else {
-                        if (!discs.isEmpty()) {
-                            for (Disc d : discs) {
-                                for (Artist a : artists) {
-                                    if (d.getId_artista() == a.getId()) {
-                                        aux = MyInstance.getInstance().selectDiscByArtist(a.getId());
-                                        if (!aux.isEmpty()) {
-                                            a.setDisc(aux);
-                                        }
-                                    }
-                                }
-                            }
-                            for (Artist a : artists) {
-                                Utilities.P(a.toString());
-                            }
-                        } else {
-                            for (Artist a : artists) {
-                                Utilities.P(a.toString());
-                            }
+                        for(Artist artist : artists){
+                            Utilities.P(artist.toString());
                         }
-
                     }
+
                     break;
                 case 2:
                     String name = Utilities.getString("Introduce el nombre del artista: ");

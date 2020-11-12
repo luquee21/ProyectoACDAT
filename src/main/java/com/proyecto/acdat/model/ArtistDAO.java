@@ -30,7 +30,7 @@ public class ArtistDAO extends Artist {
                 artist = new Artist(s.getInt("id"),s.getString("nombre"), s.getString("nacionalidad"), s.getString("foto"));
                 aux.add(artist);
             }
-
+                s.close();
         } catch (SQLException ex) {
 
         }
@@ -47,7 +47,7 @@ public class ArtistDAO extends Artist {
                 while (s.next()) {
                     artist = new Artist(s.getInt("id"), s.getString("nombre"), s.getString("nacionalidad"), s.getString("foto"));
                 }
-
+                s.close();
             } catch (SQLException ex) {
 
             }
@@ -65,7 +65,7 @@ public class ArtistDAO extends Artist {
             while (s.next()) {
                 artist = new Artist(s.getInt("id"), s.getString("nombre"), s.getString("nacionalidad"), s.getString("foto"));
             }
-
+            s.close();
         } catch (SQLException ex) {
 
         }
@@ -86,7 +86,7 @@ public class ArtistDAO extends Artist {
                 artist = new Artist(s.getInt("id"),s.getString("nombre"), s.getString("nacionalidad"), s.getString("foto"));
                 aux.add(artist);
             }
-
+            s.close();
         } catch (SQLException ex) {
 
         }
@@ -105,7 +105,6 @@ public class ArtistDAO extends Artist {
             if(rs > 0){
                 result = true;
             }
-
         } catch (SQLException ex) {
         }
 
@@ -125,7 +124,6 @@ public class ArtistDAO extends Artist {
 
         } catch (SQLException ex) {
         }
-
         return result;
     }
 
@@ -147,7 +145,6 @@ public class ArtistDAO extends Artist {
         } catch (SQLException ex) {
 
         }
-
         return result;
     }
 }

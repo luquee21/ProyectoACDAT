@@ -22,8 +22,19 @@ public class AppController implements IAppController {
     }
 
     @Override
-    public List<Artist> selectAllArtist() {
-        return ArtistDAO.selectAll();
+    public List<Artist> selectAllArtist(String option) {
+        List<Artist> artists = ArtistDAO.selectAll();
+        if (!option.equals("lazy")) {
+            for (Artist a : artists) {
+                List<Disc> discs = DiscDAO.selectByArtist(a.getId());
+                if (!discs.isEmpty()) {
+                    a.setDisc(discs);
+                }
+            }
+        }
+
+        return artists;
+
     }
 
     @Override
@@ -54,11 +65,13 @@ public class AppController implements IAppController {
 
 
     @Override
-    public boolean deleteAllDiscOfArtist(int id) { return DiscDAO.deleteAllDiscOfArtist(id); }
+    public boolean deleteAllDiscOfArtist(int id) {
+        return DiscDAO.deleteAllDiscOfArtist(id);
+    }
 
     @Override
     public boolean updateDisc(Disc disc) {
-       return DiscDAO.updateDisc(disc);
+        return DiscDAO.updateDisc(disc);
     }
 
     @Override
@@ -122,7 +135,9 @@ public class AppController implements IAppController {
     }
 
     @Override
-    public List<PlayList> selectPlayListByEmail(User user) { return PlayListDAO.selectPlayListByEmail(user); }
+    public List<PlayList> selectPlayListByEmail(User user) {
+        return PlayListDAO.selectPlayListByEmail(user);
+    }
 
     @Override
     public boolean addSong(Song song) {
