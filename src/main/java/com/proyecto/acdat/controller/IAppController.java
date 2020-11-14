@@ -44,7 +44,7 @@ public interface IAppController {
 
  boolean addSubToPlayList(User user, int id);
 
- boolean deleteSongToPlayList(Song song, int id);
+ boolean deleteSongOfPlayList(int idsong, int idPlaylist);
 
  boolean deleteSubOfPlayList(User user, int id);
 

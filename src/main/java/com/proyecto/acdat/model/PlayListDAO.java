@@ -13,19 +13,16 @@ public class PlayListDAO extends PlayList {
     private static final String SELECTALL = "SELECT * FROM Lista";
     private static final String SELECTBYNAME = "SELECT * FROM Lista WHERE nombre=?";
     private static final String SELECTBYEMAIL = "SELECT * FROM Lista WHERE id_usuario=?";
-    private static final String INSERTPLAYLIST = "INSERT INTO Lista (nombre,descripcion,id_usuario) VALUES(?,?,?,?)";
+    private static final String INSERTPLAYLIST = "INSERT INTO Lista (nombre,descripcion,id_usuario) VALUES(?,?,?)";
     private static final String DELETEPLAYLIST = "DELETE FROM Lista WHERE id=?";
     private static final String UPDATEPLAYLIST = "UPDATE Lista SET nombre=?, descripcion=?, id_usuario=? WHERE id=?";
     private static final String INSERTSUB = "INSERT INTO Suscripcion (id_usuario, id_lista) values(?,?)";
     private static final String DELETESUB = "DELETE FROM Suscripcion WHERE id_usuario=?";
     private static final String INSERTSONG = "INSERT INTO Lista_cancion (id_lista, id_cancion) values(?,?)";
-    private static final String DELETESONG = "DELETE FROM Lista_cancion WHERE id_cancion=?";
+    private static final String DELETESONG = "DELETE FROM Lista_cancion WHERE id_cancion=? AND id_lista=?";
 
-
-    public PlayListDAO(int id, String name, String description) {
-        super(id, name, description);
+    public PlayListDAO() {
     }
-
 
     @Override
     public int getId() {
@@ -96,7 +93,7 @@ public class PlayListDAO extends PlayList {
             ResultSet s = ps.executeQuery();
 
             while (s.next()) {
-                playList = new PlayList(s.getInt("id"), s.getString("name"), s.getString("description"));
+                playList = new PlayList(s.getInt("id"), s.getString("name"), s.getString("description"), s.getInt("id_usuario"));
                 aux.add(playList);
             }
 
@@ -115,7 +112,7 @@ public class PlayListDAO extends PlayList {
             ps.setString(1,name);
             ResultSet s = ps.executeQuery();
             while(s.next()){
-                playList = new PlayList(s.getInt("id"),s.getString("name"),s.getString("description"));
+                playList = new PlayList(s.getInt("id"),s.getString("name"),s.getString("description"), s.getInt("id_usuario"));
                 aux.add(playList);
             }
 
@@ -136,7 +133,7 @@ public class PlayListDAO extends PlayList {
             ResultSet s = ps.executeQuery();
 
             while (s.next()) {
-                playList = new PlayList(s.getInt("id"), s.getString("nombre"), s.getString("nacionalidad"));
+                playList = new PlayList(s.getInt("id"), s.getString("nombre"), s.getString("descripcion"), s.getInt("id_usuario"));
                 aux.add(playList);
             }
 
@@ -202,7 +199,7 @@ public class PlayListDAO extends PlayList {
         return result;
     }
 
-    boolean addSubToPlayList(User user, int id){
+    public static boolean addSubToPlayList(User user, int id){
         boolean result=false;
         try {
             java.sql.Connection conn = ConnectionUtils.getConnection();
@@ -220,7 +217,7 @@ public class PlayListDAO extends PlayList {
         return result;
     }
 
-    boolean deleteSubOfPlayList(User user, int id){
+    public static boolean deleteSubOfPlayList(User user, int id){
         boolean result = false;
         try {
             java.sql.Connection conn = ConnectionUtils.getConnection();
@@ -238,7 +235,7 @@ public class PlayListDAO extends PlayList {
         return result;
     }
 
-    boolean addSongToPlayList(Song song, int id){
+    public static boolean addSongToPlayList(Song song, int id){
         boolean result = false;
         try{
             java.sql.Connection conn = ConnectionUtils.getConnection();
@@ -256,13 +253,13 @@ public class PlayListDAO extends PlayList {
 
     }
 
-    boolean deleteSongToPlayList(Song song, int id){
+    public static boolean deleteSongToPlayList(int idSong, int idPlaylist){
         boolean result=false;
         try {
             java.sql.Connection conn = ConnectionUtils.getConnection();
             PreparedStatement ps = conn.prepareStatement(DELETESONG);
-            ps.setInt(1,song.getId());
-            ps.setInt(2,id);
+            ps.setInt(1,idSong);
+            ps.setInt(2,idPlaylist);
             int rs = ps.executeUpdate();
             if(rs > 0){
                 result = true;

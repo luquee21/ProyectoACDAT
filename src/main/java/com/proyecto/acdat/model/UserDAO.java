@@ -12,6 +12,7 @@ public class UserDAO extends User {
     private static final String SELECTALL = "SELECT * FROM Usuario";
     private static final String SELECTBYNAME = "SELECT * FROM Usuario WHERE nombre=?";
     private static final String SELECTBYEMAIL = "SELECT * FROM Usuario WHERE correo=?";
+    private static final String SELECTBYID = "SELECT * FROM Usuario WHERE id=?";
     private static final String INSERTUSER = "INSERT INTO Usuario (correo,nombre,foto) VALUES(?,?,?)";
     private static final String DELETEUSER = "DELETE FROM Usuario WHERE id=?";
     private static final String DELETEALLPLAYLISTOFUSER = "DELETE FROM Lista WHERE id_usuario=?";
@@ -78,6 +79,24 @@ public class UserDAO extends User {
             java.sql.Connection conn = ConnectionUtils.getConnection();
             PreparedStatement ps = conn.prepareStatement(SELECTBYEMAIL);
             ps.setString(1,email);
+            ResultSet s = ps.executeQuery();
+            while(s.next()){
+                user = new User(s.getInt("id"), s.getString("nombre"), s.getString("correo"), s.getString("foto"));
+            }
+
+        } catch (SQLException ex) {
+
+        }
+
+        return user;
+    }
+
+    public static User selectById(int id){
+        User user=null;
+        try {
+            java.sql.Connection conn = ConnectionUtils.getConnection();
+            PreparedStatement ps = conn.prepareStatement(SELECTBYID);
+            ps.setInt(1,id);
             ResultSet s = ps.executeQuery();
             while(s.next()){
                 user = new User(s.getInt("id"), s.getString("nombre"), s.getString("correo"), s.getString("foto"));

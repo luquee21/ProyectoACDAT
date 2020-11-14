@@ -91,7 +91,7 @@ public class Disc {
         if (songs == null) {
             songs = SongDAO.selectAllSongByDisc(id);
         }
-        return songs;
+        return SongDAO.selectAllSongByDisc(this.id);
     }
 
     public void setSongs(List<Song> songs) {

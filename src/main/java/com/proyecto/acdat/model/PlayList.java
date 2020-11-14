@@ -6,15 +6,26 @@ public class PlayList {
     String description;
     Song[] songs;
     User[] subscribers;
-    String email_creator; //FALTA
+    int id_creator; //FALTA
     User creator;
 
-    public PlayList(int id,String name,String description) {
+    public PlayList() {
+    }
+
+    public PlayList(int id, String name, String description, int id_creator) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.id_creator = id_creator;
     }
     public PlayList(String name,String description,User creator){
+        this.name = name;
+        this.description = description;
+        this.creator = creator;
     }
     public PlayList(String name, String description){
-
+        this.name = name;
+        this.description = description;
     }
 
     public int getId() {
@@ -61,7 +72,7 @@ public class PlayList {
 
     public User getCreator() {
         if (creator == null) {
-            creator = UserDAO.selectByEmail(email_creator);
+            creator = UserDAO.selectById(id_creator);
         }
         return creator;
 
@@ -82,13 +93,13 @@ public class PlayList {
         String print;
 
         if (songs == null && subscribers == null) {
-            print = "[PlayList] = id: " + id + ", nombre: " + name + ", descripcion: " + " | " + creator;
+            print = "[PlayList] = id: " + id + ", nombre: " + name + ", descripcion: " + description + " | " + creator;
         } else if (songs == null && subscribers != null) {
-            print = "[PlayList] = id: " + id + ", nombre: " + name + ", descripcion: " + " | " + creator + " | " + subscribers;
+            print = "[PlayList] = id: " + id + ", nombre: " + name + ", descripcion: " + description + " | " + creator + " | " + subscribers;
         } else if (songs != null && subscribers == null) {
-            print = "[PlayList] = id: " + id + ", nombre: " + name + ", descripcion: " + " | " + creator + " | " + songs;
+            print = "[PlayList] = id: " + id + ", nombre: " + name + ", descripcion: " + description + " | " + creator + " | " + songs;
         } else {
-            print = "[PlayList] = id: " + id + ", nombre: " + name + ", descripcion: " + " | " + creator + " | " + subscribers + " | " + songs;
+            print = "[PlayList] = id: " + id + ", nombre: " + name + ", descripcion: " + description + " | " + creator + " | " + subscribers + " | " + songs;
         }
         return print;
     }

@@ -39,14 +39,19 @@ public class SubMenuPlayList {
                     selectPlayListByEmail();
                     break;
                 case 5:
+                    addSubToPlayList();
                     break;
                 case 6:
+                    deleteSubOfPlayList();
                     break;
                 case 7:
+                    addSongToPlayList();
                     break;
                 case 8:
+                    deleteSongOfPlaylist();
                     break;
                 case 9:
+                    Menu.start();
                     break;
                 default:
                     Utilities.P("Por favor, introduce una opción válida");
@@ -61,7 +66,8 @@ public class SubMenuPlayList {
         String description = Utilities.getString("Introduce la descripción de la PlayList");
         String email = Utilities.getString("Introduce el correo electrónico del creador de la PlayList");
         User user = MyInstance.getInstance().selectUserByEmail(email);
-        if(MyInstance.getInstance().addPlayList(new PlayList(name,description,user))){
+        PlayList playList = new PlayList(name,description,user);
+        if(MyInstance.getInstance().addPlayList(playList)){
             Utilities.P("PlayList creada con éxito");
         }else {
             Utilities.P("No se ha podido crear la PlayList");
@@ -162,14 +168,78 @@ public class SubMenuPlayList {
                 Utilities.P("No hay listas de ese usuario");
             }else{
                 for(PlayList p : playList){
-                    Utilities.P(p.toString());
+                    Utilities.P(p.toString() + " " + p.getCreator());
                 }
             }
         }
     }
 
     public static void addSongToPlayList(){
+        Song song = null;
+        String songName = Utilities.getString("Introduce el nombre de la canción a añadir");
+        List<Song> songs = MyInstance.getInstance().selectSongByName(songName);
+        for(Song s : songs){
+            Utilities.P(s.toString());
+        }
+        int id = Utilities.getInt("Introduce la id de la canción deseada: ");
+        for(Song s : songs){
+            if(id == s.getId()){
+                song = s;
+            }
+        }
+        if(MyInstance.getInstance().addSongToPlayList(song, id)){
+            Utilities.P("Canción añadida con éxito");
+        }else{
+            Utilities.P("No se ha podido añadir la canción");
+        }
+    }
 
+    public static void deleteSongOfPlaylist(){
+        String playlistName = Utilities.getString("Introduce el nombre de la Playlist: ");
+        List<PlayList> playLists = MyInstance.getInstance().selectPlayListByName(playlistName);
+        for(PlayList p : playLists){
+            Utilities.P(p.toString());
+        }
+        int idPlaylist = Utilities.getInt("Introduce el id de la Playlist que deseas");
+        int idSong = Utilities.getInt("Introduce el id de la canción que deseas borrar");
+
+        if(MyInstance.getInstance().deleteSongOfPlayList(idSong,idPlaylist)){
+            Utilities.P("Canción borrada con éxito");
+        }else{
+            Utilities.P("No se ha podido borrar la canción");
+        }
+    }
+
+    public static void addSubToPlayList(){
+        String playlistName = Utilities.getString("Introduce el nombre de la Playlist: ");
+        List<PlayList> playLists = MyInstance.getInstance().selectPlayListByName(playlistName);
+        for(PlayList p : playLists){
+            Utilities.P(p.toString());
+        }
+        int idPlaylist = Utilities.getInt("Introduce el id de la Playlist que deseas");
+        String email = Utilities.getString("Introduce el email del usuario que deseas suscribir a la Playlist");
+        User user = MyInstance.getInstance().selectUserByEmail(email);
+        if(MyInstance.getInstance().addSubToPlayList(user, idPlaylist)){
+            Utilities.P("Usuario suscrito con éxito");
+        }else{
+            Utilities.P("Ha ocurrido un error no se ha podido realizar la suscripción");
+        }
+    }
+
+    public static void deleteSubOfPlayList(){
+        String playlistName = Utilities.getString("Introduce el nombre de la Playlist: ");
+        List<PlayList> playLists = MyInstance.getInstance().selectPlayListByName(playlistName);
+        for(PlayList p : playLists){
+            Utilities.P(p.toString());
+        }
+        int idPlaylist = Utilities.getInt("Introduce el id de la Playlist que deseas");
+        String email = Utilities.getString("Introduce el email del usuario que deseas borrar de la Playlist");
+        User user = MyInstance.getInstance().selectUserByEmail(email);
+        if(MyInstance.getInstance().deleteSubOfPlayList(user, idPlaylist)){
+            Utilities.P("Usuario borrado con éxito");
+        }else{
+            Utilities.P("Ha ocurrido un error no se ha podido borrar");
+        }
     }
 
 }
