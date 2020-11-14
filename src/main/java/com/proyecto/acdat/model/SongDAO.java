@@ -11,6 +11,7 @@ import java.util.List;
 public class SongDAO extends Song {
     private static final String SELECTALL = "SELECT * FROM Cancion";
     private static final String SELECTBYNAME = "SELECT * FROM Cancion WHERE nombre=?";
+    private static final String SELECTALLSONGOFPLAYLIST = "SELECT * FROM Cancion INNER JOIN Lista_cancion ON Cancion.id = Lista_cancion.id_cancion WHERE Lista_cancion.id = ?";
     private static final String SELECTALLSONGBYDISC = "SELECT * FROM Cancion INNER JOIN Disco ON Cancion.id_disco=Disco.id WHERE Disco.id=?";
     private static final String SELECTALLSONGOFARTIST = "SELECT * FROM Cancion INNER JOIN Disco ON Cancion.id_disco = Disco.id INNER JOIN Artista ON Artista.id=Disco.id_artista WHERE Artista.nombre=?";
     private static final String INSERTSONG = "INSERT INTO Cancion (nombre,duracion,id_genero,id_disco) VALUES(?,?,NULL,?)";
@@ -62,6 +63,25 @@ public class SongDAO extends Song {
         super.setDisc(disc);
     }
 
+    public static List<Song> selectAllSongOfPlaylist(int id) {
+        List<Song> aux = new ArrayList<>();
+        Song song;
+        try {
+            java.sql.Connection conn = ConnectionUtils.getConnection();
+            PreparedStatement ps = conn.prepareStatement(SELECTALLSONGOFPLAYLIST);
+            ps.setInt(1, id);
+            ResultSet s = ps.executeQuery();
+            while (s != null && s.next()) {
+                song = new Song(s.getInt("id"), s.getString("nombre"), s.getInt("duracion"), s.getInt("id_disco"));
+                aux.add(song);
+            }
+
+        } catch (SQLException ex) {
+
+        }
+        return aux;
+    }
+
     public static List<Song> selectAll() {
         List<Song> aux = new ArrayList<>();
         Song song;
@@ -69,8 +89,8 @@ public class SongDAO extends Song {
             java.sql.Connection conn = ConnectionUtils.getConnection();
             PreparedStatement ps = conn.prepareStatement(SELECTALL);
             ResultSet s = ps.executeQuery();
-            while (s.next()) {
-                song = new Song(s.getInt("id"),s.getString("nombre"), s.getInt("duracion"), s.getInt("id_disco"));
+            while (s != null && s.next()) {
+                song = new Song(s.getInt("id"), s.getString("nombre"), s.getInt("duracion"), s.getInt("id_disco"));
                 aux.add(song);
             }
 
@@ -88,8 +108,8 @@ public class SongDAO extends Song {
             PreparedStatement ps = conn.prepareStatement(SELECTBYNAME);
             ps.setString(1, name);
             ResultSet s = ps.executeQuery();
-            while (s.next()) {
-                song = new Song(s.getInt("id"),s.getString("nombre"),s.getInt("duracion"), s.getInt("id_disco"));
+            while (s != null && s.next()) {
+                song = new Song(s.getInt("id"), s.getString("nombre"), s.getInt("duracion"), s.getInt("id_disco"));
                 aux.add(song);
             }
 
@@ -124,8 +144,8 @@ public class SongDAO extends Song {
             PreparedStatement ps = conn.prepareStatement(SELECTALLSONGOFARTIST);
             ps.setString(1, name);
             ResultSet s = ps.executeQuery();
-            while (s.next()) {
-                song = new Song(s.getInt("id"),s.getString("nombre"), s.getInt("duracion"), s.getInt("id_disco"));
+            while (s != null && s.next()) {
+                song = new Song(s.getInt("id"), s.getString("nombre"), s.getInt("duracion"), s.getInt("id_disco"));
                 aux.add(song);
             }
 
@@ -143,8 +163,8 @@ public class SongDAO extends Song {
             PreparedStatement ps = conn.prepareStatement(SELECTALLSONGBYDISC);
             ps.setInt(1, id_disc);
             ResultSet s = ps.executeQuery();
-            while (s.next()) {
-                song = new Song(s.getInt("id"),s.getString("nombre"), s.getInt("duracion"), s.getInt("id_disco"));
+            while (s != null && s.next()) {
+                song = new Song(s.getInt("id"), s.getString("nombre"), s.getInt("duracion"), s.getInt("id_disco"));
                 aux.add(song);
             }
 

@@ -26,7 +26,7 @@ public class UserDAO extends User {
             PreparedStatement ps = conn.prepareStatement(SELECTALL);
             ResultSet s = ps.executeQuery();
 
-            while (s.next()) {
+            while (s != null && s.next()) {
                 user = new User(s.getInt("id"), s.getString("nombre"), s.getString("correo"), s.getString("foto"));
                 aux.add(user);
             }
@@ -61,7 +61,7 @@ public class UserDAO extends User {
             PreparedStatement ps = conn.prepareStatement(SELECTBYNAME);
             ps.setString(1, name);
             ResultSet s = ps.executeQuery();
-            while (s.next()) {
+            while (s != null && s.next()) {
                 user = new User(s.getInt("id"), s.getString("nombre"), s.getString("correo"), s.getString("foto"));
                 users.add(user);
             }
@@ -80,7 +80,7 @@ public class UserDAO extends User {
             PreparedStatement ps = conn.prepareStatement(SELECTBYEMAIL);
             ps.setString(1,email);
             ResultSet s = ps.executeQuery();
-            while(s.next()){
+            while (s != null && s.next()) {
                 user = new User(s.getInt("id"), s.getString("nombre"), s.getString("correo"), s.getString("foto"));
             }
 
@@ -98,7 +98,7 @@ public class UserDAO extends User {
             PreparedStatement ps = conn.prepareStatement(SELECTBYID);
             ps.setInt(1,id);
             ResultSet s = ps.executeQuery();
-            while(s.next()){
+            while (s != null && s.next()) {
                 user = new User(s.getInt("id"), s.getString("nombre"), s.getString("correo"), s.getString("foto"));
             }
 

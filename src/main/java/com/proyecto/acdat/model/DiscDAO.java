@@ -29,8 +29,8 @@ public class DiscDAO extends Disc {
             PreparedStatement ps = conn.prepareStatement(SELECTALL);
             ResultSet s = ps.executeQuery();
 
-            while (s.next()) {
-                disc = new Disc(s.getInt("id"),s.getString("nombre"), s.getString("foto"),s.getString("fecha_prod"),s.getInt("id_artista"));
+            while (s != null && s.next()) {
+                disc = new Disc(s.getInt("id"), s.getString("nombre"), s.getString("foto"), s.getString("fecha_prod"), s.getInt("id_artista"));
                 aux.add(disc);
             }
 
@@ -48,8 +48,8 @@ public class DiscDAO extends Disc {
             PreparedStatement ps = conn.prepareStatement(SELECTBYNAME);
             ps.setString(1, name);
             ResultSet s = ps.executeQuery();
-            while (s.next()) {
-                disc = new Disc(s.getInt("id"),s.getString("nombre"), s.getString("foto"),s.getString("fecha_prod"),s.getInt("id_artista"));
+            while (s != null && s.next()) {
+                disc = new Disc(s.getInt("id"), s.getString("nombre"), s.getString("foto"), s.getString("fecha_prod"), s.getInt("id_artista"));
                 discs.add(disc);
             }
 
@@ -69,7 +69,7 @@ public class DiscDAO extends Disc {
             ps.setInt(1, id);
             ResultSet s = ps.executeQuery();
 
-            while (s.next()) {
+            while (s != null && s.next()) {
                 disc = new Disc(s.getInt("id"), s.getString("nombre"), s.getString("foto"), s.getString("fecha_prod"), s.getInt("id_artista"));
                 aux.add(disc);
             }
