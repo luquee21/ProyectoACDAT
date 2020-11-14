@@ -1,12 +1,15 @@
 package com.proyecto.acdat.model;
 
+import java.util.List;
+import java.util.Objects;
+
 public class PlayList {
     int id;
     String name;
     String description;
-    Song[] songs;
-    User[] subscribers;
-    int id_creator; //FALTA
+    List<Song> songs;
+    List<User> subscribers;
+    int id_creator;
     User creator;
 
     public PlayList() {
@@ -23,9 +26,10 @@ public class PlayList {
         this.description = description;
         this.creator = creator;
     }
-    public PlayList(String name, String description){
+    public PlayList(String name, String description, int id){
         this.name = name;
         this.description = description;
+        this.id = id;
     }
 
     public int getId() {
@@ -52,21 +56,25 @@ public class PlayList {
         this.description = description;
     }
 
-    public Song[] getSongs() {
-        //FALTA
+    public List<Song> getSongs() {
+        if(songs==null){
+            songs=SongDAO.selectAllSongOfPlaylist(id);
+        }
         return songs;
     }
 
-    public void setSongs(Song[] songs) {
+    public void setSongs(List<Song> songs) {
         this.songs = songs;
     }
 
-    public User[] getSubscribers() {
-        //FALTA
+    public List<User> getSubscribers() {
+       if(subscribers==null){
+           subscribers=PlayListDAO.selectSubOfPlaylist(id);
+       }
         return subscribers;
     }
 
-    public void setSubscribers(User[] subscribers) {
+    public void setSubscribers(List<User> subscribers) {
         this.subscribers = subscribers;
     }
 
@@ -84,8 +92,12 @@ public class PlayList {
 
     @Override
     public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
         PlayList playList = (PlayList) o;
-        return id == playList.id;
+        return id == playList.id &&
+                name.equals(playList.name) &&
+                description.equals(playList.description);
     }
 
     @Override

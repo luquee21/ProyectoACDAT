@@ -15,11 +15,13 @@ public class PlayListDAO extends PlayList {
     private static final String SELECTBYEMAIL = "SELECT * FROM Lista WHERE id_usuario=?";
     private static final String INSERTPLAYLIST = "INSERT INTO Lista (nombre,descripcion,id_usuario) VALUES(?,?,?)";
     private static final String DELETEPLAYLIST = "DELETE FROM Lista WHERE id=?";
-    private static final String UPDATEPLAYLIST = "UPDATE Lista SET nombre=?, descripcion=?, id_usuario=? WHERE id=?";
-    private static final String INSERTSUB = "INSERT INTO Suscripcion (id_usuario, id_lista) values(?,?)";
+    private static final String UPDATEPLAYLIST = "UPDATE Lista SET nombre=?, descripcion=? WHERE id=?";
+    private static final String INSERTSUB = "INSERT INTO Suscripcion values(?,?)";
     private static final String DELETESUB = "DELETE FROM Suscripcion WHERE id_usuario=?";
+    private static final String SELECTSUB = "SELECT * FROM Suscripcion INNER JOIN Usuario ON Suscripcion.id_usuario=Usuario.id WHERE Suscripcion.id_lista=?";
     private static final String INSERTSONG = "INSERT INTO Lista_cancion (id_lista, id_cancion) values(?,?)";
     private static final String DELETESONG = "DELETE FROM Lista_cancion WHERE id_cancion=? AND id_lista=?";
+    private static final String SELECTBYID = "SELECT * FROM Lista WHERE id=?";
 
     public PlayListDAO() {
     }
@@ -55,22 +57,22 @@ public class PlayListDAO extends PlayList {
     }
 
     @Override
-    public Song[] getSongs() {
+    public List<Song> getSongs() {
         return super.getSongs();
     }
 
     @Override
-    public void setSongs(Song[] songs) {
+    public void setSongs(List<Song> songs) {
         super.setSongs(songs);
     }
 
     @Override
-    public User[] getSubscribers() {
+    public List<User> getSubscribers() {
         return super.getSubscribers();
     }
 
     @Override
-    public void setSubscribers(User[] subscribers) {
+    public void setSubscribers(List<User> subscribers) {
         super.setSubscribers(subscribers);
     }
 
@@ -92,13 +94,12 @@ public class PlayListDAO extends PlayList {
             PreparedStatement ps = conn.prepareStatement(SELECTALL);
             ResultSet s = ps.executeQuery();
 
-            while (s.next()) {
-                playList = new PlayList(s.getInt("id"), s.getString("name"), s.getString("description"), s.getInt("id_usuario"));
+            while (s!=null && s.next()) {
+                playList = new PlayList(s.getInt("id"),s.getString("nombre"),s.getString("descripcion"), s.getInt("id_usuario"));
                 aux.add(playList);
             }
 
         } catch (SQLException ex) {
-
         }
         return aux;
     }
@@ -111,16 +112,32 @@ public class PlayListDAO extends PlayList {
             PreparedStatement ps = conn.prepareStatement(SELECTBYNAME);
             ps.setString(1,name);
             ResultSet s = ps.executeQuery();
-            while(s.next()){
-                playList = new PlayList(s.getInt("id"),s.getString("name"),s.getString("description"), s.getInt("id_usuario"));
+            while(s!=null && s.next()){
+                playList = new PlayList(s.getInt("id"),s.getString("nombre"),s.getString("descripcion"), s.getInt("id_usuario"));
                 aux.add(playList);
             }
+
+        } catch (SQLException ex) {
+        }
+
+        return aux;
+    }
+
+    public static PlayList selectPlayListById(int id){
+        PlayList playList = null;
+        try {
+            java.sql.Connection conn = ConnectionUtils.getConnection();
+            PreparedStatement ps = conn.prepareStatement(SELECTBYID);
+            ps.setInt(1,id);
+            ResultSet s = ps.executeQuery();
+            while(s!=null && s.next()){
+                playList = new PlayList(s.getInt("id"),s.getString("nombre"),s.getString("descripcion"), s.getInt("id_usuario"));            }
 
         } catch (SQLException ex) {
 
         }
 
-        return aux;
+        return playList;
     }
 
     public static List<PlayList> selectPlayListByEmail(User user) {
@@ -132,7 +149,7 @@ public class PlayListDAO extends PlayList {
             ps.setInt(1, user.getId());
             ResultSet s = ps.executeQuery();
 
-            while (s.next()) {
+            while (s!=null && s.next()) {
                 playList = new PlayList(s.getInt("id"), s.getString("nombre"), s.getString("descripcion"), s.getInt("id_usuario"));
                 aux.add(playList);
             }
@@ -187,7 +204,7 @@ public class PlayListDAO extends PlayList {
 
             ps.setString(1,playList.getName());
             ps.setString(2,playList.description);
-            ps.setInt(3,playList.creator.getId());
+            ps.setInt(3,playList.getId());
             int rs = ps.executeUpdate();
             if(rs > 0){
                 result = true;
@@ -266,6 +283,26 @@ public class PlayListDAO extends PlayList {
             }
         }catch (SQLException ex){}
         return result;
+    }
+
+    public static List<User> selectSubOfPlaylist(int id){
+        User user = null;
+        List<User> aux = new ArrayList<>();
+        try {
+            java.sql.Connection conn = ConnectionUtils.getConnection();
+            PreparedStatement ps = conn.prepareStatement(SELECTSUB);
+            ps.setInt(1,id);
+            ResultSet s = ps.executeQuery();
+            while(s!=null && s.next()){
+                user = new User(s.getInt("id"), s.getString("nombre"), s.getString("correo"), s.getString("foto"));
+                aux.add(user);
+            }
+
+        } catch (SQLException ex) {
+
+        }
+
+        return aux;
     }
 
 }

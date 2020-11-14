@@ -86,12 +86,12 @@ public class AppController implements IAppController {
 
     @Override
     public boolean addSongToPlayList(Song song, int id) {
-        return false;
+        return PlayListDAO.addSongToPlayList(song, id);
     }
 
     @Override
     public boolean addSubToPlayList(User user, int id) {
-        return false;
+        return PlayListDAO.addSubToPlayList(user, id);
     }
 
     @Override
@@ -101,17 +101,27 @@ public class AppController implements IAppController {
 
     @Override
     public boolean deleteSubOfPlayList(User user, int id) {
-        return false;
+        return PlayListDAO.deleteSubOfPlayList(user, id);
     }
 
     @Override
     public boolean deletePlayList(int id) {
-        return false;
+        return PlayListDAO.deletePlayList(id);
     }
 
     @Override
     public boolean updatePlayList(PlayList playList) {
-        return false;
+        return PlayListDAO.updatePlayList(playList);
+    }
+
+    @Override
+    public PlayList selectPlayListById(int id) {
+        return PlayListDAO.selectPlayListById(id);
+    }
+
+    @Override
+    public List<User> selectSubOfPlaylist(int id) {
+        return PlayListDAO.selectSubOfPlaylist(id);
     }
 
     @Override

@@ -2,6 +2,7 @@ package com.proyecto.acdat.gui;
 
 import com.proyecto.acdat.instance.MyInstance;
 import com.proyecto.acdat.model.PlayList;
+import com.proyecto.acdat.model.PlayListDAO;
 import com.proyecto.acdat.model.Song;
 import com.proyecto.acdat.model.User;
 import com.proyecto.acdat.utils.Utilities;
@@ -18,11 +19,13 @@ public class SubMenuPlayList {
             Utilities.P("2) Borrar PlayList");
             Utilities.P("3) Actualizar PlayList");
             Utilities.P("4) Listar PlayList por email");
-            Utilities.P("5) Añadir usuario a PlayList");
-            Utilities.P("6) Borrar usuario de PlayList");
-            Utilities.P("7) Añadir canción en PlayList");
-            Utilities.P("8) Borrar canción de PlayList");
-            Utilities.P("9) Volver atrás");
+            Utilities.P("5) Listar todas las Playlist");
+            Utilities.P("6) Añadir usuario a PlayList");
+            Utilities.P("7) Borrar usuario de PlayList");
+            Utilities.P("8) Añadir canción en PlayList");
+            Utilities.P("9) Borrar canción de PlayList");
+            Utilities.P("10) Listar suscriptores de Playlist");
+            Utilities.P("11) Volver atrás");
             opction=Utilities.getInt();
 
             switch (opction){
@@ -39,25 +42,31 @@ public class SubMenuPlayList {
                     selectPlayListByEmail();
                     break;
                 case 5:
-                    addSubToPlayList();
+                    selectAllPlaylist();
                     break;
                 case 6:
-                    deleteSubOfPlayList();
+                    addSubToPlayList();
                     break;
                 case 7:
-                    addSongToPlayList();
+                    deleteSubOfPlayList();
                     break;
                 case 8:
-                    deleteSongOfPlaylist();
+                    addSongToPlayList();
                     break;
                 case 9:
+                    deleteSongOfPlaylist();
+                    break;
+                case 10:
+                    selectSubOfPlaylist();
+                    break;
+                case 11:
                     Menu.start();
                     break;
                 default:
                     Utilities.P("Por favor, introduce una opción válida");
                     break;
             }
-        }while (opction!=5);
+        }while (opction!=11);
     }
 
     private static void addPlayList(){
@@ -131,7 +140,7 @@ public class SubMenuPlayList {
                 Utilities.P(pl.toString());
             }
         }
-        int id = Utilities.getInt("Por favor,introduce la id de la PlayList que deseas borrar");
+        int id = Utilities.getInt("Por favor,introduce la id de la PlayList que deseas actualizar");
         for (PlayList p : playlist){
             if (p.getId() == id){
                 oldplaylist = p;
@@ -142,12 +151,12 @@ public class SubMenuPlayList {
         }else{
             String name = Utilities.getString("Introduce el nuevo nombre de la PLayList");
             String description = Utilities.getString("Introduce la nueva descripción de la PlayList");
-            PlayList newPlayList = new PlayList(name,description);
+            PlayList newPlayList = new PlayList(name,description, oldplaylist.getId());
 
             if (oldplaylist.equals(newPlayList)){
                 Utilities.P("No puede ser igual");
             }else {
-                if (MyInstance.getInstance().addPlayList(newPlayList)){
+                if (MyInstance.getInstance().updatePlayList(newPlayList)){
                     Utilities.P("Se ha actualizado con éxito");
                 }else{
                     Utilities.P("No se ha podido actualizar");
@@ -156,6 +165,43 @@ public class SubMenuPlayList {
         }
 
     }
+
+    public static void selectAllPlaylist(){
+        List<PlayList> playLists = MyInstance.getInstance().selectAllPlayList();
+        if(!playLists.isEmpty()){
+            for(PlayList p : playLists){
+                Utilities.P(p.toString() + " Creador: " + p.getCreator() + " Suscriptores: " + p.getSubscribers() + " Canciones: " + p.getSongs());
+            }
+        }
+    }
+
+    public  static void selectSubOfPlaylist(){
+        String name = Utilities.getString("Introduce el nombre de la PlayList");
+        List<PlayList> playlistbyname = MyInstance.getInstance().selectPlayListByName(name);
+        PlayList playList;
+        if (playlistbyname == null) {
+            Utilities.P("La PlayList introducida no existe, comprueba el nombre");
+        } else {
+            for (PlayList pl : playlistbyname) {
+                Utilities.P(pl.toString());
+            }
+            int id = Utilities.getInt("Por favor, introduce la id de la PlayList para ver sus suscriptores");
+            playList = MyInstance.getInstance().selectPlayListById(id);
+            if(playList==null){
+                Utilities.P("La PlayList introducida no existe");
+            }else{
+                List<User> users = MyInstance.getInstance().selectSubOfPlaylist(id);
+                if(users.isEmpty()){
+                    Utilities.P("No tiene suscriptores");
+                }else{
+                    for(User u : users){
+                        Utilities.P(u.toString());
+                    }
+                }
+            }
+        }
+
+        }
 
     public static void selectPlayListByEmail(){
         String email = Utilities.getString("Introduce el email para buscar sus listas de reproducción");
