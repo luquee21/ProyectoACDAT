@@ -19,50 +19,16 @@ public class SongDAO extends Song {
     private static final String DELETEALLSONGOFDISC = "DELETE FROM Cancion WHERE id_disco=?";
     private static final String UPDATESONG = "UPDATE Cancion SET nombre=?, duracion=? WHERE id=?";
 
-    public SongDAO(int id, String name, int duration) {
-        super(id, name, duration);
+    public SongDAO(){
+        super();
+
     }
 
-    @Override
-    public int getId() {
-        return super.getId();
-    }
-
-    @Override
-    public void setId(int id) {
-        super.setId(id);
-    }
-
-    @Override
-    public String getName() {
-        return super.getName();
-    }
-
-    @Override
-    public void setName(String name) {
-        super.setName(name);
-    }
-
-    @Override
-    public int getDuration() {
-        return super.getDuration();
-    }
-
-    @Override
-    public void setDuration(int duration) {
-        super.setDuration(duration);
-    }
-
-    @Override
-    public Disc getDisc() {
-        return super.getDisc();
-    }
-
-    @Override
-    public void setDisc(Disc disc) {
-        super.setDisc(disc);
-    }
-
+    /**
+     * selecciona todas las canciones de una lista de la bbdd
+     * @param id id de la playlist
+     * @return devuelve una lista de canciones
+     */
     public static List<Song> selectAllSongOfPlaylist(int id) {
         List<Song> aux = new ArrayList<>();
         Song song;
@@ -82,6 +48,10 @@ public class SongDAO extends Song {
         return aux;
     }
 
+    /**
+     * selecciona todas las canciones de la bbdd
+     * @return devuelve una lista de canciones
+     */
     public static List<Song> selectAll() {
         List<Song> aux = new ArrayList<>();
         Song song;
@@ -100,6 +70,11 @@ public class SongDAO extends Song {
         return aux;
     }
 
+    /**
+     * selecciona todas las cancion segun un nombre en concreto
+     * @param name nombre de la cancion
+     * @return devuelve una lista de canciones
+     */
     public static List<Song> selectByName(String name) {
         List<Song> aux = new ArrayList<>();
         Song song;
@@ -120,6 +95,11 @@ public class SongDAO extends Song {
         return aux;
     }
 
+    /**
+     * borra todas las canciones de un disco
+     * @param id id de disco
+     * @return devuelve un verdadero si todo ha ido correcto
+     */
     public static boolean deleteAllSongOfDisc(int id){
         boolean result = false;
         try {
@@ -136,6 +116,12 @@ public class SongDAO extends Song {
 
         return result;
     }
+
+    /**
+     * selecciona todas las canciones de un artista
+     * @param name nombre del artista
+     * @return devuelve una lista de canciones
+     */
     public static List<Song> selectAllSongOfArtist(String name) {
         List<Song> aux = new ArrayList<>();
         Song song;
@@ -155,6 +141,11 @@ public class SongDAO extends Song {
         return aux;
     }
 
+    /**
+     * selecciona todas las canciones de un disco
+     * @param id_disc id del disco
+     * @return devuelve una lista de canciones
+     */
     public static List<Song> selectAllSongByDisc(int id_disc) {
         List<Song> aux = new ArrayList<>();
         Song song;
@@ -174,6 +165,11 @@ public class SongDAO extends Song {
         return aux;
     }
 
+    /**
+     * añade una cancion a la bbdd
+     * @param song instancia de la cancion
+     * @return devuelve un verdadero si todo ha ido correcto
+     */
     public static boolean addSong(Song song) {
         boolean result = false;
         try {
@@ -192,6 +188,11 @@ public class SongDAO extends Song {
         return result;
     }
 
+    /**
+     * borra una cancion segun su id
+     * @param id id de la cancion
+     * @return devuelve un verdadero si todo ha ido correcto
+     */
     public static boolean deleteSong(int id) {
         boolean result = false;
         try {
@@ -209,6 +210,11 @@ public class SongDAO extends Song {
         return result;
     }
 
+    /**
+     * actualiza una cancion
+     * @param song instancia de la cancion
+     * @return devuelve un verdadero si todo ha ido correcto
+     */
     public static boolean updateSong(Song song) {
         boolean result = false;
         try {

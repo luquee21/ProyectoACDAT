@@ -18,7 +18,10 @@ public class ArtistDAO extends Artist {
     private static final String DELETEARTIST = "DELETE FROM Artista WHERE nombre=?";
     private static final String UPDATEARTIST = "UPDATE Artista SET nombre=?, nacionalidad=?, foto=? WHERE id=?";
 
-
+    /**
+     * selecciona todos los artistas de la bbbdd
+     * @return devuelve una lista de artistas
+     */
     public static List<Artist> selectAll() {
         List<Artist> aux = new ArrayList<>();
         Artist artist;
@@ -41,6 +44,11 @@ public class ArtistDAO extends Artist {
         return aux;
     }
 
+    /**
+     * selecciona el artista por su nombre de la bbdd
+     * @param name nombre del artista
+     * @return devuelve el artista
+     */
         public static Artist selectByName(String name){
             Artist artist = null;
             try {
@@ -61,6 +69,11 @@ public class ArtistDAO extends Artist {
             return artist;
         }
 
+    /**
+     * selecciona un artista por su id
+     * @param id id del artista
+     * @return deveulve el artista
+     */
     public static Artist selectById(int id) {
         Artist artist = null;
         try {
@@ -81,6 +94,11 @@ public class ArtistDAO extends Artist {
         return artist;
     }
 
+    /**
+     * selecciona un artista por un id de su cancion
+     * @param id id de la cancion
+     * @return devuelve un artista
+     */
     public static Artist selectByIdSong(int id) {
         Artist artist = null;
         try {
@@ -101,6 +119,11 @@ public class ArtistDAO extends Artist {
         return artist;
     }
 
+    /**
+     * selecciona una lista de artistas segun su nacionalidad
+     * @param nationality nacionalidad del artista
+     * @return devuelve una lista de artista
+     */
     public static List<Artist> selectByNationality(String nationality) {
         List<Artist> aux = new ArrayList<>();
         Artist artist;
@@ -123,6 +146,11 @@ public class ArtistDAO extends Artist {
         return aux;
     }
 
+    /**
+     * añade un artista a la bbdd
+     * @param artist le pasamos una instancia de artista
+     * @return devuelve un verdadero si todo ha ido correcto
+     */
     public static boolean addArtist(Artist artist){
         boolean result = false;
         try {
@@ -141,6 +169,11 @@ public class ArtistDAO extends Artist {
         return result;
     }
 
+    /**
+     * borra de la bbdd un artista segun su nombre
+     * @param name nombre del artista
+     * @return devuelve un verdadero si todo ha ido correcto
+     */
     public static boolean deleteArtist(String name){
         boolean result = false;
         try {
@@ -157,6 +190,12 @@ public class ArtistDAO extends Artist {
         return result;
     }
 
+    /**
+     * actualiza un artista segun su id
+     * @param artist instancia del artista con sus nuevos datos
+     * @param id id del artista que se va a actualizar
+     * @return devuelve un verdadero si todo ha ido correcto
+     */
     public static boolean updateArtist(Artist artist, int id){
         boolean result = false;
         try {

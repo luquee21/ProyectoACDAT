@@ -18,6 +18,10 @@ public class UserDAO extends User {
     private static final String DELETEALLPLAYLISTOFUSER = "DELETE FROM Lista WHERE id_usuario=?";
     private static final String UPDATEUSER = "UPDATE Usuario SET nombre=?, foto=? WHERE id=?";
 
+    /**
+     * selecciona todos los usuarios de la bbdd
+     * @return devuelve una lista de usuarios
+     */
     public static List<User> selectAll() {
         List<User> aux = new ArrayList<>();
         User user;
@@ -36,6 +40,11 @@ public class UserDAO extends User {
         return aux;
     }
 
+    /**
+     * borra todas las playlist de un usuario
+     * @param id_user id del usuario
+     * @return devuelve un verdadero si todo es correcto
+     */
     public static boolean deleteAllPlayListOfUser(int id_user) {
         boolean result = false;
         try {
@@ -53,6 +62,11 @@ public class UserDAO extends User {
         return result;
     }
 
+    /**
+     * selecciona una lista de usuarios segun un nombre
+     * @param name nombre de usuario
+     * @return devuelve una lista de usuarios
+     */
     public static List<User> selectByName(String name) {
         List<User> users = new ArrayList<>();
         User user;
@@ -73,6 +87,11 @@ public class UserDAO extends User {
         return users;
     }
 
+    /**
+     * selecciona un usuario por su email
+     * @param email email del usuario
+     * @return devuelve un usuario
+     */
     public static User selectByEmail(String email){
         User user=null;
         try {
@@ -91,6 +110,11 @@ public class UserDAO extends User {
         return user;
     }
 
+    /**
+     * selecciona un usuario por su id
+     * @param id id del usuario
+     * @return devuelve un usuario
+     */
     public static User selectById(int id){
         User user=null;
         try {
@@ -109,6 +133,11 @@ public class UserDAO extends User {
         return user;
     }
 
+    /**
+     * añade un usuario a la bbdd
+     * @param user instancia del usuario
+     * @return devuelve un verdadero si todo ha ido correcto
+     */
     public static boolean addUser(User user){
         boolean result = false;
         try {
@@ -128,6 +157,11 @@ public class UserDAO extends User {
         return result;
     }
 
+    /**
+     * borra un usuario segun su email
+     * @param email email del usuario
+     * @return devuelve un verdadero si todo ha ido correcto
+     */
     public static boolean deleteUser(String email){
         boolean result = false;
         try {
@@ -145,6 +179,11 @@ public class UserDAO extends User {
         return result;
     }
 
+    /**
+     * actualiza un usuario
+     * @param user instancia del usuario
+     * @return devuelve un verdadero si todo ha ido correcto
+     */
     public static boolean updateUser(User user){
         boolean result = false;
         try {

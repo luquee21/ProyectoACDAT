@@ -22,6 +22,9 @@ public class Song {
         this.duration = duration;
     }
 
+    public Song() {
+    }
+
     public Song(String name, int duration, int id_disc) {
         this.name = name;
         this.duration = duration;

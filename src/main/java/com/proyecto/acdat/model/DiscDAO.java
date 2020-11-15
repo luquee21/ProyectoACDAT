@@ -20,7 +20,10 @@ public class DiscDAO extends Disc {
     private static final String DELETEALLDISC = "DELETE from Disco where id_artista=?";
 
 
-
+    /**
+     * selecciona todos los discos de la bbdd
+     * @return devuelve una lista con todos los artistas
+     */
     public static List<Disc> selectAll() {
         List<Disc> aux = new ArrayList<>();
         Disc disc;
@@ -40,6 +43,11 @@ public class DiscDAO extends Disc {
         return aux;
     }
 
+    /**
+     * selecciona todos los discos con un nombre en concreto
+     * @param name nombre del disco
+     * @return devuelve una lista de discos
+     */
     public static List<Disc> selectByName(String name) {
         List<Disc> discs = new ArrayList<>();
         Disc disc;
@@ -60,6 +68,11 @@ public class DiscDAO extends Disc {
         return discs;
     }
 
+    /**
+     * selecciona una lista de discos según el id de un artista
+     * @param id id del artista
+     * @return devuelve una lista de discos
+     */
     public static List<Disc> selectByArtist(int id) {
         List<Disc> aux = new ArrayList<>();
         Disc disc;
@@ -80,6 +93,11 @@ public class DiscDAO extends Disc {
         return aux;
     }
 
+    /**
+     * selecciona un disco de la bbdd según su id
+     * @param id id del disco
+     * @return devuelve el disco
+     */
     public static Disc selectById(int id) {
         Disc disc = null;
         try {
@@ -97,6 +115,11 @@ public class DiscDAO extends Disc {
         return disc;
     }
 
+    /**
+     * añade un disco a la bbdd
+     * @param disc instancia de disco
+     * @return devuelve un verdadero si todo ha ido correcto
+     */
     public static boolean addDisc(Disc disc) {
         boolean result = false;
         try {
@@ -117,6 +140,11 @@ public class DiscDAO extends Disc {
         return result;
     }
 
+    /**
+     * borra un disco segun su id
+     * @param id id de disco
+     * @return devuelve un verdadero si todo ha ido correcto
+     */
     public static boolean deleteDisc(int id) {
         boolean result = false;
         try {
@@ -134,6 +162,11 @@ public class DiscDAO extends Disc {
         return result;
     }
 
+    /**
+     * borra todos los disco de un artista segun su id
+     * @param id id del artista
+     * @return devuelve un verdadero si todo ha ido correcto
+     */
     public static boolean deleteAllDiscOfArtist(int id) {
         boolean result = false;
         try {
@@ -151,6 +184,11 @@ public class DiscDAO extends Disc {
         return result;
     }
 
+    /**
+     * actualiza un disco en la bbdd segun el id del artista
+     * @param disc instancia de disco
+     * @return devuelve un verdadero si todo ha ido correcto
+     */
     public static boolean updateDisc(Disc disc) {
         boolean result = false;
         try {
