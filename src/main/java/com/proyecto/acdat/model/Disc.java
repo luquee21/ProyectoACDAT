@@ -100,17 +100,8 @@ public class Disc {
 
     @Override
     public String toString() {
-        String print;
-        if (songs == null && artist == null) {
-            print = "[Disco] = id: " + id + ", nombre: " + name + ", fecha: " + date;
-        } else if (songs != null && artist == null) {
-            print = "[Disco] = id: " + id + ", nombre: " + name + ", fecha: " + date + " | " + songs;
-        } else if (artist != null && songs == null) {
-            print = "[Disco] = id: " + id + ", nombre: " + name + ", fecha: " + date + " | " + artist;
-        } else {
-            print = "[Disco] = id: " + id + ", nombre: " + name + ", fecha: " + date + " | " + artist + " | " + songs;
-        }
-        return print;
+        return "[Disco] = id: " + id + ", nombre: " + name + ", fecha: " + date;
+
     }
 
     @Override

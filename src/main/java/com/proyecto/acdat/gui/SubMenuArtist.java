@@ -124,7 +124,7 @@ public class SubMenuArtist {
                         Utilities.P("No hay ningún artista creado");
                     } else {
                         for (Artist a : artists) {
-                            Utilities.P(a.toString() + " " + a.getDisc());
+                            Utilities.P(a.toString() + " | " + a.getDisc());
                         }
                     }
                     break;
@@ -141,7 +141,7 @@ public class SubMenuArtist {
                 case 3:
                     name = Utilities.getString("Introduce el nombre del artista: ");
                     artist = MyInstance.getInstance().selectArtistByName(name);
-                    Utilities.P(artist.toString() + " " + artist.getDisc());
+                    Utilities.P(artist.toString() + " | " + artist.getDisc());
                     break;
                 case 4:
                     name = Utilities.getString("Introduce el nombre del artista: ");
@@ -155,7 +155,7 @@ public class SubMenuArtist {
                         Utilities.P("No hay ningún artista con esa nacionalidad");
                     } else {
                         for (Artist a : artists) {
-                            Utilities.P(a.toString() + " " + a.getDisc());
+                            Utilities.P(a.toString() + " | " + a.getDisc());
                         }
                     }
                     break;

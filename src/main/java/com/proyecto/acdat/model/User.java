@@ -71,13 +71,7 @@ public class User {
 
     @Override
     public String toString() {
-        String print;
-        if (playLists == null) {
-            print = "[Usuario] = id: " + id + ", nombre: " + name + ", email: " + email;
-        } else {
-            print = "[Usuario] = id: " + id + ", nombre: " + name + ", email: " + email + " | " + playLists;
-        }
-        return print;
+       return "[Usuario] = id: " + id + ", nombre: " + name + ", email: " + email;
 
     }
 

@@ -87,13 +87,7 @@ public class Song {
 
     @Override
     public String toString() {
-        String print;
-        if(disc == null && artist == null){
-            print = "[Cancion] = id: " + id + ", nombre: " + name + ", duracion: " + duration;
-        } else {
-            print = "[Cancion] = id: " + id + ", nombre: " + name + ", duracion: " + duration + " |"  + disc + " " + artist;
-        }
-        return print;
+       return "[Cancion] = id: " + id + ", nombre: " + name + ", duracion: " + duration;
     }
 
     @Override

@@ -170,7 +170,7 @@ public class SubMenuPlayList {
         List<PlayList> playLists = MyInstance.getInstance().selectAllPlayList();
         if(!playLists.isEmpty()){
             for(PlayList p : playLists){
-                Utilities.P(p.toString() + " Creador: " + p.getCreator() + " Suscriptores: " + p.getSubscribers() + " Canciones: " + p.getSongs());
+                Utilities.P(p.toString() + "| Creador: " + p.getCreator() + "| Suscriptores: " + p.getSubscribers() + "| Canciones: " + p.getSongs());
             }
         }
     }
@@ -214,7 +214,7 @@ public class SubMenuPlayList {
                 Utilities.P("No hay listas de ese usuario");
             }else{
                 for(PlayList p : playList){
-                    Utilities.P(p.toString() + " " + p.getCreator());
+                    Utilities.P(p.toString() + "| Creador: " + p.getCreator() + "| Suscriptores: " + p.getSubscribers() + "| Canciones: " + p.getSongs());
                 }
             }
         }

@@ -137,7 +137,7 @@ public class SubMenuDisc {
                         Utilities.P("No hay ningún disco creado");
                     } else {
                         for(Disc disc : discs){
-                            Utilities.P(disc.toString());
+                            Utilities.P(disc.toString() + " | " + disc.getArtist());
                         }
                     }
                     break;
@@ -148,7 +148,7 @@ public class SubMenuDisc {
                         Utilities.P("No hay ningún disco con ese nombre");
                     } else {
                         for(Disc a : listDiscs){
-                            Utilities.P(a.toString());
+                            Utilities.P(a.toString() + " | " + a.getArtist());
                         }
                     }
                     break;
@@ -160,7 +160,7 @@ public class SubMenuDisc {
                         Utilities.P("No hay ningún disco de ese artista");
                     } else {
                         for(Disc a : discs){
-                            Utilities.P(a.toString());
+                            Utilities.P(a.toString() + " | " + a.getArtist());
                         }
                     }
                     break;

@@ -1,4 +1,5 @@
 package com.proyecto.acdat.model;
+
 import java.util.List;
 
 public class Artist {
@@ -11,13 +12,13 @@ public class Artist {
     public Artist() {
     }
 
-    public Artist(int id,String name, String nationality, String photo) {
-        this.id=id;
+    public Artist(int id, String name, String nationality, String photo) {
+        this.id = id;
         this.name = name;
         this.nationality = nationality;
         this.photo = photo;
     }
-    
+
     public Artist(String name, String nationality, String photo) {
         this.name = name;
         this.nationality = nationality;
@@ -69,16 +70,8 @@ public class Artist {
 
     @Override
     public String toString() {
-        String print;
-        if (disc == null || disc.isEmpty()) {
-            print = "[Artista] = id: " + id + ", nombre: " + name + ", nacionalidad: " + nationality;
-        } else {
-            System.out.println("aki toy");
-            print = "[Artista] = id: " + id + ", nombre: " + name + ", nacionalidad: " + nationality + " | " + disc;
-        }
+        return "[Artista] = id: " + id + ", nombre: " + name + ", nacionalidad: " + nationality;
 
-
-        return print;
     }
 
     @Override
