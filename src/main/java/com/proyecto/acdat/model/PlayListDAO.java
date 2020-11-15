@@ -26,66 +26,10 @@ public class PlayListDAO extends PlayList {
     public PlayListDAO() {
     }
 
-    @Override
-    public int getId() {
-        return super.getId();
-    }
-
-    @Override
-    public void setId(int id) {
-        super.setId(id);
-    }
-
-    @Override
-    public String getName() {
-        return super.getName();
-    }
-
-    @Override
-    public void setName(String name) {
-        super.setName(name);
-    }
-
-    @Override
-    public String getDescription() {
-        return super.getDescription();
-    }
-
-    @Override
-    public void setDescription(String description) {
-        super.setDescription(description);
-    }
-
-    @Override
-    public List<Song> getSongs() {
-        return super.getSongs();
-    }
-
-    @Override
-    public void setSongs(List<Song> songs) {
-        super.setSongs(songs);
-    }
-
-    @Override
-    public List<User> getSubscribers() {
-        return super.getSubscribers();
-    }
-
-    @Override
-    public void setSubscribers(List<User> subscribers) {
-        super.setSubscribers(subscribers);
-    }
-
-    @Override
-    public User getCreator() {
-        return super.getCreator();
-    }
-
-    @Override
-    public void setCreator(User creator) {
-        super.setCreator(creator);
-    }
-
+    /**
+     * Metodo que se conecta a la BBDD
+     * @return una lista de todas las playlists de la BBDD
+     */
     public static List<PlayList> selectAll() {
         List<PlayList> aux = new ArrayList<>();
         PlayList playList;
@@ -104,6 +48,11 @@ public class PlayListDAO extends PlayList {
         return aux;
     }
 
+    /**
+     * Método que se conecta a la BBDD
+     * @param name nombre de la playlist a buscar
+     * @return Lista de todas las playlist de la BBDD con el nombre pasado por parametro
+     */
     public static List<PlayList> selectPlayListByName(String name){
         PlayList playList = null;
         List<PlayList> aux = new ArrayList<>();
@@ -123,6 +72,11 @@ public class PlayListDAO extends PlayList {
         return aux;
     }
 
+    /**
+     * Método que se conecta a la BBDD
+     * @param id id de la playlist a buscar
+     * @return la playlist buscada por la id pasada
+     */
     public static PlayList selectPlayListById(int id){
         PlayList playList = null;
         try {
@@ -140,6 +94,11 @@ public class PlayListDAO extends PlayList {
         return playList;
     }
 
+    /**
+     * Método que se conecta a la BBDD para buscar una playlist creada por cierto usuario
+     * @param user Usuario del programa
+     * @return lista de playlists que contengan como creador el usuario pasado por parametro
+     */
     public static List<PlayList> selectPlayListByEmail(User user) {
         List<PlayList> aux = new ArrayList<>();
         PlayList playList;
@@ -160,6 +119,11 @@ public class PlayListDAO extends PlayList {
         return aux;
     }
 
+    /**
+     * Método que se conecta a la BBDD para añadir una nueva playlist
+     * @param playList lista de reproducción
+     * @return booleano (verdadero o falso) si se ha podido o no añadir la lista de reproducción a la BBDD
+     */
     public static boolean addPlayList(PlayList playList){
         boolean result = false;
         try {
@@ -179,6 +143,11 @@ public class PlayListDAO extends PlayList {
         return result;
     }
 
+    /**
+     * Método que se conecta a la BBDD para borrar una playlist
+     * @param id id de la playlist a borrar
+     * @return booleano (verdadero o falso) si se ha podido o no borrar la lista de reproducción en la BBDD
+     */
     public static boolean deletePlayList(int id){
         boolean result = false;
         try {
@@ -196,6 +165,11 @@ public class PlayListDAO extends PlayList {
         return result;
     }
 
+    /**
+     * Método que conecta la BBDD para actualizar datos de una playlist
+     * @param playList una playlist nueva para editar los datos de una ya existente
+     * @return booleano (verdadero o falso) si se ha podido o no actualizar la lista de reproducción en la BBDD
+     */
     public static boolean updatePlayList(PlayList playList){
         boolean result = false;
         try {
@@ -216,6 +190,13 @@ public class PlayListDAO extends PlayList {
         return result;
     }
 
+    /**
+     * Método que conecta con la BBDD para añadir un suscriptor a una playlist
+     * @param user Usuario a suscribir
+     * @param id id de la playlist a la que queremos suscribirnos
+     * @return booleano (verdadero o falso) si se ha podido o no realizar la suscripción a la lista
+     * de reproducción
+     */
     public static boolean addSubToPlayList(User user, int id){
         boolean result=false;
         try {
@@ -234,6 +215,13 @@ public class PlayListDAO extends PlayList {
         return result;
     }
 
+    /**
+     * Método que conecta a la BBDD para borrar una suscripción de una playlist
+     * @param user Usuario a borrar
+     * @param id id de la playlist de la que se desea quitar la suscripción
+     * @return booleano (verdadero o falso) si se ha podido o no quitar la suscripción de
+     * la lista de reproducción en la BBDD
+     */
     public static boolean deleteSubOfPlayList(User user, int id){
         boolean result = false;
         try {
@@ -251,6 +239,13 @@ public class PlayListDAO extends PlayList {
         return result;
     }
 
+    /**
+     * Método que conecta a la BBDD para añadir una canción a una playlist
+     * @param song cancion a añadir
+     * @param id id de la playlist donde queremos añadir la canción
+     * @return booleano (verdadero o falso) si se ha podido o no añadir la canción
+     * a la lista de reproducción en la BBDD
+     */
     public static boolean addSongToPlayList(Song song, int id){
         boolean result = false;
         try{
@@ -270,6 +265,13 @@ public class PlayListDAO extends PlayList {
 
     }
 
+    /**
+     * Método que conecta con la BBDD para borrar una cancion de una playlist
+     * @param idSong id de la camción a borrar
+     * @param idPlaylist id de la playlist de donde borrar la canción
+     * @return booleano (verdadero o falso) si se ha podido o no borrar la canción
+     * de la lista de reproducción en la BBDD
+     */
     public static boolean deleteSongToPlayList(int idSong, int idPlaylist){
         boolean result=false;
         try {
@@ -285,6 +287,11 @@ public class PlayListDAO extends PlayList {
         return result;
     }
 
+    /**
+     * Método que conecta con la BBDD para mostrar la suscriptores de una playlist
+     * @param id id de la playlist para buscar sus suscriptores
+     * @return lista de usuarios que contiene los usuarios suscritos a la playlist con la id pasada
+     */
     public static List<User> selectSubOfPlaylist(int id){
         User user = null;
         List<User> aux = new ArrayList<>();
