@@ -224,27 +224,44 @@ public class SubMenuPlayList {
         Song song = null;
         String songName = Utilities.getString("Introduce el nombre de la canción a añadir");
         List<Song> songs = MyInstance.getInstance().selectSongByName(songName);
-        for(Song s : songs){
-            Utilities.P(s.toString());
-        }
-        int id = Utilities.getInt("Introduce la id de la canción deseada: ");
-        for(Song s : songs){
-            if(id == s.getId()){
-                song = s;
+        if(songs.isEmpty()){
+            Utilities.P("No existe ninguna canción con ese nombre");
+        }else{
+            for(Song s : songs){
+                Utilities.P(s.toString());
+            }
+            List<PlayList> playLists = MyInstance.getInstance().selectAllPlayList();
+            if(!playLists.isEmpty()){
+                for(PlayList p : playLists){
+                    Utilities.P(p.toString()  + " Canciones: " + p.getSongs());
+                }
+            }
+            int id = Utilities.getInt("Introduce la id de la canción a añadir");
+            int id_playlist = Utilities.getInt("Introduce la id de la playlist deseada: ");
+            for(Song s : songs){
+                if(id == s.getId()){
+                    song = s;
+                }
+            }
+            if(song==null){
+                Utilities.P("La canción no existe");
+            }else{
+                System.out.println(song.getId() + " " + id_playlist);
+                if(MyInstance.getInstance().addSongToPlayList(song, id_playlist)){
+                    Utilities.P("Canción añadida con éxito");
+                }else{
+                    Utilities.P("No se ha podido añadir la canción");
+                }
             }
         }
-        if(MyInstance.getInstance().addSongToPlayList(song, id)){
-            Utilities.P("Canción añadida con éxito");
-        }else{
-            Utilities.P("No se ha podido añadir la canción");
-        }
+
     }
 
     public static void deleteSongOfPlaylist(){
         String playlistName = Utilities.getString("Introduce el nombre de la Playlist: ");
         List<PlayList> playLists = MyInstance.getInstance().selectPlayListByName(playlistName);
         for(PlayList p : playLists){
-            Utilities.P(p.toString());
+            Utilities.P(p.toString() + " Canciones " + p.getSongs());
         }
         int idPlaylist = Utilities.getInt("Introduce el id de la Playlist que deseas");
         int idSong = Utilities.getInt("Introduce el id de la canción que deseas borrar");

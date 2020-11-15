@@ -19,7 +19,7 @@ public class PlayListDAO extends PlayList {
     private static final String INSERTSUB = "INSERT INTO Suscripcion values(?,?)";
     private static final String DELETESUB = "DELETE FROM Suscripcion WHERE id_usuario=?";
     private static final String SELECTSUB = "SELECT * FROM Suscripcion INNER JOIN Usuario ON Suscripcion.id_usuario=Usuario.id WHERE Suscripcion.id_lista=?";
-    private static final String INSERTSONG = "INSERT INTO Lista_cancion (id_lista, id_cancion) values(?,?)";
+    private static final String INSERTSONG = "INSERT INTO Lista_cancion values(?,?)";
     private static final String DELETESONG = "DELETE FROM Lista_cancion WHERE id_cancion=? AND id_lista=?";
     private static final String SELECTBYID = "SELECT * FROM Lista WHERE id=?";
 
@@ -240,7 +240,6 @@ public class PlayListDAO extends PlayList {
             java.sql.Connection conn = ConnectionUtils.getConnection();
             PreparedStatement ps = conn.prepareStatement(DELETESUB);
             ps.setInt(1, user.getId());
-            ps.setInt(2, id);
             int rs = ps.executeUpdate();
             if(rs > 0){
                 result = true;
@@ -265,6 +264,7 @@ public class PlayListDAO extends PlayList {
             }
 
         }catch (SQLException ex){
+            System.out.println(ex);
         }
         return result;
 
