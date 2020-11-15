@@ -15,7 +15,7 @@ public class DiscDAO extends Disc {
     private static final String SELECTBYNAME = "SELECT * FROM Disco WHERE nombre=?";
     private static final String SELECTBYARTIST = "SELECT * FROM Disco WHERE id_artista=?";
     private static final String INSERTDISC = "INSERT INTO Disco (nombre, foto, id_artista, fecha_prod) VALUES (?, ?, ?, ?)";
-    private static final String UPDATEDISC = "UPDATE Disco set nombre=?, foto=?, fecha_prod=? WHERE id_artista=?";
+    private static final String UPDATEDISC = "UPDATE Disco set nombre=?, foto=? WHERE id_artista=?";
     private static final String DELETEDISC = "DELETE from Disco where id=?";
     private static final String DELETEALLDISC = "DELETE from Disco where id_artista=?";
 
@@ -197,8 +197,7 @@ public class DiscDAO extends Disc {
 
             ps.setString(1, disc.getName());
             ps.setString(2, disc.getPhoto());
-            ps.setString(3, disc.getDate());
-            ps.setInt(4, disc.getId_artista());
+            ps.setInt(3, disc.getId_artista());
             int rs = ps.executeUpdate();
             if (rs > 0) {
                 result = true;

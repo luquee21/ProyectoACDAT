@@ -35,6 +35,9 @@ public class Menu {
                 case 6:
                     Utilities.P("Adios");
                     break;
+                default:
+                    Utilities.P("Introduce una opción correcta");
+                    break;
             }
         }while(option!=6);
     }

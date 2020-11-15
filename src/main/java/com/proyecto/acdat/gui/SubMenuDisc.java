@@ -105,7 +105,7 @@ public class SubMenuDisc {
                         if(MyInstance.getInstance().deleteAllDiscOfArtist(artist.getId())){
                             Utilities.P("Discos borrados con exito");
                         }else{
-                            Utilities.P("No se han podido borrar los discos");
+                            Utilities.P("No se han podido borrar los discos, comprueba que no tengan canciones asociadas");
                         }
                     }
                 case 4:
@@ -197,7 +197,7 @@ public class SubMenuDisc {
         } else {
             String name = Utilities.getString("Introduce el nuevo nombre del disco: ");
             String photo = Utilities.getString("Introduce la nueva foto: ");
-            Disc newDisc = new Disc(oldDisc.getId(), name, photo);
+            Disc newDisc = new Disc(oldDisc.getId(), name, photo, oldDisc.getDate(), oldDisc.getId_artista());
 
             if(oldDisc.equals(newDisc)){
                 Utilities.P("No puede ser igual");

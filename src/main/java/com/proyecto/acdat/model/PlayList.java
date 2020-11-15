@@ -104,7 +104,9 @@ public class PlayList {
     public String toString() {
         String print;
 
-        if (songs == null && subscribers == null) {
+        if (songs == null && subscribers == null && creator==null) {
+            print = "[PlayList] = id: " + id + ", nombre: " + name + ", descripcion: " + description;
+        } else if(songs == null && subscribers == null){
             print = "[PlayList] = id: " + id + ", nombre: " + name + ", descripcion: " + description + " | " + creator;
         } else if (songs == null && subscribers != null) {
             print = "[PlayList] = id: " + id + ", nombre: " + name + ", descripcion: " + description + " | " + creator + " | " + subscribers;
