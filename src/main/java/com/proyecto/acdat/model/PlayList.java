@@ -59,9 +59,6 @@ public class PlayList {
     }
 
     public List<Song> getSongs() {
-        if (songs == null) {
-            songs = SongDAO.selectAllSongOfPlaylist(id);
-        }
         return songs;
     }
 
@@ -70,9 +67,6 @@ public class PlayList {
     }
 
     public List<User> getSubscribers() {
-        if (subscribers == null) {
-            subscribers = PlayListDAO.selectSubOfPlaylist(id);
-        }
         return subscribers;
     }
 
@@ -81,9 +75,6 @@ public class PlayList {
     }
 
     public User getCreator() {
-        if (creator == null) {
-            creator = UserDAO.selectById(id_creator);
-        }
         return creator;
 
     }

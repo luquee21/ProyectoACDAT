@@ -58,9 +58,6 @@ public class Artist {
     }
 
     public List<Disc> getDisc() {
-        if (disc == null) {
-            disc = DiscDAO.selectByArtist(this.id);
-        }
         return disc;
     }
 

@@ -40,9 +40,6 @@ public class Song {
 
 
     public Artist getArtist() {
-        if (artist == null) {
-            artist = ArtistDAO.selectByIdSong(id);
-        }
         return artist;
     }
 
@@ -75,9 +72,6 @@ public class Song {
     }
 
     public Disc getDisc() {
-        if (disc == null) {
-            disc = DiscDAO.selectById(id_disc);
-        }
         return disc;
     }
 

@@ -61,9 +61,6 @@ public class Disc {
     }
 
     public Artist getArtist() {
-        if (artist == null) {
-            artist = ArtistDAO.selectById(id_artista);
-        }
         return artist;
     }
 
@@ -88,10 +85,7 @@ public class Disc {
     }
 
     public List<Song> getSongs() {
-        if (songs == null) {
-            songs = SongDAO.selectAllSongByDisc(id);
-        }
-        return SongDAO.selectAllSongByDisc(this.id);
+        return songs;
     }
 
     public void setSongs(List<Song> songs) {
