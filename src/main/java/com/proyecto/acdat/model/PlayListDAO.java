@@ -246,19 +246,19 @@ public class PlayListDAO extends PlayList {
      * @return booleano (verdadero o falso) si se ha podido o no añadir la canción
      * a la lista de reproducción en la BBDD
      */
-    public static boolean addSongToPlayList(Song song, int id){
+    public static boolean addSongToPlayList(Song song, int id) {
         boolean result = false;
-        try{
+        try {
             java.sql.Connection conn = ConnectionUtils.getConnection();
             PreparedStatement ps = conn.prepareStatement(INSERTSONG);
-            ps.setInt(1, song.getId());
-            ps.setInt(2,id);
+            ps.setInt(1, id);
+            ps.setInt(2, song.getId());
             int rs = ps.executeUpdate();
-            if (rs > 0){
+            if (rs > 0) {
                 result = true;
             }
 
-        }catch (SQLException ex){
+        } catch (SQLException ex) {
             System.out.println(ex);
         }
         return result;
