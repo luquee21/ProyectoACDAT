@@ -1,16 +1,25 @@
 package com.proyecto.acdat.model;
 
+import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 
-public class Artist {
-    private int id;
-    private String name;
-    private String nationality;
-    private String photo;
-    private List<Disc> disc;
+@Entity
+@Table(name = "Artista")
+public class Artist implements Serializable {
+    private static final long serialVersionUID = 1L;
 
-    public Artist() {
-    }
+    @Id
+    @Column(name = "id")
+    protected int id;
+    @Column(name = "nombre")
+    protected String name;
+    @Column(name = "nacionalidad")
+    protected String nationality;
+    @Column(name = "photo")
+    protected String photo;
+    @OneToMany(mappedBy = "artist", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    protected List<Disc> disc;
 
     public Artist(int id, String name, String nationality, String photo) {
         this.id = id;
@@ -63,6 +72,9 @@ public class Artist {
 
     public void setDisc(List<Disc> disc) {
         this.disc = disc;
+        for (Disc d : this.disc) {
+            d.setArtist(this);
+        }
     }
 
     @Override

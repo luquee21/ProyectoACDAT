@@ -1,13 +1,5 @@
 package com.proyecto.acdat.model;
 
-import com.proyecto.acdat.utils.ConnectionUtils;
-
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-
 public class UserDAO extends User {
 
     private static final String SELECTALL = "SELECT * FROM Usuario";

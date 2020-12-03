@@ -1,5 +1,6 @@
 package com.proyecto.acdat.gui;
 
+import com.proyecto.acdat.utils.Connection;
 import com.proyecto.acdat.utils.Utilities;
 
 public class Menu {
@@ -7,6 +8,7 @@ public class Menu {
     public static void start(){
         int option = 0;
         do{
+            Connection.getEmf();
             Utilities.P("----Bienvenido a ----");
             Utilities.P("1) Menu Artista");
             Utilities.P("2) Menu Disco");

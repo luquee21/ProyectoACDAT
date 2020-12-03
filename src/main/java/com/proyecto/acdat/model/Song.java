@@ -1,10 +1,23 @@
 package com.proyecto.acdat.model;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "Cancion")
 public class Song {
+    @Id
+    @Column(name = "id")
     private int id;
+    @Column(name = "nombre")
     private String name;
+    @Column(name = "duracion")
     private int duration;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_disco")
     private Disc disc;
+
+
     private Artist artist;
     private int id_disc;
 
@@ -81,7 +94,7 @@ public class Song {
 
     @Override
     public String toString() {
-       return "[Cancion] = id: " + id + ", nombre: " + name + ", duracion: " + duration;
+        return "[Cancion] = id: " + id + ", nombre: " + name + ", duracion: " + duration;
     }
 
     @Override

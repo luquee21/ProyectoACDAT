@@ -1,15 +1,23 @@
 package com.proyecto.acdat.model;
 
+import javax.persistence.*;
 import java.util.List;
-import java.util.Objects;
 
+@Entity
+@Table(name = "Lista")
 public class PlayList {
+    @Id
+    @Column(name = "id")
     int id;
+    @Column(name = "nombre")
     String name;
+    @Column(name = "descripcion")
     String description;
     List<Song> songs;
     List<User> subscribers;
     int id_creator;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_usuario")
     User creator;
 
     public PlayList() {

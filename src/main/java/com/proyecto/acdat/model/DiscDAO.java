@@ -1,13 +1,5 @@
 package com.proyecto.acdat.model;
 
-import com.proyecto.acdat.utils.ConnectionUtils;
-
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-
 public class DiscDAO extends Disc {
 
     private static final String SELECTALL = "SELECT * FROM Disco";
@@ -19,6 +11,7 @@ public class DiscDAO extends Disc {
     private static final String DELETEDISC = "DELETE from Disco where id=?";
     private static final String DELETEALLDISC = "DELETE from Disco where id_artista=?";
 
-
-
+    public DiscDAO(Disc d) {
+        super(d.id, d.name, d.photo, d.artist, d.date);
+    }
 }

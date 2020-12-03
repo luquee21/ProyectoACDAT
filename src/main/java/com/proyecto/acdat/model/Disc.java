@@ -1,18 +1,46 @@
 package com.proyecto.acdat.model;
 
 
+import javax.persistence.*;
 import java.util.List;
 
+@Entity
+@Table(name = "Disco")
 public class Disc {
-    private int id;
-    private String name;
-    private String photo;
-    private List<Song> songs;
+    @Id
+    @Column(name = "id")
+    protected int id;
+    @Column(name = "nombre")
+    protected String name;
+    @Column(name = "foto")
+    protected String photo;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_artista")
+    protected Artist artist;
+    @Column(name = "fecha_prod")
+    protected String date;
+
     private int id_artista;
-    private Artist artist;
-    private String date;
+    @OneToMany(mappedBy = "artist", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    protected List<Song> songs;
+
+    public Disc(int id, String name, String photo, Artist artist, String date) {
+        this.id = id;
+        this.name = name;
+        this.photo = photo;
+        this.artist = artist;
+        this.date = date;
+    }
+
+    public int getId_artista() {
+        return id_artista;
+    }
 
     public Disc() {
+    }
+
+    public void setId_artista(int id_artista) {
+        this.id_artista = id_artista;
     }
 
     public Disc(int id, String name, String photo) {
@@ -34,14 +62,6 @@ public class Disc {
         this.name = name;
         this.photo = photo;
         this.date = date;
-    }
-
-    public int getId_artista() {
-        return id_artista;
-    }
-
-    public void setId_artista(int id_artista) {
-        this.id_artista = id_artista;
     }
 
     public String getDate() {
@@ -84,13 +104,6 @@ public class Disc {
         this.name = name;
     }
 
-    public List<Song> getSongs() {
-        return songs;
-    }
-
-    public void setSongs(List<Song> songs) {
-        this.songs = songs;
-    }
 
     @Override
     public String toString() {

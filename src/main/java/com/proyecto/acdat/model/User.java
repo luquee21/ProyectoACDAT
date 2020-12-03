@@ -1,12 +1,24 @@
 package com.proyecto.acdat.model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.util.List;
 
+@Entity
+@Table(name = "Usuario")
 public class User {
+    @Id
+    @Column(name = "id")
     private int id;
+    @Column(name = "nombre")
     private String name;
+    @Column(name = "correo")
     private String email;
+    @Column(name = "foto")
     private String photo;
+
     private List<PlayList> playLists;
 
     public User() {
