@@ -1,46 +1,50 @@
 package com.proyecto.acdat.model;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 
 @Entity
 @Table(name = "Lista")
-public class PlayList {
+public class PlayList implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    int id;
+    private int id;
     @Column(name = "nombre")
-    String name;
+    private String name;
     @Column(name = "descripcion")
-    String description;
-    List<Song> songs;
-    List<User> subscribers;
-    int id_creator;
+    private String description;
+    @ManyToMany
+    @JoinTable(name = "Lista_cancion",
+            joinColumns = @JoinColumn(name = "id_lista"), inverseJoinColumns = @JoinColumn(name = "id_cancion"))
+    private List<Song> songs;
+
+    @ManyToMany
+    @JoinTable(name = "Suscripcion",
+            joinColumns = @JoinColumn(name = "id_lista"), inverseJoinColumns = @JoinColumn(name = "id_usuario"))
+    private List<User> subscribers;
+
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_usuario")
-    User creator;
+    private User creator;
 
     public PlayList() {
     }
 
-    public PlayList(int id, String name, String description, int id_creator) {
+    public PlayList(int id, String name, String description) {
         this.id = id;
         this.name = name;
         this.description = description;
-        this.id_creator = id_creator;
     }
 
-    public PlayList(String name, String description, User creator) {
+    public PlayList(String name, String description) {
         this.name = name;
         this.description = description;
-        this.creator = creator;
     }
 
-    public PlayList(String name, String description, int id) {
-        this.name = name;
-        this.description = description;
-        this.id = id;
-    }
 
     public int getId() {
         return id;

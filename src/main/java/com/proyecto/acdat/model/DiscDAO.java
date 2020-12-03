@@ -11,7 +11,8 @@ public class DiscDAO extends Disc {
     private static final String DELETEDISC = "DELETE from Disco where id=?";
     private static final String DELETEALLDISC = "DELETE from Disco where id_artista=?";
 
-    public DiscDAO(Disc d) {
-        super(d.id, d.name, d.photo, d.artist, d.date);
+
+    public DiscDAO(String name, String photo, Artist artist, String date) {
+        super(name, photo, artist, date);
     }
 }

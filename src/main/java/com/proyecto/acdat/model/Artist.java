@@ -10,16 +10,20 @@ public class Artist implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     protected int id;
     @Column(name = "nombre")
     protected String name;
     @Column(name = "nacionalidad")
     protected String nationality;
-    @Column(name = "photo")
+    @Column(name = "foto")
     protected String photo;
     @OneToMany(mappedBy = "artist", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     protected List<Disc> disc;
+
+    public Artist() {
+    }
 
     public Artist(int id, String name, String nationality, String photo) {
         this.id = id;

@@ -12,4 +12,7 @@ public class SongDAO extends Song {
     private static final String DELETEALLSONGOFDISC = "DELETE FROM Cancion WHERE id_disco=?";
     private static final String UPDATESONG = "UPDATE Cancion SET nombre=?, duracion=? WHERE id=?";
 
+    public SongDAO(String name, int duration) {
+        super(name, duration);
+    }
 }

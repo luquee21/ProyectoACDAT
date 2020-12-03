@@ -15,4 +15,7 @@ public class PlayListDAO extends PlayList {
     private static final String DELETESONG = "DELETE FROM Lista_cancion WHERE id_cancion=? AND id_lista=?";
     private static final String SELECTBYID = "SELECT * FROM Lista WHERE id=?";
 
+    public PlayListDAO(String name, String description) {
+        super(name, description);
+    }
 }

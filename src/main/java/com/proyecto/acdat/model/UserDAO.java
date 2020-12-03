@@ -11,4 +11,7 @@ public class UserDAO extends User {
     private static final String DELETEALLPLAYLISTOFUSER = "DELETE FROM Lista WHERE id_usuario=?";
     private static final String UPDATEUSER = "UPDATE Usuario SET nombre=?, foto=? WHERE id=?";
 
+    public UserDAO(String name, String email, String photo) {
+        super(name, email, photo);
+    }
 }

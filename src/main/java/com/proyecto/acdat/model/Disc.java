@@ -2,12 +2,16 @@ package com.proyecto.acdat.model;
 
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 
 @Entity
 @Table(name = "Disco")
-public class Disc {
+public class Disc implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     protected int id;
     @Column(name = "nombre")
@@ -20,9 +24,12 @@ public class Disc {
     @Column(name = "fecha_prod")
     protected String date;
 
-    private int id_artista;
-    @OneToMany(mappedBy = "artist", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+
+    @OneToMany(mappedBy = "disc", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     protected List<Song> songs;
+
+    public Disc() {
+    }
 
     public Disc(int id, String name, String photo, Artist artist, String date) {
         this.id = id;
@@ -32,35 +39,10 @@ public class Disc {
         this.date = date;
     }
 
-    public int getId_artista() {
-        return id_artista;
-    }
-
-    public Disc() {
-    }
-
-    public void setId_artista(int id_artista) {
-        this.id_artista = id_artista;
-    }
-
-    public Disc(int id, String name, String photo) {
-        this.id = id;
+    public Disc(String name, String photo, Artist artist, String date) {
         this.name = name;
         this.photo = photo;
-    }
-
-    public Disc(String name, String photo, String date, int id_artista) {
-        this.name = name;
-        this.photo = photo;
-        this.date = date;
-        this.id_artista = id_artista;
-    }
-
-    public Disc(int id, String name, String photo, String date, int id_artista) {
-        this.id = id;
-        this.id_artista = id_artista;
-        this.name = name;
-        this.photo = photo;
+        this.artist = artist;
         this.date = date;
     }
 

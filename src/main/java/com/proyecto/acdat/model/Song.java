@@ -1,63 +1,37 @@
 package com.proyecto.acdat.model;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "Cancion")
-public class Song {
+public class Song implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int id;
     @Column(name = "nombre")
     private String name;
     @Column(name = "duracion")
     private int duration;
-
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_disco")
     private Disc disc;
 
-
-    private Artist artist;
-    private int id_disc;
-
-    public int getId_disc() {
-        return id_disc;
+    public Song() {
     }
 
-    public void setId_disc(int id_disc) {
-        this.id_disc = id_disc;
+    public Song(String name, int duration) {
+        this.name = name;
+        this.duration = duration;
     }
 
     public Song(int id, String name, int duration) {
         this.id = id;
         this.name = name;
         this.duration = duration;
-    }
-
-    public Song() {
-    }
-
-    public Song(String name, int duration, int id_disc) {
-        this.name = name;
-        this.duration = duration;
-        this.id_disc= id_disc;
-    }
-
-    public Song(int id, String name, int duration, int id_disco) {
-        this.id = id;
-        this.name = name;
-        this.duration = duration;
-        this.id_disc= id_disc;
-    }
-
-
-    public Artist getArtist() {
-        return artist;
-    }
-
-    public void setArtist(Artist artist) {
-        this.artist = artist;
     }
 
     public int getId() {

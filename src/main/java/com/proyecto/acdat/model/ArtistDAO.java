@@ -22,10 +22,10 @@ public class ArtistDAO extends Artist {
     private static final String DELETEARTIST = "DELETE FROM Artista WHERE nombre=?";
     private static final String UPDATEARTIST = "UPDATE Artista SET nombre=?, nacionalidad=?, foto=? WHERE id=?";
 
-
-    public ArtistDAO(Artist a) {
-        super(a.id, a.name, a.nationality, a.photo);
+    public ArtistDAO(String name, String nationality, String photo) {
+        super(name, nationality, photo);
     }
+
 
     public void addArtist() {
         manager = Connection.getEmf().createEntityManager();
