@@ -3,6 +3,7 @@ package com.proyecto.acdat.model;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.sql.Date;
 import java.util.List;
 
 @Entity
@@ -22,35 +23,31 @@ public class Disc implements Serializable {
     @JoinColumn(name = "id_artista")
     protected Artist artist;
     @Column(name = "fecha_prod")
-    protected String date;
-
-
+    protected Date date;
     @OneToMany(mappedBy = "disc", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     protected List<Song> songs;
 
     public Disc() {
     }
 
-    public Disc(int id, String name, String photo, Artist artist, String date) {
+    public Disc(int id, String name, String photo, Date date) {
         this.id = id;
         this.name = name;
         this.photo = photo;
-        this.artist = artist;
         this.date = date;
     }
 
-    public Disc(String name, String photo, Artist artist, String date) {
+    public Disc(String name, String photo, Date date) {
         this.name = name;
         this.photo = photo;
-        this.artist = artist;
         this.date = date;
     }
 
-    public String getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 

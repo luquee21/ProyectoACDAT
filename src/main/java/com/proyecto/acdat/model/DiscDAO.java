@@ -1,5 +1,8 @@
 package com.proyecto.acdat.model;
 
+
+import java.sql.Date;
+
 public class DiscDAO extends Disc {
 
     private static final String SELECTALL = "SELECT * FROM Disco";
@@ -12,7 +15,7 @@ public class DiscDAO extends Disc {
     private static final String DELETEALLDISC = "DELETE from Disco where id_artista=?";
 
 
-    public DiscDAO(String name, String photo, Artist artist, String date) {
-        super(name, photo, artist, date);
+    public DiscDAO(String name, String photo, Date date) {
+        super(name, photo, date);
     }
 }

@@ -1,5 +1,6 @@
 package com.proyecto.acdat.utils;
 
+import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
@@ -11,5 +12,9 @@ public class Connection {
             emf = Persistence.createEntityManagerFactory("proyectojpa");
         }
         return emf;
+    }
+
+    public static EntityManager getManager() {
+        return getEmf().createEntityManager();
     }
 }

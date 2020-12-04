@@ -11,14 +11,14 @@ public class Song implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private int id;
+    protected int id;
     @Column(name = "nombre")
-    private String name;
+    protected String name;
     @Column(name = "duracion")
-    private int duration;
+    protected int duration;
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_disco")
-    private Disc disc;
+    protected Disc disc;
 
     public Song() {
     }

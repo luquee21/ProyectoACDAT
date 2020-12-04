@@ -12,24 +12,24 @@ public class PlayList implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private int id;
+    protected int id;
     @Column(name = "nombre")
-    private String name;
+    protected String name;
     @Column(name = "descripcion")
-    private String description;
+    protected String description;
     @ManyToMany
     @JoinTable(name = "Lista_cancion",
             joinColumns = @JoinColumn(name = "id_lista"), inverseJoinColumns = @JoinColumn(name = "id_cancion"))
-    private List<Song> songs;
+    protected List<Song> songs;
 
     @ManyToMany
     @JoinTable(name = "Suscripcion",
             joinColumns = @JoinColumn(name = "id_lista"), inverseJoinColumns = @JoinColumn(name = "id_usuario"))
-    private List<User> subscribers;
+    protected List<User> subscribers;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_usuario")
-    private User creator;
+    protected User creator;
 
     public PlayList() {
     }

@@ -1,7 +1,13 @@
 package com.proyecto.acdat.model;
 
+import com.proyecto.acdat.utils.Connection;
+
+import javax.persistence.EntityManager;
+
 public class UserDAO extends User {
 
+
+    private EntityManager manager;
     private static final String SELECTALL = "SELECT * FROM Usuario";
     private static final String SELECTBYNAME = "SELECT * FROM Usuario WHERE nombre=?";
     private static final String SELECTBYEMAIL = "SELECT * FROM Usuario WHERE correo=?";
@@ -13,5 +19,44 @@ public class UserDAO extends User {
 
     public UserDAO(String name, String email, String photo) {
         super(name, email, photo);
+    }
+
+    public UserDAO() {
+    }
+
+    public void addUser(User u) {
+        manager = Connection.getManager();
+        try {
+            manager.getTransaction().begin();
+            manager.persist(u);
+            manager.getTransaction().commit();
+        } catch (Exception e) {
+            manager.getTransaction().rollback();
+        }
+        manager.close();
+    }
+
+    public void deleteUser(User u) {
+        manager = Connection.getManager();
+        try {
+            manager.getTransaction().begin();
+            manager.remove(u);
+            manager.getTransaction().commit();
+        } catch (Exception e) {
+            manager.getTransaction().rollback();
+        }
+        manager.close();
+    }
+
+    public void updateUser(User u) {
+        manager = Connection.getManager();
+        try {
+            manager.getTransaction().begin();
+            manager.merge(u);
+            manager.getTransaction().commit();
+        } catch (Exception e) {
+            manager.getTransaction().rollback();
+        }
+        manager.close();
     }
 }

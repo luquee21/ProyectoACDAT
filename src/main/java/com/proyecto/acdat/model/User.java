@@ -12,15 +12,15 @@ public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private int id;
+    protected int id;
     @Column(name = "nombre")
-    private String name;
+    protected String name;
     @Column(name = "correo")
-    private String email;
+    protected String email;
     @Column(name = "foto")
-    private String photo;
+    protected String photo;
     @OneToMany(mappedBy = "creator", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<PlayList> playLists;
+    protected List<PlayList> playLists;
 
     public User() {
     }

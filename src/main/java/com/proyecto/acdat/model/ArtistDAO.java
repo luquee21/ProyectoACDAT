@@ -11,8 +11,7 @@ import java.util.List;
 @NamedQuery(name = "selectAll", query = "SELECT * FROM Artista")
 public class ArtistDAO extends Artist {
 
-
-    private static EntityManager manager;
+    private EntityManager manager;
     private static final String SELECTALL = "SELECT * FROM Artista";
     private static final String SELECTBYNAME = "SELECT * FROM Artista WHERE nombre=?";
     private static final String SELECTBYIDSONG = "SELECT * FROM Artista INNER JOIN Disco ON Artista.id = Disco.id_artista INNER JOIN Cancion ON Cancion.id_disco = Disco.id WHERE Cancion.id = ?";
@@ -27,11 +26,12 @@ public class ArtistDAO extends Artist {
     }
 
 
-    public void addArtist() {
-        manager = Connection.getEmf().createEntityManager();
-        manager.getTransaction().begin();
+    public void addArtist(Artist a) {
+        manager = Connection.getManager();
         try {
-            manager.persist(this);
+            manager.getTransaction().begin();
+            manager.persist(a);
+
         } catch (Exception e) {
             manager.getTransaction().rollback();
         }
@@ -39,40 +39,42 @@ public class ArtistDAO extends Artist {
         manager.close();
     }
 
-    public void deleteArtist() {
-        manager = Connection.getEmf().createEntityManager();
-        manager.getTransaction().begin();
+    public void deleteArtist(Artist a) {
+        manager = Connection.getManager();
         try {
-            manager.remove(this);
+            manager.getTransaction().begin();
+            manager.remove(a);
+            manager.getTransaction().commit();
+
         } catch (Exception e) {
             manager.getTransaction().rollback();
         }
-        manager.getTransaction().commit();
         manager.close();
     }
 
-    public void updateArtist() {
-        manager = Connection.getEmf().createEntityManager();
-        manager.getTransaction().begin();
+    public void updateArtist(Artist a) {
+        manager = Connection.getManager();
         try {
-            manager.merge(this);
+            manager.getTransaction().begin();
+            manager.merge(a);
+            manager.getTransaction().commit();
         } catch (Exception e) {
             manager.getTransaction().rollback();
         }
-        manager.getTransaction().commit();
         manager.close();
     }
 
     public void getArtist() {
-        manager = Connection.getEmf().createEntityManager();
-        manager.getTransaction().begin();
+        manager = Connection.getManager();
         try {
+            manager.getTransaction().begin();
             Query query = manager.createNamedQuery(".findAll");
-            List results = query.getResultList();
+            List<Artist> results = query.getResultList();
+            manager.getTransaction().commit();
+
         } catch (Exception e) {
             manager.getTransaction().rollback();
         }
-        manager.getTransaction().commit();
         manager.close();
     }
 
