@@ -3,12 +3,11 @@ package com.proyecto.acdat.model;
 import com.proyecto.acdat.utils.Connection;
 
 import javax.persistence.EntityManager;
-import javax.persistence.NamedQuery;
 import javax.persistence.Query;
 import java.util.List;
 
 
-@NamedQuery(name = "selectAll", query = "SELECT * FROM Artista")
+
 public class ArtistDAO extends Artist {
 
     private EntityManager manager;
@@ -25,6 +24,8 @@ public class ArtistDAO extends Artist {
         super(name, nationality, photo);
     }
 
+    public ArtistDAO() {
+    }
 
     public void addArtist(Artist a) {
         manager = Connection.getManager();
@@ -64,18 +65,20 @@ public class ArtistDAO extends Artist {
         manager.close();
     }
 
-    public void getArtist() {
+    public List<Artist> getAllArtists() {
+        List<Artist> artists = null;
         manager = Connection.getManager();
         try {
             manager.getTransaction().begin();
-            Query query = manager.createNamedQuery(".findAll");
-            List<Artist> results = query.getResultList();
+            Query query = manager.createNamedQuery("Artist.selectAll", Artist.class);
+            artists = (List<Artist>) query.getResultList();
             manager.getTransaction().commit();
 
         } catch (Exception e) {
             manager.getTransaction().rollback();
         }
         manager.close();
+        return artists;
     }
 
 

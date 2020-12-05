@@ -6,6 +6,13 @@ import java.util.List;
 
 @Entity
 @Table(name = "Artista")
+@NamedQueries({
+        @NamedQuery(name = "Artist.selectAll", query = "SELECT * FROM Artista"),
+        @NamedQuery(name = "Artist.selectByName", query = "SELECT * FROM Artista WHERE nombre = :name"),
+        @NamedQuery(name = "Artist.selectByIdSong", query = "SELECT * FROM Artista INNER JOIN Disco ON Artista.id = Disco.id_artista INNER JOIN Cancion ON Cancion.id_disco = Disco.id WHERE Cancion.id = :id_song"),
+        @NamedQuery(name = "Artist.selectById", query = "SELECT * FROM Artista WHERE id = :id"),
+        @NamedQuery(name = "Artist.selectByNationality", query = "SELECT * FROM Artista WHERE nacionalidad = :nationality")
+})
 public class Artist implements Serializable {
     private static final long serialVersionUID = 1L;
 

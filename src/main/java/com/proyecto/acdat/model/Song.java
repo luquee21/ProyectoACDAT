@@ -5,6 +5,15 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "Cancion")
+@NamedQueries({
+        @NamedQuery(name = "Song.selectAll", query = "SELECT * FROM Cancion"),
+        @NamedQuery(name = "Song.selectByName", query = "SELECT * FROM Cancion WHERE nombre = :name"),
+        @NamedQuery(name = "Song.selectById", query = "SELECT * FROM Cancion WHERE id = :id"),
+        @NamedQuery(name = "Song.selectByArtist", query = "SELECT * FROM Cancion INNER JOIN Disco ON Cancion.id_disco = Disco.id INNER JOIN Artista ON Artista.id=Disco.id_artista WHERE Artista.nombre= :artist_name"),
+        @NamedQuery(name = "Song.selectByDisc", query = "SELECT * FROM Cancion INNER JOIN Disco ON Cancion.id_disco=Disco.id WHERE Disco.id= :id_disc"),
+        @NamedQuery(name = "Song.selectByPlaylist", query = "SELECT * FROM Cancion INNER JOIN Lista_cancion ON Cancion.id = Lista_cancion.id_cancion WHERE Lista_cancion.id_lista = :id_list")
+
+})
 public class Song implements Serializable {
     private static final long serialVersionUID = 1L;
 
