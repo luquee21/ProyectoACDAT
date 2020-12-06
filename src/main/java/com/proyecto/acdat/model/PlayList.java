@@ -7,12 +7,13 @@ import java.util.List;
 @Entity
 @Table(name = "Lista")
 @NamedQueries({
-        @NamedQuery(name = "Playlist.selectAll", query = "SELECT * FROM Lista"),
-        @NamedQuery(name = "Playlist.selectByName", query = "SELECT * FROM Lista WHERE nombre = :name"),
-        @NamedQuery(name = "Playlist.selectById", query = "SELECT * FROM Lista WHERE id = :id"),
-        @NamedQuery(name = "Playlist.selectBySub", query = "SELECT * FROM Suscripcion INNER JOIN Usuario ON Suscripcion.id_usuario=Usuario.id WHERE Suscripcion.id_lista= :id_playlist"),
-        @NamedQuery(name = "Playlist.selectByIdUser", query = "SELECT * FROM Lista WHERE id_usuario= :id_user")
-
+        @NamedQuery(name = "Playlist.selectAll", query = "SELECT l FROM PlayList l"),
+        @NamedQuery(name = "Playlist.selectByName", query = "SELECT l FROM PlayList l WHERE l.name = :name"),
+        @NamedQuery(name = "Playlist.selectById", query = "SELECT l FROM PlayList l WHERE l.id = :id"),
+        @NamedQuery(name = "Playlist.selectByIdUser", query = "SELECT l FROM PlayList l WHERE l.creator= :id_user")
+})
+@NamedNativeQueries({
+        @NamedNativeQuery(name = "Playlist.selectBySub", query = "SELECT s FROM Suscripcion s INNER JOIN Usuario ON Suscripcion.id_usuario=Usuario.id WHERE Suscripcion.id_lista= :id_playlist"),
 })
 public class PlayList implements Serializable {
     private static final long serialVersionUID = 1L;

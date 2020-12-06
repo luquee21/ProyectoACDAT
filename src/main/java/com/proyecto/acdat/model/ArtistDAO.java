@@ -3,7 +3,7 @@ package com.proyecto.acdat.model;
 import com.proyecto.acdat.utils.Connection;
 
 import javax.persistence.EntityManager;
-import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 import java.util.List;
 
 
@@ -40,23 +40,29 @@ public class ArtistDAO extends Artist {
         manager.close();
     }
 
-    public void deleteArtist(Artist a) {
+    public void deleteArtist(Artist artist) {
         manager = Connection.getManager();
         try {
             manager.getTransaction().begin();
+            Artist a = manager.find(Artist.class, artist.id);
             manager.remove(a);
             manager.getTransaction().commit();
 
         } catch (Exception e) {
+            System.out.println(e);
             manager.getTransaction().rollback();
         }
         manager.close();
     }
 
-    public void updateArtist(Artist a) {
+    public void updateArtist(Artist artist) {
         manager = Connection.getManager();
         try {
             manager.getTransaction().begin();
+            Artist a = manager.find(Artist.class, artist.id);
+            a.setName(artist.getName());
+            a.setNationality(artist.getNationality());
+            a.setPhoto(artist.getPhoto());
             manager.merge(a);
             manager.getTransaction().commit();
         } catch (Exception e) {
@@ -70,7 +76,7 @@ public class ArtistDAO extends Artist {
         manager = Connection.getManager();
         try {
             manager.getTransaction().begin();
-            Query query = manager.createNamedQuery("Artist.selectAll", Artist.class);
+            TypedQuery query = manager.createNamedQuery("Artist.selectAll", Artist.class);
             artists = (List<Artist>) query.getResultList();
             manager.getTransaction().commit();
 
@@ -79,6 +85,22 @@ public class ArtistDAO extends Artist {
         }
         manager.close();
         return artists;
+    }
+
+    public Artist getArtist(String name) {
+        Artist artist = null;
+        manager = Connection.getManager();
+        try {
+            manager.getTransaction().begin();
+            TypedQuery query = manager.createNamedQuery("Artist.selectByName", Artist.class);
+            query.setParameter("name", name);
+            artist = (Artist) query.getSingleResult();
+            manager.getTransaction().commit();
+        } catch (Exception e) {
+            manager.getTransaction().rollback();
+        }
+        manager.close();
+        return artist;
     }
 
 

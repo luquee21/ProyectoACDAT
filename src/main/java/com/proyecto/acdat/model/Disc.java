@@ -9,10 +9,10 @@ import java.util.List;
 @Entity
 @Table(name = "Disco")
 @NamedQueries({
-        @NamedQuery(name = "Disc.selectAll", query = "SELECT * FROM Disco"),
-        @NamedQuery(name = "Disc.selectByName", query = "SELECT * FROM Disco WHERE nombre = :name"),
-        @NamedQuery(name = "Disc.selectById", query = "SELECT * FROM Disco WHERE id = :id"),
-        @NamedQuery(name = "Disc.selectByArtist", query = "SELECT * FROM Disco WHERE id_artista = :id_artist")
+        @NamedQuery(name = "Disc.selectAll", query = "SELECT d FROM Disc d"),
+        @NamedQuery(name = "Disc.selectByName", query = "SELECT d FROM Disc d WHERE d.name = :name"),
+        @NamedQuery(name = "Disc.selectById", query = "SELECT d FROM Disc d WHERE d.id = :id"),
+        @NamedQuery(name = "Disc.selectByArtist", query = "SELECT d FROM Disc d WHERE d.artist = :id_artist")
 })
 public class Disc implements Serializable {
     private static final long serialVersionUID = 1L;

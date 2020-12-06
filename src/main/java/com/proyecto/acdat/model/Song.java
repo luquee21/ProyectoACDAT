@@ -6,12 +6,14 @@ import java.io.Serializable;
 @Entity
 @Table(name = "Cancion")
 @NamedQueries({
-        @NamedQuery(name = "Song.selectAll", query = "SELECT * FROM Cancion"),
-        @NamedQuery(name = "Song.selectByName", query = "SELECT * FROM Cancion WHERE nombre = :name"),
-        @NamedQuery(name = "Song.selectById", query = "SELECT * FROM Cancion WHERE id = :id"),
-        @NamedQuery(name = "Song.selectByArtist", query = "SELECT * FROM Cancion INNER JOIN Disco ON Cancion.id_disco = Disco.id INNER JOIN Artista ON Artista.id=Disco.id_artista WHERE Artista.nombre= :artist_name"),
-        @NamedQuery(name = "Song.selectByDisc", query = "SELECT * FROM Cancion INNER JOIN Disco ON Cancion.id_disco=Disco.id WHERE Disco.id= :id_disc"),
-        @NamedQuery(name = "Song.selectByPlaylist", query = "SELECT * FROM Cancion INNER JOIN Lista_cancion ON Cancion.id = Lista_cancion.id_cancion WHERE Lista_cancion.id_lista = :id_list")
+        @NamedQuery(name = "Song.selectAll", query = "SELECT s FROM Song s"),
+        @NamedQuery(name = "Song.selectByName", query = "SELECT s FROM Song s WHERE s.name = :name"),
+        @NamedQuery(name = "Song.selectById", query = "SELECT s FROM Song s WHERE s.id = :id")
+})
+@NamedNativeQueries({
+        @NamedNativeQuery(name = "Song.selectByArtist", query = "SELECT s FROM Song s INNER JOIN Disc ON Song.id_disco = Disc.id INNER JOIN Artist ON Artist.id=Disc.id_artista WHERE Artist.name= :artist_name"),
+        @NamedNativeQuery(name = "Song.selectByDisc", query = "SELECT s FROM Song s INNER JOIN Disc ON Song.id_disco=Disc.id WHERE Disc.id= :id_disc"),
+        @NamedNativeQuery(name = "Song.selectByPlaylist", query = "SELECT s FROM Song s INNER JOIN Lista_cancion ON Song.id = Lista_cancion.id_cancion WHERE Lista_cancion.id_lista = :id_list")
 
 })
 public class Song implements Serializable {

@@ -7,11 +7,10 @@ import java.util.List;
 @Entity
 @Table(name = "Usuario")
 @NamedQueries({
-        @NamedQuery(name = "User.selectAll", query = "SELECT * FROM Usuario"),
-        @NamedQuery(name = "User.selectByName", query = "SELECT * FROM Usuario WHERE nombre = :name"),
-        @NamedQuery(name = "User.selectByEmail", query = "SELECT * FROM Usuario WHERE correo = :email"),
-        @NamedQuery(name = "User.selectByID", query = "SELECT * FROM Usuario WHERE id = :id")
-
+        @NamedQuery(name = "User.selectAll", query = "SELECT u FROM User u"),
+        @NamedQuery(name = "User.selectByName", query = "SELECT u FROM User u WHERE name = :name"),
+        @NamedQuery(name = "User.selectByEmail", query = "SELECT u FROM User u WHERE email = :email"),
+        @NamedQuery(name = "User.selectByID", query = "SELECT u FROM User u WHERE id = :id")
 })
 public class User implements Serializable {
     private static final long serialVersionUID = 1L;
