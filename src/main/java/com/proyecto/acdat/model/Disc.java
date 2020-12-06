@@ -4,6 +4,7 @@ package com.proyecto.acdat.model;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -34,6 +35,14 @@ public class Disc implements Serializable {
     protected List<Song> songs;
 
     public Disc() {
+    }
+
+    public List<Song> getSongs() {
+        return songs;
+    }
+
+    public void setSongs(List<Song> songs) {
+        this.songs = songs;
     }
 
     public Disc(int id, String name, String photo, Date date) {
@@ -71,6 +80,11 @@ public class Disc implements Serializable {
 
     public void setArtist(Artist artist) {
         this.artist = artist;
+        if (artist != null) {
+            List<Disc> discs = new ArrayList<>();
+            discs.add(this);
+            artist.setDisc(discs);
+        }
     }
 
     public int getId() {

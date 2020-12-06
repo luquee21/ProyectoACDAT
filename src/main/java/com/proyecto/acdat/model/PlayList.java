@@ -2,6 +2,7 @@ package com.proyecto.acdat.model;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -95,6 +96,7 @@ public class PlayList implements Serializable {
         this.subscribers = subscribers;
     }
 
+
     public User getCreator() {
         return creator;
 
@@ -102,6 +104,12 @@ public class PlayList implements Serializable {
 
     public void setCreator(User creator) {
         this.creator = creator;
+        if (creator != null) {
+            List<PlayList> playlists = new ArrayList<>();
+            playlists.add(this);
+            creator.setPlayLists(playlists);
+        }
+
     }
 
     @Override

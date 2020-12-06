@@ -112,7 +112,7 @@ public class PlayListDAO extends PlayList {
         try {
             manager.getTransaction().begin();
             TypedQuery query = manager.createNamedQuery("Playlist.selectByIdUser", PlayList.class);
-            query.setParameter("id_user", user.id);
+            query.setParameter("id_user", user);
             playLists = (List<PlayList>) query.getResultList();
             manager.getTransaction().commit();
         } catch (Exception e) {

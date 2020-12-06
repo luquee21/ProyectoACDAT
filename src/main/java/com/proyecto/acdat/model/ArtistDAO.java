@@ -11,15 +11,6 @@ import java.util.List;
 public class ArtistDAO extends Artist {
 
     private EntityManager manager;
-    private static final String SELECTALL = "SELECT * FROM Artista";
-    private static final String SELECTBYNAME = "SELECT * FROM Artista WHERE nombre=?";
-    private static final String SELECTBYIDSONG = "SELECT * FROM Artista INNER JOIN Disco ON Artista.id = Disco.id_artista INNER JOIN Cancion ON Cancion.id_disco = Disco.id WHERE Cancion.id = ?";
-    private static final String SELECTBYID = "SELECT * FROM Artista WHERE id=?";
-    private static final String SELECTBYNATIONALITY = "SELECT * FROM Artista WHERE nacionalidad=?";
-    private static final String INSERTARTIST = "INSERT INTO Artista (nombre,nacionalidad,foto) VALUES(?,?,?)";
-    private static final String DELETEARTIST = "DELETE FROM Artista WHERE nombre=?";
-    private static final String UPDATEARTIST = "UPDATE Artista SET nombre=?, nacionalidad=?, foto=? WHERE id=?";
-
     public ArtistDAO(String name, String nationality, String photo) {
         super(name, nationality, photo);
     }
@@ -32,11 +23,10 @@ public class ArtistDAO extends Artist {
         try {
             manager.getTransaction().begin();
             manager.persist(a);
-
+            manager.getTransaction().commit();
         } catch (Exception e) {
             manager.getTransaction().rollback();
         }
-        manager.getTransaction().commit();
         manager.close();
     }
 
@@ -49,7 +39,6 @@ public class ArtistDAO extends Artist {
             manager.getTransaction().commit();
 
         } catch (Exception e) {
-            System.out.println(e);
             manager.getTransaction().rollback();
         }
         manager.close();
@@ -87,13 +76,46 @@ public class ArtistDAO extends Artist {
         return artists;
     }
 
-    public Artist getArtist(String name) {
+    public Artist getArtistByName(String name) {
         Artist artist = null;
         manager = Connection.getManager();
         try {
             manager.getTransaction().begin();
             TypedQuery query = manager.createNamedQuery("Artist.selectByName", Artist.class);
             query.setParameter("name", name);
+            artist = (Artist) query.getSingleResult();
+            manager.getTransaction().commit();
+        } catch (Exception e) {
+            manager.getTransaction().rollback();
+        }
+        manager.close();
+        return artist;
+    }
+
+
+    public Artist getArtistById(int id) {
+        Artist artist = null;
+        manager = Connection.getManager();
+        try {
+            manager.getTransaction().begin();
+            TypedQuery query = manager.createNamedQuery("Artist.selectById", Artist.class);
+            query.setParameter("id", id);
+            artist = (Artist) query.getSingleResult();
+            manager.getTransaction().commit();
+        } catch (Exception e) {
+            manager.getTransaction().rollback();
+        }
+        manager.close();
+        return artist;
+    }
+
+    public Artist getArtistByNationality(String nationality) {
+        Artist artist = null;
+        manager = Connection.getManager();
+        try {
+            manager.getTransaction().begin();
+            TypedQuery query = manager.createNamedQuery("Artist.selectByNationality", Artist.class);
+            query.setParameter("nationality", nationality);
             artist = (Artist) query.getSingleResult();
             manager.getTransaction().commit();
         } catch (Exception e) {

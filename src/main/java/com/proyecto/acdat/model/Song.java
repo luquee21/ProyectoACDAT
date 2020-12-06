@@ -2,6 +2,8 @@ package com.proyecto.acdat.model;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "Cancion")
@@ -75,6 +77,11 @@ public class Song implements Serializable {
 
     public void setDisc(Disc disc) {
         this.disc = disc;
+        if (disc != null) {
+            List<Song> songs = new ArrayList<>();
+            songs.add(this);
+            disc.setSongs(songs);
+        }
     }
 
     @Override
