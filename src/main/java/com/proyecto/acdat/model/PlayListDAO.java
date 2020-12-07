@@ -144,40 +144,6 @@ public class PlayListDAO extends PlayList {
         return subs;
     }
 
-    public boolean addSongToPlaylist(Song song, int id) {
-        boolean flag = false;
-        manager = Connection.getManager();
-        try {
-            manager.getTransaction().begin();
-            Query query = manager.createNativeQuery("Playlist.addSong");
-            query.setParameter("id_playlist", id);
-            query.setParameter("id_song", song.id);
-            manager.getTransaction().commit();
-            flag = true;
-        } catch (Exception e) {
-            manager.getTransaction().rollback();
-        }
-        manager.close();
-        return flag;
-    }
-
-    public boolean addSubToPlaylist(User user, int id) {
-        boolean flag = false;
-        manager = Connection.getManager();
-        try {
-            manager.getTransaction().begin();
-            Query query = manager.createNativeQuery("Playlist.addSub");
-            query.setParameter("id_playlist", id);
-            query.setParameter("id_user", user.id);
-            manager.getTransaction().commit();
-            flag = true;
-        } catch (Exception e) {
-            manager.getTransaction().rollback();
-        }
-        manager.close();
-        return flag;
-    }
-
     public boolean deleteSongOfPlaylist(int id_song, int id_playlist) {
         boolean flag = false;
         manager = Connection.getManager();
