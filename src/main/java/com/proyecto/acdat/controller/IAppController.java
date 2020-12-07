@@ -10,9 +10,9 @@ public interface IAppController {
     //Artist
     boolean addArtist(Artist artist);
 
-    boolean deleteArtist(String name);
+    boolean deleteArtist(Artist artist);
 
-    boolean updateArtist(Artist artist, int id);
+    boolean updateArtist(Artist artist);
 
     List<Artist> selectAllArtist();
 

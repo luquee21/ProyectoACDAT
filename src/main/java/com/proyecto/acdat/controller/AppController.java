@@ -5,43 +5,43 @@ import com.proyecto.acdat.model.*;
 import java.util.List;
 
 public class AppController implements IAppController {
+    private final ArtistDAO adao = new ArtistDAO();
+    private final UserDAO udao = new UserDAO();
 
     @Override
     public boolean addArtist(Artist artist) {
-        return false;
+        return adao.addArtist(artist);
     }
 
     @Override
-    public boolean deleteArtist(String name) {
-        return false;
+    public boolean deleteArtist(Artist artist) {
+        return adao.deleteArtist(artist);
     }
 
     @Override
-    public boolean updateArtist(Artist artist, int id) {
-
-        return false;
+    public boolean updateArtist(Artist artist) {
+        return adao.updateArtist(artist);
     }
 
     @Override
     public List<Artist> selectAllArtist() {
-        return null;
+        return adao.getAllArtists();
     }
 
     @Override
     public Artist selectArtistByName(String name) {
-        return null;
+        return adao.getArtistByName(name);
     }
 
     @Override
     public Artist selectArtistById(int id) {
-
-        return null;
+        return adao.getArtistById(id);
     }
 
 
     @Override
     public List<Artist> selectArtistByNationality(String nationality) {
-        return null;
+        return adao.getArtistByNationality(nationality);
     }
 
     @Override

@@ -23,7 +23,7 @@ public class Artist implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     protected int id;
-    @Column(name = "nombre")
+    @Column(name = "nombre", unique = true)
     protected String name;
     @Column(name = "nacionalidad")
     protected String nationality;

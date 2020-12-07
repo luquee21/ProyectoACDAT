@@ -11,6 +11,7 @@ import java.util.List;
 public class ArtistDAO extends Artist {
 
     private EntityManager manager;
+
     public ArtistDAO(String name, String nationality, String photo) {
         super(name, nationality, photo);
     }
@@ -18,33 +19,39 @@ public class ArtistDAO extends Artist {
     public ArtistDAO() {
     }
 
-    public void addArtist(Artist a) {
+    public boolean addArtist(Artist a) {
+        boolean result = false;
         manager = Connection.getManager();
         try {
             manager.getTransaction().begin();
             manager.persist(a);
             manager.getTransaction().commit();
+            result = true;
         } catch (Exception e) {
             manager.getTransaction().rollback();
         }
         manager.close();
+        return result;
     }
 
-    public void deleteArtist(Artist artist) {
+    public boolean deleteArtist(Artist artist) {
+        boolean result = false;
         manager = Connection.getManager();
         try {
             manager.getTransaction().begin();
             Artist a = manager.find(Artist.class, artist.id);
             manager.remove(a);
             manager.getTransaction().commit();
-
+            result = true;
         } catch (Exception e) {
             manager.getTransaction().rollback();
         }
         manager.close();
+        return result;
     }
 
-    public void updateArtist(Artist artist) {
+    public boolean updateArtist(Artist artist) {
+        boolean result = false;
         manager = Connection.getManager();
         try {
             manager.getTransaction().begin();
@@ -54,10 +61,12 @@ public class ArtistDAO extends Artist {
             a.setPhoto(artist.getPhoto());
             manager.merge(a);
             manager.getTransaction().commit();
+            result = true;
         } catch (Exception e) {
             manager.getTransaction().rollback();
         }
         manager.close();
+        return result;
     }
 
     public List<Artist> getAllArtists() {
@@ -98,9 +107,7 @@ public class ArtistDAO extends Artist {
         manager = Connection.getManager();
         try {
             manager.getTransaction().begin();
-            TypedQuery query = manager.createNamedQuery("Artist.selectById", Artist.class);
-            query.setParameter("id", id);
-            artist = (Artist) query.getSingleResult();
+            artist = manager.find(Artist.class, id);
             manager.getTransaction().commit();
         } catch (Exception e) {
             manager.getTransaction().rollback();
@@ -109,20 +116,20 @@ public class ArtistDAO extends Artist {
         return artist;
     }
 
-    public Artist getArtistByNationality(String nationality) {
-        Artist artist = null;
+    public List<Artist> getArtistByNationality(String nationality) {
+        List<Artist> artists = null;
         manager = Connection.getManager();
         try {
             manager.getTransaction().begin();
             TypedQuery query = manager.createNamedQuery("Artist.selectByNationality", Artist.class);
             query.setParameter("nationality", nationality);
-            artist = (Artist) query.getSingleResult();
+            artists = (List<Artist>) query.getResultList();
             manager.getTransaction().commit();
         } catch (Exception e) {
             manager.getTransaction().rollback();
         }
         manager.close();
-        return artist;
+        return artists;
     }
 
 

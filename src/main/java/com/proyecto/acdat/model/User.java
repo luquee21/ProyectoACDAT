@@ -21,7 +21,7 @@ public class User implements Serializable {
     protected int id;
     @Column(name = "nombre")
     protected String name;
-    @Column(name = "correo")
+    @Column(name = "correo", unique = true)
     protected String email;
     @Column(name = "foto")
     protected String photo;
