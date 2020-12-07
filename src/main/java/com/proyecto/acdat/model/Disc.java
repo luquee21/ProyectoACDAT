@@ -58,6 +58,11 @@ public class Disc implements Serializable {
         this.date = date;
     }
 
+    public Disc(String name, String photo) {
+        this.name = name;
+        this.photo = photo;
+    }
+
     public Date getDate() {
         return date;
     }
