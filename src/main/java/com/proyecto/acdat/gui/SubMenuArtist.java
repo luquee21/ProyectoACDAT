@@ -83,7 +83,7 @@ public class SubMenuArtist {
                     if (artist == null) {
                         Utilities.P("El artista introducido no existe, comprueba el nombre");
                     } else {
-                        if (MyInstance.getInstance().deleteArtist(name)) {
+                        if (MyInstance.getInstance().deleteArtist(artist)) {
                             Utilities.P("Artista borrado con éxito");
                         } else {
                             Utilities.P("No se ha podido borrar el artista");
@@ -192,11 +192,12 @@ public class SubMenuArtist {
             String nationality = Utilities.getString("Introduce la nueva nacionalidad: ");
             String photo = Utilities.getString("Introduce la nueva foto: ");
             Artist newArtist = new Artist(name, nationality, photo);
+            newArtist.setId(oldArtist.getId());
 
             if (oldArtist.equals(newArtist)) {
                 Utilities.P("No puede ser igual");
             } else {
-                if (MyInstance.getInstance().updateArtist(newArtist, oldArtist.getId())) {
+                if (MyInstance.getInstance().updateArtist(newArtist)) {
                     Utilities.P("Se ha actualizado con éxito");
                 } else {
                     Utilities.P("No se ha podido actualizar");

@@ -43,6 +43,11 @@ public class Disc implements Serializable {
 
     public void setSongs(List<Song> songs) {
         this.songs = songs;
+        if (songs != null) {
+            for (Song s : songs) {
+                s.setDisc(this);
+            }
+        }
     }
 
     public Disc(int id, String name, String photo, Date date) {
@@ -85,10 +90,12 @@ public class Disc implements Serializable {
 
     public void setArtist(Artist artist) {
         this.artist = artist;
-        if (artist != null) {
-            List<Disc> discs = new ArrayList<>();
+        List<Disc> discs = this.artist.getDisc();
+        if (discs == null) {
+            discs = new ArrayList<>();
+        }
+        if (!discs.contains(this)) {
             discs.add(this);
-            artist.setDisc(discs);
         }
     }
 

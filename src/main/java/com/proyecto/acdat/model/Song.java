@@ -77,10 +77,12 @@ public class Song implements Serializable {
 
     public void setDisc(Disc disc) {
         this.disc = disc;
-        if (disc != null) {
-            List<Song> songs = new ArrayList<>();
+        List<Song> songs = this.disc.getSongs();
+        if (songs == null) {
+            songs = new ArrayList<>();
+        }
+        if (!songs.contains(this)) {
             songs.add(this);
-            disc.setSongs(songs);
         }
     }
 

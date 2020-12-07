@@ -17,33 +17,39 @@ public class PlayListDAO extends PlayList {
     public PlayListDAO() {
     }
 
-    public void addplaylist(PlayList a) {
+    public boolean addplaylist(PlayList a) {
+        boolean flag = false;
         manager = Connection.getManager();
         try {
             manager.getTransaction().begin();
             manager.persist(a);
             manager.getTransaction().commit();
+            flag = true;
         } catch (Exception e) {
             manager.getTransaction().rollback();
         }
         manager.close();
+        return flag;
     }
 
-    public void deletePlaylist(PlayList playList) {
+    public boolean deletePlaylist(PlayList playList) {
+        boolean flag = false;
         manager = Connection.getManager();
         try {
             manager.getTransaction().begin();
             PlayList a = manager.find(PlayList.class, playList.id);
             manager.remove(a);
             manager.getTransaction().commit();
-
+            flag = true;
         } catch (Exception e) {
             manager.getTransaction().rollback();
         }
         manager.close();
+        return flag;
     }
 
-    public void updatePlaylist(PlayList playList) {
+    public boolean updatePlaylist(PlayList playList) {
+        boolean flag = false;
         manager = Connection.getManager();
         try {
             manager.getTransaction().begin();
@@ -52,10 +58,12 @@ public class PlayListDAO extends PlayList {
             a.setDescription(playList.getDescription());
             manager.merge(a);
             manager.getTransaction().commit();
+            flag = true;
         } catch (Exception e) {
             manager.getTransaction().rollback();
         }
         manager.close();
+        return flag;
     }
 
     public List<PlayList> getAllPlaylist() {
@@ -95,9 +103,7 @@ public class PlayListDAO extends PlayList {
         manager = Connection.getManager();
         try {
             manager.getTransaction().begin();
-            TypedQuery query = manager.createNamedQuery("Playlist.selectById", PlayList.class);
-            query.setParameter("id", id);
-            playList = (PlayList) query.getSingleResult();
+            playList = manager.find(PlayList.class, id);
             manager.getTransaction().commit();
         } catch (Exception e) {
             manager.getTransaction().rollback();
@@ -122,26 +128,88 @@ public class PlayListDAO extends PlayList {
         return playLists;
     }
 
-    public List<PlayList> getPlaylistBySub(int id) {
-        List<PlayList> playLists = null;
+    public List<User> getSubOfPlaylist(int id) {
+        List<User> subs = null;
         manager = Connection.getManager();
         try {
             manager.getTransaction().begin();
-            Query query = manager.createNativeQuery("Playlist.selectBySub", PlayList.class);
+            Query query = manager.createNativeQuery("Playlist.selectBySub", User.class);
             query.setParameter("id_playlist", id);
-            playLists = (List<PlayList>) query.getResultList();
+            subs = (List<User>) query.getResultList();
             manager.getTransaction().commit();
         } catch (Exception e) {
             manager.getTransaction().rollback();
         }
         manager.close();
-        return playLists;
+        return subs;
     }
 
+    public boolean addSongToPlaylist(Song song, int id) {
+        boolean flag = false;
+        manager = Connection.getManager();
+        try {
+            manager.getTransaction().begin();
+            Query query = manager.createNativeQuery("Playlist.addSong");
+            query.setParameter("id_playlist", id);
+            query.setParameter("id_song", song.id);
+            manager.getTransaction().commit();
+            flag = true;
+        } catch (Exception e) {
+            manager.getTransaction().rollback();
+        }
+        manager.close();
+        return flag;
+    }
 
+    public boolean addSubToPlaylist(User user, int id) {
+        boolean flag = false;
+        manager = Connection.getManager();
+        try {
+            manager.getTransaction().begin();
+            Query query = manager.createNativeQuery("Playlist.addSub");
+            query.setParameter("id_playlist", id);
+            query.setParameter("id_user", user.id);
+            manager.getTransaction().commit();
+            flag = true;
+        } catch (Exception e) {
+            manager.getTransaction().rollback();
+        }
+        manager.close();
+        return flag;
+    }
 
+    public boolean deleteSongOfPlaylist(int id_song, int id_playlist) {
+        boolean flag = false;
+        manager = Connection.getManager();
+        try {
+            manager.getTransaction().begin();
+            Query query = manager.createNativeQuery("Playlist.deleteSong");
+            query.setParameter("id_playlist", id_playlist);
+            query.setParameter("id_song", id_song);
+            manager.getTransaction().commit();
+            flag = true;
+        } catch (Exception e) {
+            manager.getTransaction().rollback();
+        }
+        manager.close();
+        return flag;
+    }
 
+    public boolean deleteSubOfPlaylist(User user, int id) {
+        boolean flag = false;
+        manager = Connection.getManager();
+        try {
+            manager.getTransaction().begin();
+            Query query = manager.createNativeQuery("Playlist.deleteSub");
+            query.setParameter("id_playlist", id);
+            query.setParameter("id_user", user.id);
+            manager.getTransaction().commit();
+            flag = true;
+        } catch (Exception e) {
+            manager.getTransaction().rollback();
+        }
+        manager.close();
+        return flag;
+    }
 
-
-    //funciones del sub
 }

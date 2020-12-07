@@ -15,6 +15,10 @@ import java.util.List;
 })
 @NamedNativeQueries({
         @NamedNativeQuery(name = "Playlist.selectBySub", query = "SELECT s FROM Suscripcion s INNER JOIN Usuario ON Suscripcion.id_usuario=Usuario.id WHERE Suscripcion.id_lista= :id_playlist"),
+        @NamedNativeQuery(name = "Playlist.addSong", query = "INSERT INTO Lista_cancion VALUES (:id_playlist,:id_song)"),
+        @NamedNativeQuery(name = "Playlist.addSub", query = "INSERT INTO Suscripcion VALUES (:id_playlist,:id_user)"),
+        @NamedNativeQuery(name = "Playlist.deleteSong", query = "DELETE * FROM Lista_cancion WHERE id_playlist=:id_playlist and id_song=:id_song"),
+        @NamedNativeQuery(name = "Playlist.deleteSub", query = "DELETE * FROM Suscripcion WHERE id_playlist=:id_playlist and id_user=:id_user")
 })
 public class PlayList implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -99,17 +103,17 @@ public class PlayList implements Serializable {
 
     public User getCreator() {
         return creator;
-
     }
 
     public void setCreator(User creator) {
         this.creator = creator;
-        if (creator != null) {
-            List<PlayList> playlists = new ArrayList<>();
-            playlists.add(this);
-            creator.setPlayLists(playlists);
+        List<PlayList> playlist = this.creator.getPlayLists();
+        if (playlist == null) {
+            playlist = new ArrayList<>();
         }
-
+        if (!playlist.contains(this)) {
+            playlist.add(this);
+        }
     }
 
     @Override

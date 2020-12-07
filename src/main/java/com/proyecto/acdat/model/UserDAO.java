@@ -79,9 +79,7 @@ public class UserDAO extends User {
         manager = Connection.getManager();
         try {
             manager.getTransaction().begin();
-            TypedQuery query = manager.createNamedQuery("User.selectByID", User.class);
-            query.setParameter("id", id);
-            user = (User) query.getSingleResult();
+            user = manager.find(User.class, id);
             manager.getTransaction().commit();
         } catch (Exception e) {
             manager.getTransaction().rollback();

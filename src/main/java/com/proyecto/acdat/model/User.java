@@ -21,7 +21,7 @@ public class User implements Serializable {
     protected int id;
     @Column(name = "nombre")
     protected String name;
-    @Column(name = "correo")
+    @Column(name = "correo", unique = true)
     protected String email;
     @Column(name = "foto")
     protected String photo;
@@ -83,6 +83,11 @@ public class User implements Serializable {
 
     public void setPlayLists(List<PlayList> playLists) {
         this.playLists = playLists;
+        if (playLists != null) {
+            for (PlayList p : playLists) {
+                p.setCreator(this);
+            }
+        }
     }
 
     @Override

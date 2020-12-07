@@ -1,47 +1,52 @@
 package com.proyecto.acdat.controller;
 
 import com.proyecto.acdat.model.*;
+import com.proyecto.acdat.utils.Connection;
 
+import javax.persistence.EntityManager;
 import java.util.List;
 
 public class AppController implements IAppController {
+    private final ArtistDAO adao = new ArtistDAO();
+    private final UserDAO udao = new UserDAO();
+    private EntityManager manager;
+    private final PlayListDAO playListDAO = new PlayListDAO();
+
 
     @Override
     public boolean addArtist(Artist artist) {
-        return false;
+        return adao.addArtist(artist);
     }
 
     @Override
-    public boolean deleteArtist(String name) {
-        return false;
+    public boolean deleteArtist(Artist artist) {
+        return adao.deleteArtist(artist);
     }
 
     @Override
-    public boolean updateArtist(Artist artist, int id) {
-
-        return false;
+    public boolean updateArtist(Artist artist) {
+        return adao.updateArtist(artist);
     }
 
     @Override
     public List<Artist> selectAllArtist() {
-        return null;
+        return adao.getAllArtists();
     }
 
     @Override
     public Artist selectArtistByName(String name) {
-        return null;
+        return adao.getArtistByName(name);
     }
 
     @Override
     public Artist selectArtistById(int id) {
-
-        return null;
+        return adao.getArtistById(id);
     }
 
 
     @Override
     public List<Artist> selectArtistByNationality(String nationality) {
-        return null;
+        return adao.getArtistByNationality(nationality);
     }
 
     @Override
@@ -83,63 +88,72 @@ public class AppController implements IAppController {
     }
 
     @Override
-    public boolean addPlayList(PlayList playList) {
-        return false;
+    public boolean addPlayList(PlayList playList, User user) {
+        manager = Connection.getManager();
+        try{
+            manager.getTransaction().begin();
+            playList.setCreator(user);
+            manager.getTransaction().commit();
+        }catch (Exception e){
+            manager.getTransaction().rollback();
+        }
+        manager.close();
+        return playListDAO.addplaylist(playList);
     }
 
     @Override
     public boolean addSongToPlayList(Song song, int id) {
-        return false;
+        return playListDAO.addSongToPlaylist(song, id);
     }
 
     @Override
     public boolean addSubToPlayList(User user, int id) {
-        return false;
+        return playListDAO.addSubToPlaylist(user, id);
     }
 
     @Override
     public boolean deleteSongOfPlayList(int idSong, int idPlaylist) {
-        return false;
+        return playListDAO.deleteSongOfPlaylist(idSong, idPlaylist);
     }
 
     @Override
     public boolean deleteSubOfPlayList(User user, int id) {
-        return false;
+        return playListDAO.deleteSubOfPlaylist(user, id);
     }
 
     @Override
-    public boolean deletePlayList(int id) {
-        return false;
+    public boolean deletePlayList(PlayList playList) {
+        return playListDAO.deletePlaylist(playList);
     }
 
     @Override
     public boolean updatePlayList(PlayList playList) {
-        return false;
+        return playListDAO.updatePlaylist(playList);
     }
 
     @Override
     public PlayList selectPlayListById(int id) {
-        return null;
+        return playListDAO.getPlaylistById(id);
     }
 
     @Override
     public List<User> selectSubOfPlaylist(int id) {
-        return null;
+        return playListDAO.getSubOfPlaylist(id);
     }
 
     @Override
     public List<PlayList> selectAllPlayList() {
-        return null;
+        return playListDAO.getAllPlaylist();
     }
 
     @Override
     public List<PlayList> selectPlayListByName(String name) {
-        return null;
+        return playListDAO.getPlaylistByName(name);
     }
 
     @Override
-    public List<PlayList> selectPlayListByEmail(User user) {
-        return null;
+    public List<PlayList> selectPlayListByUser(User user) {
+        return playListDAO.getPlaylistByUser(user);
     }
 
     @Override

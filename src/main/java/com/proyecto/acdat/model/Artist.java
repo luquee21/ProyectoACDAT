@@ -23,7 +23,7 @@ public class Artist implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     protected int id;
-    @Column(name = "nombre")
+    @Column(name = "nombre", unique = true)
     protected String name;
     @Column(name = "nacionalidad")
     protected String nationality;
@@ -86,7 +86,13 @@ public class Artist implements Serializable {
 
     public void setDisc(List<Disc> disc) {
         this.disc = disc;
+        if (disc != null) {
+            for (Disc d : disc) {
+                d.setArtist(this);
+            }
+        }
     }
+
 
     @Override
     public String toString() {
