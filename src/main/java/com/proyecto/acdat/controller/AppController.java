@@ -5,6 +5,7 @@ import com.proyecto.acdat.model.*;
 import java.util.List;
 
 public class AppController implements IAppController {
+    PlayListDAO playListDAO = new PlayListDAO();
 
     @Override
     public boolean addArtist(Artist artist) {
@@ -84,62 +85,62 @@ public class AppController implements IAppController {
 
     @Override
     public boolean addPlayList(PlayList playList) {
-        return false;
+        return playListDAO.addplaylist(playList);
     }
 
     @Override
     public boolean addSongToPlayList(Song song, int id) {
-        return false;
+        return playListDAO.addSongToPlaylist(song, id);
     }
 
     @Override
     public boolean addSubToPlayList(User user, int id) {
-        return false;
+        return playListDAO.addSubToPlaylist(user, id);
     }
 
     @Override
     public boolean deleteSongOfPlayList(int idSong, int idPlaylist) {
-        return false;
+        return playListDAO.deleteSongOfPlaylist(idSong, idPlaylist);
     }
 
     @Override
     public boolean deleteSubOfPlayList(User user, int id) {
-        return false;
+        return playListDAO.deleteSubOfPlaylist(user, id);
     }
 
     @Override
-    public boolean deletePlayList(int id) {
-        return false;
+    public boolean deletePlayList(PlayList playList) {
+        return playListDAO.deletePlaylist(playList);
     }
 
     @Override
     public boolean updatePlayList(PlayList playList) {
-        return false;
+        return playListDAO.updatePlaylist(playList);
     }
 
     @Override
     public PlayList selectPlayListById(int id) {
-        return null;
+        return playListDAO.getPlaylistById(id);
     }
 
     @Override
     public List<User> selectSubOfPlaylist(int id) {
-        return null;
+        return playListDAO.getSubOfPlaylist(id);
     }
 
     @Override
     public List<PlayList> selectAllPlayList() {
-        return null;
+        return playListDAO.getAllPlaylist();
     }
 
     @Override
     public List<PlayList> selectPlayListByName(String name) {
-        return null;
+        return playListDAO.getPlaylistByName(name);
     }
 
     @Override
-    public List<PlayList> selectPlayListByEmail(User user) {
-        return null;
+    public List<PlayList> selectPlayListByUser(User user) {
+        return playListDAO.getPlaylistByUser(user);
     }
 
     @Override

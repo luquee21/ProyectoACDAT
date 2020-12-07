@@ -48,7 +48,7 @@ public interface IAppController {
 
     boolean deleteSubOfPlayList(User user, int id);
 
-    boolean deletePlayList(int id);
+    boolean deletePlayList(PlayList playList);
 
     boolean updatePlayList(PlayList playList);
 
@@ -60,7 +60,7 @@ public interface IAppController {
 
     List<PlayList> selectPlayListByName(String name);
 
-    List<PlayList> selectPlayListByEmail(User user);
+    List<PlayList> selectPlayListByUser(User user);
 
     //Song
     boolean addSong(Song song);
