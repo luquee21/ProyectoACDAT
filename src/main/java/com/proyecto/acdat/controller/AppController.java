@@ -1,11 +1,16 @@
 package com.proyecto.acdat.controller;
 
 import com.proyecto.acdat.model.*;
+import com.proyecto.acdat.utils.Connection;
 
+import javax.persistence.EntityManager;
 import java.util.List;
 
 public class AppController implements IAppController {
+
+    private EntityManager manager;
     PlayListDAO playListDAO = new PlayListDAO();
+
 
     @Override
     public boolean addArtist(Artist artist) {
@@ -84,7 +89,16 @@ public class AppController implements IAppController {
     }
 
     @Override
-    public boolean addPlayList(PlayList playList) {
+    public boolean addPlayList(PlayList playList, User user) {
+        manager = Connection.getManager();
+        try{
+            manager.getTransaction().begin();
+            playList.setCreator(user);
+            manager.getTransaction().commit();
+        }catch (Exception e){
+            manager.getTransaction().rollback();
+        }
+        manager.close();
         return playListDAO.addplaylist(playList);
     }
 

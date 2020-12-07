@@ -4,11 +4,14 @@ import com.proyecto.acdat.instance.MyInstance;
 import com.proyecto.acdat.model.PlayList;
 import com.proyecto.acdat.model.Song;
 import com.proyecto.acdat.model.User;
+import com.proyecto.acdat.model.UserDAO;
 import com.proyecto.acdat.utils.Utilities;
 
 import java.util.List;
 
 public class SubMenuPlayList {
+
+    static UserDAO userDAO = new UserDAO();
 
     public static void playlist() {
         int opction = 0;
@@ -74,8 +77,8 @@ public class SubMenuPlayList {
         String description = Utilities.getString("Introduce la descripción de la PlayList");
         String email = Utilities.getString("Introduce el correo electrónico del creador de la PlayList");
         User user = MyInstance.getInstance().selectUserByEmail(email);
-        PlayList playList = new PlayList(name, description, user);
-        if (MyInstance.getInstance().addPlayList(playList)) {
+        PlayList playList = new PlayList(name, description);
+        if (MyInstance.getInstance().addPlayList(playList, user)) {
             Utilities.P("PlayList creada con éxito");
         } else {
             Utilities.P("No se ha podido crear la PlayList");

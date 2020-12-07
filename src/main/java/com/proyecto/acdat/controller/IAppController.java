@@ -38,7 +38,7 @@ public interface IAppController {
     List<Disc> selectDiscByArtist(int id);
 
     //PlayList
-    boolean addPlayList(PlayList playList);
+    boolean addPlayList(PlayList playList, User user);
 
     boolean addSongToPlayList(Song song, int id);
 
