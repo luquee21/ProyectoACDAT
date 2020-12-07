@@ -86,7 +86,13 @@ public class Artist implements Serializable {
 
     public void setDisc(List<Disc> disc) {
         this.disc = disc;
+        if (disc != null) {
+            for (Disc d : disc) {
+                d.setArtist(this);
+            }
+        }
     }
+
 
     @Override
     public String toString() {

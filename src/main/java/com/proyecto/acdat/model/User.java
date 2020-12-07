@@ -83,6 +83,11 @@ public class User implements Serializable {
 
     public void setPlayLists(List<PlayList> playLists) {
         this.playLists = playLists;
+        if (playLists != null) {
+            for (PlayList p : playLists) {
+                p.setCreator(this);
+            }
+        }
     }
 
     @Override

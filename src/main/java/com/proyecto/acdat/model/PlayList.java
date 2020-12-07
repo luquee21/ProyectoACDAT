@@ -103,17 +103,17 @@ public class PlayList implements Serializable {
 
     public User getCreator() {
         return creator;
-
     }
 
     public void setCreator(User creator) {
         this.creator = creator;
-        if (creator != null) {
-            List<PlayList> playlists = new ArrayList<>();
-            playlists.add(this);
-            creator.setPlayLists(playlists);
+        List<PlayList> playlist = this.creator.getPlayLists();
+        if (playlist == null) {
+            playlist = new ArrayList<>();
         }
-
+        if (!playlist.contains(this)) {
+            playlist.add(this);
+        }
     }
 
     @Override

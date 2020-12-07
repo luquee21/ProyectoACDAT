@@ -9,9 +9,8 @@ import java.util.List;
 public class AppController implements IAppController {
     private final ArtistDAO adao = new ArtistDAO();
     private final UserDAO udao = new UserDAO();
-
     private EntityManager manager;
-    PlayListDAO playListDAO = new PlayListDAO();
+    private final PlayListDAO playListDAO = new PlayListDAO();
 
 
     @Override
