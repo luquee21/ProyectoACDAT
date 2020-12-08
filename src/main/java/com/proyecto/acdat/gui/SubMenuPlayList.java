@@ -76,7 +76,7 @@ public class SubMenuPlayList {
         String name = Utilities.getString("Introduce el nombre del la PlayList");
         String description = Utilities.getString("Introduce la descripción de la PlayList");
         String email = Utilities.getString("Introduce el correo electrónico del creador de la PlayList");
-        User user = MyInstance.getInstance().selectUserByEmail(email);
+        User user = MyInstance.getInstance().selectUserByEmail(email, false);
         PlayList playList = new PlayList(name, description);
         if (MyInstance.getInstance().addPlayList(playList, user)) {
             Utilities.P("PlayList creada con éxito");
@@ -208,7 +208,7 @@ public class SubMenuPlayList {
 
     public static void selectPlayListByEmail() {
         String email = Utilities.getString("Introduce el email para buscar sus listas de reproducción");
-        User user = MyInstance.getInstance().selectUserByEmail(email);
+        User user = MyInstance.getInstance().selectUserByEmail(email, false);
         if (user == null) {
             Utilities.P("No existe ningún usuario con ese email");
         } else {
@@ -284,7 +284,7 @@ public class SubMenuPlayList {
         }
         int idPlaylist = Utilities.getInt("Introduce el id de la Playlist que deseas");
         String email = Utilities.getString("Introduce el email del usuario que deseas suscribir a la Playlist");
-        User user = MyInstance.getInstance().selectUserByEmail(email);
+        User user = MyInstance.getInstance().selectUserByEmail(email, false);
         if (MyInstance.getInstance().addSubToPlayList(user, idPlaylist)) {
             Utilities.P("Usuario suscrito con éxito");
         } else {
@@ -300,7 +300,7 @@ public class SubMenuPlayList {
         }
         int idPlaylist = Utilities.getInt("Introduce el id de la Playlist que deseas");
         String email = Utilities.getString("Introduce el email del usuario que deseas borrar de la Playlist");
-        User user = MyInstance.getInstance().selectUserByEmail(email);
+        User user = MyInstance.getInstance().selectUserByEmail(email, false);
         if (MyInstance.getInstance().deleteSubOfPlayList(user, idPlaylist)) {
             Utilities.P("Usuario borrado con éxito");
         } else {
