@@ -18,35 +18,41 @@ public class SongDAO extends Song {
     public SongDAO() {
     }
 
-    public void addSong(Song s) {
+    public boolean addSong(Song s) {
+        boolean flag=false;
         manager = Connection.getManager();
         try {
             manager.getTransaction().begin();
             manager.persist(s);
             manager.getTransaction().commit();
-
+            flag = true;
         } catch (Exception e) {
             manager.getTransaction().rollback();
         }
 
         manager.close();
+        return flag;
     }
 
-    public void deleteSong(Song song) {
+    public boolean deleteSong(Song song) {
+        boolean flag = false;
         manager = Connection.getManager();
         try {
             manager.getTransaction().begin();
             Song s = manager.find(Song.class, song.id);
             manager.remove(s);
             manager.getTransaction().commit();
+            flag = true;
 
         } catch (Exception e) {
             manager.getTransaction().rollback();
         }
         manager.close();
+        return flag;
     }
 
-    public void updateSong(Song song) {
+    public boolean updateSong(Song song) {
+        boolean flag = false;
         manager = Connection.getManager();
         try {
             manager.getTransaction().begin();
@@ -55,10 +61,12 @@ public class SongDAO extends Song {
             s.setDuration(s.getDuration());
             manager.merge(s);
             manager.getTransaction().commit();
+            flag = true;
         } catch (Exception e) {
             manager.getTransaction().rollback();
         }
         manager.close();
+        return flag;
     }
 
     public List<Song> getAllSong() {
@@ -77,7 +85,7 @@ public class SongDAO extends Song {
         return song;
     }
 
-    public List<Song> getDisc(String name) {
+    public List<Song> getSongByName(String name) {
         List<Song> song = null;
         manager = Connection.getManager();
         try {
@@ -107,14 +115,14 @@ public class SongDAO extends Song {
         return song;
     }
 
-    public Song getSongByArtist(Artist artist) {
-        Song song = null;
+    public List<Song> getSongByArtist(Artist artist) {
+        List<Song> song = null;
         manager = Connection.getManager();
         try {
             manager.getTransaction().begin();
             TypedQuery query = manager.createNamedQuery("Song.selectByArtist", Song.class);
             query.setParameter("artist_name", artist.name);
-            song = (Song) query.getResultList();
+            song = query.getResultList();
             manager.getTransaction().commit();
         } catch (Exception e) {
             manager.getTransaction().rollback();
@@ -123,14 +131,14 @@ public class SongDAO extends Song {
         return song;
     }
 
-    public Song getSongByDisc(Disc disc) {
-        Song song = null;
+    public List<Song> getSongByDisc(Disc disc) {
+        List<Song> song = null;
         manager = Connection.getManager();
         try {
             manager.getTransaction().begin();
             TypedQuery query = manager.createNamedQuery("Song.selectByDisc", Song.class);
             query.setParameter("id_disc", disc.id);
-            song = (Song) query.getResultList();
+            song = query.getResultList();
             manager.getTransaction().commit();
         } catch (Exception e) {
             manager.getTransaction().rollback();
@@ -153,6 +161,23 @@ public class SongDAO extends Song {
         }
         manager.close();
         return song;
+    }
+
+    public boolean deleteAllSongOfDisc(int id) {
+        boolean flag = false;
+        manager = Connection.getManager();
+        try {
+            manager.getTransaction().begin();
+            TypedQuery query = manager.createNamedQuery("Song.deleteAllSongOfDisc", Song.class);
+            query.setParameter("id_disc",id);
+            query.executeUpdate();
+            manager.getTransaction().commit();
+            flag = true;
+        } catch (Exception e) {
+            manager.getTransaction().rollback();
+        }
+        manager.close();
+        return flag;
     }
 
 

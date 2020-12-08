@@ -11,6 +11,8 @@ public class AppController implements IAppController {
     private final UserDAO udao = new UserDAO();
     private EntityManager manager;
     private final PlayListDAO playListDAO = new PlayListDAO();
+    private final SongDAO songDAO = new SongDAO();
+    private final DiscDAO discDAO = new DiscDAO();
 
 
     @Override
@@ -50,41 +52,56 @@ public class AppController implements IAppController {
     }
 
     @Override
-    public boolean addDisc(Disc disc) {
+    public boolean addDisc(Disc disc,String artist) {
+        manager = Connection.getManager();
+        try {
+            manager.getTransaction().begin();
+            Artist aux = adao.getArtistByName(artist);
+            disc.setArtist(aux);
+            manager.getTransaction().commit();
 
-        return false;
+        }catch (Exception ex){
+        }
+        manager.close();
+        return discDAO.addDisc(disc);
     }
 
     @Override
     public boolean deleteDisc(int id) {
-
-        return false;
+        Disc disc = discDAO.getDiscById(id);
+        return discDAO.deleteDisc(disc);
     }
 
 
     @Override
     public boolean deleteAllDiscOfArtist(int id) {
-        return false;
+        return discDAO.deleteAllDiscOfArtist(id);
     }
 
     @Override
     public boolean updateDisc(Disc disc) {
-        return false;
+        return discDAO.updateDisc(disc);
     }
 
     @Override
     public List<Disc> selectAllDisc() {
-        return null;
+        return discDAO.getAllDisc();
     }
 
     @Override
     public List<Disc> selectDiscByName(String name) {
-        return null;
+        return discDAO.getDisc(name);
     }
 
     @Override
     public List<Disc> selectDiscByArtist(int id) {
-        return null;
+        Artist artist = adao.getArtistById(id);
+        return discDAO.getDiscByArtist(artist);
+    }
+
+    @Override
+    public Disc selectDiscById(int id) {
+        return discDAO.getDiscById(id);
     }
 
     @Override
@@ -157,43 +174,55 @@ public class AppController implements IAppController {
     }
 
     @Override
-    public boolean addSong(Song song) {
-        return false;
+    public boolean addSong(Song song, Disc disc) {
+        manager= Connection.getManager();
+        try {
+            manager.getTransaction().begin();
+            song.setDisc(disc);
+            manager.getTransaction().commit();
+        }catch (Exception e){
+            manager.getTransaction().rollback();
+        }
+        manager.close();
+        return songDAO.addSong(song);
     }
 
     @Override
     public boolean deleteSong(int id) {
-        return false;
+        Song song = songDAO.getSongById(id);
+        return songDAO.deleteSong(song);
     }
 
     @Override
     public boolean deleteAllSongOfDisc(int id) {
-        return false;
+        return songDAO.deleteAllSongOfDisc(id);
     }
 
     @Override
     public boolean updateSong(Song song) {
-        return false;
+        return songDAO.updateSong(song);
     }
 
     @Override
     public List<Song> selectAllSong() {
-        return null;
+        return songDAO.getAllSong();
     }
 
     @Override
     public List<Song> selectSongByName(String name) {
-        return null;
+        return songDAO.getSongByName(name);
     }
 
     @Override
     public List<Song> selectAllSongOfArtist(String name) {
-        return null;
+        Artist artist = adao.getArtistByName(name);
+        return songDAO.getSongByArtist(artist);
     }
 
     @Override
     public List<Song> selectAllSongByDisc(int id) {
-        return null;
+        Disc disc = discDAO.getDiscById(id);
+        return songDAO.getSongByDisc(disc);
     }
 
     @Override

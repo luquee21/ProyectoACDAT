@@ -4,9 +4,9 @@ import com.proyecto.acdat.instance.MyInstance;
 import com.proyecto.acdat.model.Artist;
 import com.proyecto.acdat.model.ArtistDAO;
 import com.proyecto.acdat.model.Disc;
-import com.proyecto.acdat.model.DiscDAO;
 import com.proyecto.acdat.utils.Utilities;
 
+import java.sql.Date;
 import java.util.List;
 
 public class SubMenuDisc {
@@ -51,21 +51,20 @@ public class SubMenuDisc {
         Utilities.P("---- Añadir Disco ----");
         String name = Utilities.getString("Inserte el nombre del disco");
         String photo = Utilities.getString("Introduce la foto");
-        String date = Utilities.getString("Introduce la fecha(AÑO-MES-DIA // EJ: 2020-11-05)");
+        int year = Utilities.getInt("Introduce el año del disco");
+        int mounth = Utilities.getInt("Introduce el mes del disco");
+        int day = Utilities.getInt("Introduce el día del disco");
+        Date date = new Date(year, mounth,day);
         String artist = Utilities.getString("Introduce el nombre del artista");
-        Artist a = artistDAO.getArtistByName(artist);
-        Artist tmp = artistDAO.getArtistById(a.getId());
-        if (tmp == null) {
-            Utilities.P("El artista no existe");
-        } else {
-            if (MyInstance.getInstance().addDisc(new Disc(name, photo, date, a.getId()))) {
+        Disc disc = new Disc(name, photo,date);
+            if (MyInstance.getInstance().addDisc(disc, artist)) {
                 Utilities.P("Disco creado con éxito");
             } else {
                 Utilities.P("No se ha podido crear el disco");
             }
         }
 
-    }
+
 
     public static void deleteDisc() {
         int option = 0;
@@ -201,7 +200,8 @@ public class SubMenuDisc {
         } else {
             String name = Utilities.getString("Introduce el nuevo nombre del disco: ");
             String photo = Utilities.getString("Introduce la nueva foto: ");
-            Disc newDisc = new Disc(oldDisc.getId(), name, photo, oldDisc.getDate(), oldDisc.getId_artista());
+            Disc newDisc = new Disc(oldDisc.getId(), name, photo, oldDisc.getDate());
+            newDisc.setArtist(oldDisc.getArtist());
 
             if (oldDisc.equals(newDisc)) {
                 Utilities.P("No puede ser igual");

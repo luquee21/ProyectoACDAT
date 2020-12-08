@@ -47,8 +47,8 @@ public class SubMenuSong {
         String name = Utilities.getString("Inserte el nombre de la canción");
         int duration = Utilities.getInt("Introduce la duración");
         String nameDisc = Utilities.getString("Introduce el nombre del disco al que pertenece");
+        Song song = new Song(name,duration);
         List<Disc> discs = MyInstance.getInstance().selectDiscByName(nameDisc);
-
         if (discs.isEmpty()) {
             Utilities.P("No existe el disco");
         } else {
@@ -56,7 +56,8 @@ public class SubMenuSong {
                 Utilities.P(d.toString());
             }
             int id = Utilities.getInt("Introduce el id del disco al que pertenece");
-            if (MyInstance.getInstance().addSong(new Song(name, duration, id))) {
+            Disc disc = MyInstance.getInstance().selectDiscById(id);
+            if (MyInstance.getInstance().addSong(song, disc)) {
                 Utilities.P("Canción creada con éxito");
             } else {
                 Utilities.P("No se ha podido crear la canción");

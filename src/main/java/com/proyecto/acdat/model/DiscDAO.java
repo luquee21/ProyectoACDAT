@@ -19,35 +19,42 @@ public class DiscDAO extends Disc {
     public DiscDAO() {
     }
 
-    public void addDisc(Disc d) {
+    public boolean addDisc(Disc d) {
+        boolean flag = false;
         manager = Connection.getManager();
         try {
             manager.getTransaction().begin();
             manager.persist(d);
             manager.getTransaction().commit();
+            flag = true;
 
         } catch (Exception e) {
             manager.getTransaction().rollback();
         }
 
         manager.close();
+        return flag;
     }
 
-    public void deleteDisc(Disc disc) {
+    public boolean deleteDisc(Disc disc) {
+        boolean flag = false;
         manager = Connection.getManager();
         try {
             manager.getTransaction().begin();
             Disc d = manager.find(Disc.class, disc.id);
             manager.remove(d);
             manager.getTransaction().commit();
+            flag = true;
 
         } catch (Exception e) {
             manager.getTransaction().rollback();
         }
         manager.close();
+        return flag;
     }
 
-    public void updateDisc(Disc disc) {
+    public boolean updateDisc(Disc disc) {
+        boolean flag = false;
         manager = Connection.getManager();
         try {
             manager.getTransaction().begin();
@@ -57,10 +64,12 @@ public class DiscDAO extends Disc {
             d.setDate(disc.getDate());
             manager.merge(d);
             manager.getTransaction().commit();
+            flag = true;
         } catch (Exception e) {
             manager.getTransaction().rollback();
         }
         manager.close();
+        return flag;
     }
 
     public List<Disc> getAllDisc() {
@@ -109,19 +118,35 @@ public class DiscDAO extends Disc {
         return disc;
     }
 
-    public Disc getDiscByArtist(Artist artist) {
-        Disc disc = null;
+    public List<Disc> getDiscByArtist(Artist artist) {
+        List<Disc>disc = null;
         manager = Connection.getManager();
         try {
             manager.getTransaction().begin();
             TypedQuery query = manager.createNamedQuery("Disc.selectByArtist", Disc.class);
             query.setParameter("id_artist", artist.id);
-            disc = (Disc) query.getResultList();
+            disc = query.getResultList();
             manager.getTransaction().commit();
         } catch (Exception e) {
             manager.getTransaction().rollback();
         }
         manager.close();
         return disc;
+    }
+    public boolean deleteAllDiscOfArtist(int id) {
+        boolean flag = false;
+        manager = Connection.getManager();
+        try {
+            manager.getTransaction().begin();
+            TypedQuery query = manager.createNamedQuery("Disc.deleteAllDiscOfArtist", Disc.class);
+            query.setParameter("id_artist",id);
+            query.executeUpdate();
+            manager.getTransaction().commit();
+            flag = true;
+        } catch (Exception e) {
+            manager.getTransaction().rollback();
+        }
+        manager.close();
+        return flag;
     }
 }

@@ -10,7 +10,8 @@ import java.util.List;
 @NamedQueries({
         @NamedQuery(name = "Song.selectAll", query = "SELECT s FROM Song s"),
         @NamedQuery(name = "Song.selectByName", query = "SELECT s FROM Song s WHERE s.name = :name"),
-        @NamedQuery(name = "Song.selectById", query = "SELECT s FROM Song s WHERE s.id = :id")
+        @NamedQuery(name = "Song.selectById", query = "SELECT s FROM Song s WHERE s.id = :id"),
+        @NamedQuery(name = "Song.deleteAllSongOfDisc", query = "DELETE FROM Cancion WHERE Disc.id= :id_disc"),
 })
 @NamedNativeQueries({
         @NamedNativeQuery(name = "Song.selectByArtist", query = "SELECT s FROM Song s INNER JOIN Disc ON Song.id_disco = Disc.id INNER JOIN Artist ON Artist.id=Disc.id_artista WHERE Artist.name= :artist_name"),
