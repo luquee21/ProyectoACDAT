@@ -26,7 +26,7 @@ public class Disc implements Serializable {
     protected String name;
     @Column(name = "foto", nullable = false)
     protected String photo;
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "id_artista", nullable = false)
     protected Artist artist;
     @Column(name = "fecha_prod", nullable = false)

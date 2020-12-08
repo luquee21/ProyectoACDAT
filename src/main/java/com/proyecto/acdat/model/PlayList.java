@@ -31,17 +31,18 @@ public class PlayList implements Serializable {
     protected String name;
     @Column(name = "descripcion", nullable = false)
     protected String description;
-    @ManyToMany
+
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinTable(name = "Lista_cancion",
             joinColumns = @JoinColumn(name = "id_lista"), inverseJoinColumns = @JoinColumn(name = "id_cancion"))
     protected List<Song> songs;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinTable(name = "Suscripcion",
             joinColumns = @JoinColumn(name = "id_lista"), inverseJoinColumns = @JoinColumn(name = "id_usuario"))
     protected List<User> subscribers;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "id_usuario", nullable = false)
     protected User creator;
 

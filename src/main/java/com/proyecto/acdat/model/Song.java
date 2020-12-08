@@ -29,7 +29,7 @@ public class Song implements Serializable {
     protected String name;
     @Column(name = "duracion", nullable = false)
     protected int duration;
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "id_disco", nullable = false)
     protected Disc disc;
 
