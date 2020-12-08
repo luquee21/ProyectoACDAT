@@ -2,12 +2,16 @@ package com.proyecto.acdat.gui;
 
 import com.proyecto.acdat.instance.MyInstance;
 import com.proyecto.acdat.model.Artist;
+import com.proyecto.acdat.model.ArtistDAO;
 import com.proyecto.acdat.model.Disc;
+import com.proyecto.acdat.model.DiscDAO;
 import com.proyecto.acdat.utils.Utilities;
 
 import java.util.List;
 
 public class SubMenuDisc {
+
+    static ArtistDAO artistDAO = new ArtistDAO();
 
     public static void disc() {
         int option = 0;
@@ -49,8 +53,9 @@ public class SubMenuDisc {
         String photo = Utilities.getString("Introduce la foto");
         String date = Utilities.getString("Introduce la fecha(AÑO-MES-DIA // EJ: 2020-11-05)");
         String artist = Utilities.getString("Introduce el nombre del artista");
-        Artist a = MyInstance.getInstance().selectArtistByName(artist);
-        if (a == null) {
+        Artist a = artistDAO.getArtistByName(artist);
+        Artist tmp = artistDAO.getArtistById(a.getId());
+        if (tmp == null) {
             Utilities.P("El artista no existe");
         } else {
             if (MyInstance.getInstance().addDisc(new Disc(name, photo, date, a.getId()))) {

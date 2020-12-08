@@ -1,18 +1,163 @@
 package com.proyecto.acdat.model;
 
+import com.proyecto.acdat.utils.Connection;
+
+import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
+import javax.swing.text.html.parser.Entity;
+import java.util.List;
+
 public class SongDAO extends Song {
 
-    private static final String SELECTALL = "SELECT * FROM Cancion";
-    private static final String SELECTBYNAME = "SELECT * FROM Cancion WHERE nombre=?";
-    private static final String SELECTALLSONGOFPLAYLIST = "SELECT * FROM Cancion INNER JOIN Lista_cancion ON Cancion.id = Lista_cancion.id_cancion WHERE Lista_cancion.id_lista = ?";
-    private static final String SELECTALLSONGBYDISC = "SELECT * FROM Cancion INNER JOIN Disco ON Cancion.id_disco=Disco.id WHERE Disco.id=?";
-    private static final String SELECTALLSONGOFARTIST = "SELECT * FROM Cancion INNER JOIN Disco ON Cancion.id_disco = Disco.id INNER JOIN Artista ON Artista.id=Disco.id_artista WHERE Artista.nombre=?";
-    private static final String INSERTSONG = "INSERT INTO Cancion (nombre,duracion,id_genero,id_disco) VALUES(?,?,NULL,?)";
-    private static final String DELETESONG = "DELETE FROM Cancion WHERE id=?";
-    private static final String DELETEALLSONGOFDISC = "DELETE FROM Cancion WHERE id_disco=?";
-    private static final String UPDATESONG = "UPDATE Cancion SET nombre=?, duracion=? WHERE id=?";
+    private EntityManager manager;
 
     public SongDAO(String name, int duration) {
         super(name, duration);
     }
+
+    public SongDAO() {
+    }
+
+    public void addSong(Song s) {
+        manager = Connection.getManager();
+        try {
+            manager.getTransaction().begin();
+            manager.persist(s);
+            manager.getTransaction().commit();
+
+        } catch (Exception e) {
+            manager.getTransaction().rollback();
+        }
+
+        manager.close();
+    }
+
+    public void deleteSong(Song song) {
+        manager = Connection.getManager();
+        try {
+            manager.getTransaction().begin();
+            Song s = manager.find(Song.class, song.id);
+            manager.remove(s);
+            manager.getTransaction().commit();
+
+        } catch (Exception e) {
+            manager.getTransaction().rollback();
+        }
+        manager.close();
+    }
+
+    public void updateSong(Song song) {
+        manager = Connection.getManager();
+        try {
+            manager.getTransaction().begin();
+            Song s = manager.find(Song.class, song.id);
+            s.setName(s.getName());
+            s.setDuration(s.getDuration());
+            manager.merge(s);
+            manager.getTransaction().commit();
+        } catch (Exception e) {
+            manager.getTransaction().rollback();
+        }
+        manager.close();
+    }
+
+    public List<Song> getAllSong() {
+        List<Song> song = null;
+        manager = Connection.getManager();
+        try {
+            manager.getTransaction().begin();
+            TypedQuery query = manager.createNamedQuery("Song.selectAll", Song.class);
+            song = (List<Song>) query.getResultList();
+            manager.getTransaction().commit();
+
+        } catch (Exception e) {
+            manager.getTransaction().rollback();
+        }
+        manager.close();
+        return song;
+    }
+
+    public List<Song> getDisc(String name) {
+        List<Song> song = null;
+        manager = Connection.getManager();
+        try {
+            manager.getTransaction().begin();
+            TypedQuery query = manager.createNamedQuery("Disc.selectByName", Song.class);
+            query.setParameter("name", name);
+            song = (List<Song>) query.getResultList();
+            manager.getTransaction().commit();
+        } catch (Exception e) {
+            manager.getTransaction().rollback();
+        }
+        manager.close();
+        return song;
+    }
+
+    public Song getSongById(int id) {
+        Song song = null;
+        manager = Connection.getManager();
+        try {
+            manager.getTransaction().begin();
+            song = manager.find(Song.class,id);
+            manager.getTransaction().commit();
+        } catch (Exception e) {
+            manager.getTransaction().rollback();
+        }
+        manager.close();
+        return song;
+    }
+
+    public Song getSongByArtist(Artist artist) {
+        Song song = null;
+        manager = Connection.getManager();
+        try {
+            manager.getTransaction().begin();
+            TypedQuery query = manager.createNamedQuery("Song.selectByArtist", Song.class);
+            query.setParameter("artist_name", artist.name);
+            song = (Song) query.getResultList();
+            manager.getTransaction().commit();
+        } catch (Exception e) {
+            manager.getTransaction().rollback();
+        }
+        manager.close();
+        return song;
+    }
+
+    public Song getSongByDisc(Disc disc) {
+        Song song = null;
+        manager = Connection.getManager();
+        try {
+            manager.getTransaction().begin();
+            TypedQuery query = manager.createNamedQuery("Song.selectByDisc", Song.class);
+            query.setParameter("id_disc", disc.id);
+            song = (Song) query.getResultList();
+            manager.getTransaction().commit();
+        } catch (Exception e) {
+            manager.getTransaction().rollback();
+        }
+        manager.close();
+        return song;
+    }
+
+    public Song getSongByPlayList(PlayList playList) {
+        Song song = null;
+        manager = Connection.getManager();
+        try {
+            manager.getTransaction().begin();
+            TypedQuery query = manager.createNamedQuery("Song.selectByPlaylist", Song.class);
+            query.setParameter("id_list", playList.id);
+            song = (Song) query.getResultList();
+            manager.getTransaction().commit();
+        } catch (Exception e) {
+            manager.getTransaction().rollback();
+        }
+        manager.close();
+        return song;
+    }
+
+
+
+
+
+
 }
