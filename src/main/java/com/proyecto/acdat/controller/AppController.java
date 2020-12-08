@@ -103,12 +103,12 @@ public class AppController implements IAppController {
 
     @Override
     public boolean addSongToPlayList(Song song, int id) {
-        return playListDAO.addSongToPlaylist(song, id);
+        return playListDAO.addSongOnPlaylist(song.getId(), id);
     }
 
     @Override
     public boolean addSubToPlayList(User user, int id) {
-        return playListDAO.addSubToPlaylist(user, id);
+        return playListDAO.addSubOnPlaylist(user.getId(), id);
     }
 
     @Override

@@ -135,6 +135,7 @@ public class PlayListDAO extends PlayList {
             manager.getTransaction().begin();
             Query query = manager.createNativeQuery("Playlist.selectBySub", User.class);
             query.setParameter("id_playlist", id);
+            query.executeUpdate();
             subs = (List<User>) query.getResultList();
             manager.getTransaction().commit();
         } catch (Exception e) {
@@ -142,6 +143,42 @@ public class PlayListDAO extends PlayList {
         }
         manager.close();
         return subs;
+    }
+
+    public boolean addSongOnPlaylist(int id_song, int id_playlist) {
+        boolean flag = false;
+        manager = Connection.getManager();
+        try {
+            manager.getTransaction().begin();
+            Query query = manager.createNativeQuery("Playlist.addSong");
+            query.setParameter("id_playlist", id_playlist);
+            query.setParameter("id_song", id_song);
+            query.executeUpdate();
+            manager.getTransaction().commit();
+            flag = true;
+        } catch (Exception e) {
+            manager.getTransaction().rollback();
+        }
+        manager.close();
+        return flag;
+    }
+
+    public boolean addSubOnPlaylist(int id_sub, int id_playlist) {
+        boolean flag = false;
+        manager = Connection.getManager();
+        try {
+            manager.getTransaction().begin();
+            Query query = manager.createNativeQuery("Playlist.addSong");
+            query.setParameter("id_playlist", id_playlist);
+            query.setParameter("id_song", id_sub);
+            query.executeUpdate();
+            manager.getTransaction().commit();
+            flag = true;
+        } catch (Exception e) {
+            manager.getTransaction().rollback();
+        }
+        manager.close();
+        return flag;
     }
 
     public boolean deleteSongOfPlaylist(int id_song, int id_playlist) {
@@ -152,6 +189,7 @@ public class PlayListDAO extends PlayList {
             Query query = manager.createNativeQuery("Playlist.deleteSong");
             query.setParameter("id_playlist", id_playlist);
             query.setParameter("id_song", id_song);
+            query.executeUpdate();
             manager.getTransaction().commit();
             flag = true;
         } catch (Exception e) {
@@ -169,6 +207,7 @@ public class PlayListDAO extends PlayList {
             Query query = manager.createNativeQuery("Playlist.deleteSub");
             query.setParameter("id_playlist", id);
             query.setParameter("id_user", user.id);
+            query.executeUpdate();
             manager.getTransaction().commit();
             flag = true;
         } catch (Exception e) {
