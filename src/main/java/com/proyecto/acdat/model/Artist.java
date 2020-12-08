@@ -23,11 +23,11 @@ public class Artist implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     protected int id;
-    @Column(name = "nombre", unique = true)
+    @Column(name = "nombre", unique = true, nullable = false)
     protected String name;
-    @Column(name = "nacionalidad")
+    @Column(name = "nacionalidad", nullable = false)
     protected String nationality;
-    @Column(name = "foto")
+    @Column(name = "foto", nullable = false)
     protected String photo;
     @OneToMany(mappedBy = "artist", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     protected List<Disc> disc;

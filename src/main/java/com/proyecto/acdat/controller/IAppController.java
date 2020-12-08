@@ -14,13 +14,13 @@ public interface IAppController {
 
     boolean updateArtist(Artist artist);
 
-    List<Artist> selectAllArtist();
+    List<Artist> selectAllArtist(boolean flag);
 
-    Artist selectArtistByName(String name);
+    Artist selectArtistByName(String name, boolean flag);
 
-    Artist selectArtistById(int id);
+    Artist selectArtistById(int id, boolean flag);
 
-    List<Artist> selectArtistByNationality(String nationality);
+    List<Artist> selectArtistByNationality(String nationality, boolean flag);
 
     //Disc
     boolean addDisc(Disc disc,String artist);
@@ -84,17 +84,19 @@ public interface IAppController {
     //User
     boolean addUser(User user);
 
-    boolean deleteUser(String email);
+    boolean deleteUser(User user);
 
     boolean deleteAllPlayListOfUser(int id_user);
 
     boolean updateUser(User user);
 
-    List<User> selectAllUser();
+    List<User> selectAllUser(boolean flag);
 
-    User selectUserByEmail(String email);
+    User selectUserByEmail(String email, boolean flag);
 
-    List<User> selectUserByName(String name);
+    List<User> selectUserByName(String name, boolean flag);
+
+    User selectUserById(int id, boolean flag);
 
 
 }

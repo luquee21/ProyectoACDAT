@@ -63,7 +63,7 @@ public class SubMenuUser {
         option = Utilities.getInt();
         switch (option) {
             case 1:
-                List<User> users = MyInstance.getInstance().selectAllUser();
+                List<User> users = MyInstance.getInstance().selectAllUser(false);
                 if (users.isEmpty()) {
                     Utilities.P("No hay usuarios creados");
                 } else {
@@ -74,7 +74,8 @@ public class SubMenuUser {
                 break;
             case 2:
                 String email = Utilities.getString("Introduce el email del usuario que deseas borrar: ");
-                if (MyInstance.getInstance().deleteUser(email)) {
+                User u = MyInstance.getInstance().selectUserByEmail(email, false);
+                if (MyInstance.getInstance().deleteUser(u)) {
                     Utilities.P("Se ha borrado el usuario con éxito");
                 } else {
                     Utilities.P("No se ha podido borrar el usuario");
@@ -82,7 +83,7 @@ public class SubMenuUser {
                 break;
             case 3:
                 String aux = Utilities.getString("Introduce el email del usuario: ");
-                User user = MyInstance.getInstance().selectUserByEmail(aux);
+                User user = MyInstance.getInstance().selectUserByEmail(aux, false);
                 if (user == null) {
                     Utilities.P("No hay ningun usuario con ese email");
                 } else {
@@ -121,7 +122,7 @@ public class SubMenuUser {
 
         switch (option) {
             case 1:
-                users = MyInstance.getInstance().selectAllUser();
+                users = MyInstance.getInstance().selectAllUser(true);
                 if (users.isEmpty()) {
                     Utilities.P("No hay ningún usuario creado");
                 } else {
@@ -131,7 +132,7 @@ public class SubMenuUser {
                 }
                 break;
             case 2:
-                users = MyInstance.getInstance().selectAllUser();
+                users = MyInstance.getInstance().selectAllUser(false);
                 if (users.isEmpty()) {
                     Utilities.P("No hay ningún usuario creado");
                 } else {
@@ -142,7 +143,7 @@ public class SubMenuUser {
                 break;
             case 3:
                 String name = Utilities.getString("Introduce el nombre de usuario: ");
-                users = MyInstance.getInstance().selectUserByName(name);
+                users = MyInstance.getInstance().selectUserByName(name, true);
                 if (users.isEmpty()) {
                     Utilities.P("No hay usuarios con ese nombre");
                 } else {
@@ -153,7 +154,7 @@ public class SubMenuUser {
                 break;
             case 4:
                 name = Utilities.getString("Introduce el nombre de usuario: ");
-                users = MyInstance.getInstance().selectUserByName(name);
+                users = MyInstance.getInstance().selectUserByName(name, false);
                 if (users.isEmpty()) {
                     Utilities.P("No hay usuarios con ese nombre");
                 } else {
@@ -164,7 +165,7 @@ public class SubMenuUser {
                 break;
             case 5:
                 email = Utilities.getString("Introduce el email de usuario: ");
-                user = MyInstance.getInstance().selectUserByEmail(email);
+                user = MyInstance.getInstance().selectUserByEmail(email, true);
                 if (user == null) {
                     Utilities.P("No hay ningún usuario con ese email");
                 } else {
@@ -173,7 +174,7 @@ public class SubMenuUser {
                 break;
             case 6:
                 email = Utilities.getString("Introduce el email de usuario: ");
-                user = MyInstance.getInstance().selectUserByEmail(email);
+                user = MyInstance.getInstance().selectUserByEmail(email, false);
                 if (user == null) {
                     Utilities.P("No hay ningún usuario con ese email");
                 } else {
@@ -192,7 +193,7 @@ public class SubMenuUser {
     private static void updateUser() {
         Utilities.P("---- Actualizar Usuario ----");
         String oldemail = Utilities.getString("Introduce el email del usuario: ");
-        User oldUser = MyInstance.getInstance().selectUserByEmail(oldemail);
+        User oldUser = MyInstance.getInstance().selectUserByEmail(oldemail, false);
 
         if (oldUser == null) {
             Utilities.P("No hay ningún usuario con ese email");

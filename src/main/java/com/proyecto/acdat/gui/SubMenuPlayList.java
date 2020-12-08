@@ -76,7 +76,7 @@ public class SubMenuPlayList {
         String name = Utilities.getString("Introduce el nombre del la PlayList");
         String description = Utilities.getString("Introduce la descripción de la PlayList");
         String email = Utilities.getString("Introduce el correo electrónico del creador de la PlayList");
-        User user = MyInstance.getInstance().selectUserByEmail(email);
+        User user = MyInstance.getInstance().selectUserByEmail(email, false);
         PlayList playList = new PlayList(name, description);
         if (MyInstance.getInstance().addPlayList(playList, user)) {
             Utilities.P("PlayList creada con éxito");
@@ -114,7 +114,8 @@ public class SubMenuPlayList {
                             Utilities.P(pl.toString());
                         }
                         int id = Utilities.getInt("Por favor, introduce la id de la PlayList que deseas borrar");
-                        if (MyInstance.getInstance().deletePlayList(id)) {
+                        PlayList toDelete = MyInstance.getInstance().selectPlayListById(id);
+                        if (MyInstance.getInstance().deletePlayList(toDelete)) {
                             Utilities.P("PlayList borrada con éxito");
                         } else {
                             Utilities.P("No se ha podido borrar la PlayList seleccionada");
@@ -153,7 +154,7 @@ public class SubMenuPlayList {
         } else {
             String name = Utilities.getString("Introduce el nuevo nombre de la PLayList");
             String description = Utilities.getString("Introduce la nueva descripción de la PlayList");
-            PlayList newPlayList = new PlayList(name, description, oldplaylist.getId());
+            PlayList newPlayList = new PlayList(oldplaylist.getId(), name, description);
 
             if (oldplaylist.equals(newPlayList)) {
                 Utilities.P("No puede ser igual");
@@ -207,11 +208,11 @@ public class SubMenuPlayList {
 
     public static void selectPlayListByEmail() {
         String email = Utilities.getString("Introduce el email para buscar sus listas de reproducción");
-        User user = MyInstance.getInstance().selectUserByEmail(email);
+        User user = MyInstance.getInstance().selectUserByEmail(email, false);
         if (user == null) {
             Utilities.P("No existe ningún usuario con ese email");
         } else {
-            List<PlayList> playList = MyInstance.getInstance().selectPlayListByEmail(user);
+            List<PlayList> playList = MyInstance.getInstance().selectPlayListByUser(user);
             if (playList.isEmpty()) {
                 Utilities.P("No hay listas de ese usuario");
             } else {
@@ -283,7 +284,7 @@ public class SubMenuPlayList {
         }
         int idPlaylist = Utilities.getInt("Introduce el id de la Playlist que deseas");
         String email = Utilities.getString("Introduce el email del usuario que deseas suscribir a la Playlist");
-        User user = MyInstance.getInstance().selectUserByEmail(email);
+        User user = MyInstance.getInstance().selectUserByEmail(email, false);
         if (MyInstance.getInstance().addSubToPlayList(user, idPlaylist)) {
             Utilities.P("Usuario suscrito con éxito");
         } else {
@@ -299,7 +300,7 @@ public class SubMenuPlayList {
         }
         int idPlaylist = Utilities.getInt("Introduce el id de la Playlist que deseas");
         String email = Utilities.getString("Introduce el email del usuario que deseas borrar de la Playlist");
-        User user = MyInstance.getInstance().selectUserByEmail(email);
+        User user = MyInstance.getInstance().selectUserByEmail(email, false);
         if (MyInstance.getInstance().deleteSubOfPlayList(user, idPlaylist)) {
             Utilities.P("Usuario borrado con éxito");
         } else {

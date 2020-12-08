@@ -15,8 +15,8 @@ import java.util.List;
 })
 @NamedNativeQueries({
         @NamedNativeQuery(name = "Playlist.selectBySub", query = "SELECT s FROM Suscripcion s INNER JOIN Usuario ON Suscripcion.id_usuario=Usuario.id WHERE Suscripcion.id_lista= :id_playlist"),
-        @NamedNativeQuery(name = "Playlist.addSong", query = "INSERT INTO Lista_cancion VALUES (:id_playlist,:id_song)"),
-        @NamedNativeQuery(name = "Playlist.addSub", query = "INSERT INTO Suscripcion VALUES (:id_playlist,:id_user)"),
+        @NamedNativeQuery(name = "Playlist.addSong", query = "INSERT INTO Lista_cancion VALUES (:id_playlist, :id_song)"),
+        @NamedNativeQuery(name = "Playlist.addSub", query = "INSERT INTO Suscripcion VALUES (:id_playlist, :id_user)"),
         @NamedNativeQuery(name = "Playlist.deleteSong", query = "DELETE * FROM Lista_cancion WHERE id_playlist=:id_playlist and id_song=:id_song"),
         @NamedNativeQuery(name = "Playlist.deleteSub", query = "DELETE * FROM Suscripcion WHERE id_playlist=:id_playlist and id_user=:id_user")
 })
@@ -27,22 +27,23 @@ public class PlayList implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     protected int id;
-    @Column(name = "nombre")
+    @Column(name = "nombre", nullable = false)
     protected String name;
-    @Column(name = "descripcion")
+    @Column(name = "descripcion", nullable = false)
     protected String description;
-    @ManyToMany
+
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinTable(name = "Lista_cancion",
             joinColumns = @JoinColumn(name = "id_lista"), inverseJoinColumns = @JoinColumn(name = "id_cancion"))
     protected List<Song> songs;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinTable(name = "Suscripcion",
             joinColumns = @JoinColumn(name = "id_lista"), inverseJoinColumns = @JoinColumn(name = "id_usuario"))
     protected List<User> subscribers;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id_usuario")
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_usuario", nullable = false)
     protected User creator;
 
     public PlayList() {
@@ -97,7 +98,10 @@ public class PlayList implements Serializable {
     }
 
     public void setSubscribers(List<User> subscribers) {
+
         this.subscribers = subscribers;
+
+
     }
 
 

@@ -26,12 +26,12 @@ public class Song implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     protected int id;
-    @Column(name = "nombre")
+    @Column(name = "nombre", nullable = false)
     protected String name;
-    @Column(name = "duracion")
+    @Column(name = "duracion", nullable = false)
     protected int duration;
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id_disco")
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_disco", nullable = false)
     protected Disc disc;
 
     public Song() {

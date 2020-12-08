@@ -29,7 +29,7 @@ public class Menu {
                 case 4:
                     break;
                 case 5:
-
+                    SubMenuUser.user();
                     break;
                 case 6:
                     Utilities.P("Adios");
