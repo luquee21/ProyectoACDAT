@@ -27,9 +27,9 @@ public class PlayList implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     protected int id;
-    @Column(name = "nombre")
+    @Column(name = "nombre", nullable = false)
     protected String name;
-    @Column(name = "descripcion")
+    @Column(name = "descripcion", nullable = false)
     protected String description;
     @ManyToMany
     @JoinTable(name = "Lista_cancion",
@@ -42,7 +42,7 @@ public class PlayList implements Serializable {
     protected List<User> subscribers;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id_usuario")
+    @JoinColumn(name = "id_usuario", nullable = false)
     protected User creator;
 
     public PlayList() {
@@ -97,7 +97,10 @@ public class PlayList implements Serializable {
     }
 
     public void setSubscribers(List<User> subscribers) {
+
         this.subscribers = subscribers;
+
+
     }
 
 

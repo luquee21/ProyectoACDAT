@@ -68,7 +68,7 @@ public class SubMenuArtist {
             option = Utilities.getInt();
             switch (option) {
                 case 1:
-                    List<Artist> artists = MyInstance.getInstance().selectAllArtist();
+                    List<Artist> artists = MyInstance.getInstance().selectAllArtist(false);
                     if (artists == null) {
                         Utilities.P("No hay ningún artista creado");
                     } else {
@@ -79,7 +79,7 @@ public class SubMenuArtist {
                     break;
                 case 2:
                     String name = Utilities.getString("Introduce el nombre del artista que deseas borrar: ");
-                    Artist artist = MyInstance.getInstance().selectArtistByName(name);
+                    Artist artist = MyInstance.getInstance().selectArtistByName(name, false);
                     if (artist == null) {
                         Utilities.P("El artista introducido no existe, comprueba el nombre");
                     } else {
@@ -119,7 +119,7 @@ public class SubMenuArtist {
             option = Utilities.getInt();
             switch (option) {
                 case 1:
-                    artists = MyInstance.getInstance().selectAllArtist();
+                    artists = MyInstance.getInstance().selectAllArtist(true);
                     if (artists.isEmpty()) {
                         Utilities.P("No hay ningún artista creado");
                     } else {
@@ -129,7 +129,7 @@ public class SubMenuArtist {
                     }
                     break;
                 case 2:
-                    artists = MyInstance.getInstance().selectAllArtist();
+                    artists = MyInstance.getInstance().selectAllArtist(false);
                     if (artists.isEmpty()) {
                         Utilities.P("No hay ningún artista creado");
                     } else {
@@ -140,17 +140,17 @@ public class SubMenuArtist {
                     break;
                 case 3:
                     name = Utilities.getString("Introduce el nombre del artista: ");
-                    artist = MyInstance.getInstance().selectArtistByName(name);
+                    artist = MyInstance.getInstance().selectArtistByName(name, true);
                     Utilities.P(artist.toString() + " | " + artist.getDisc());
                     break;
                 case 4:
                     name = Utilities.getString("Introduce el nombre del artista: ");
-                    artist = MyInstance.getInstance().selectArtistByName(name);
+                    artist = MyInstance.getInstance().selectArtistByName(name, false);
                     Utilities.P(artist.toString());
                     break;
                 case 5:
                     nationality = Utilities.getString("Introduce la nacionalidad");
-                    artists = MyInstance.getInstance().selectArtistByNationality(nationality);
+                    artists = MyInstance.getInstance().selectArtistByNationality(nationality, true);
                     if (artists.isEmpty()) {
                         Utilities.P("No hay ningún artista con esa nacionalidad");
                     } else {
@@ -161,7 +161,7 @@ public class SubMenuArtist {
                     break;
                 case 6:
                     nationality = Utilities.getString("Introduce la nacionalidad");
-                    artists = MyInstance.getInstance().selectArtistByNationality(nationality);
+                    artists = MyInstance.getInstance().selectArtistByNationality(nationality, false);
                     if (artists.isEmpty()) {
                         Utilities.P("No hay ningún artista con esa nacionalidad");
                     } else {
@@ -183,7 +183,7 @@ public class SubMenuArtist {
     private static void updateArtist() {
         Utilities.P("---- Actualizar Artista ----");
         String oldname = Utilities.getString("Introduce el nombre del artista: ");
-        Artist oldArtist = MyInstance.getInstance().selectArtistByName(oldname);
+        Artist oldArtist = MyInstance.getInstance().selectArtistByName(oldname, false);
 
         if (oldArtist == null) {
             Utilities.P("No hay ningún artista con ese nombre");

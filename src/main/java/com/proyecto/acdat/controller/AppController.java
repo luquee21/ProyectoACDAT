@@ -29,24 +29,24 @@ public class AppController implements IAppController {
     }
 
     @Override
-    public List<Artist> selectAllArtist() {
-        return adao.getAllArtists();
+    public List<Artist> selectAllArtist(boolean flag) {
+        return adao.getAllArtists(flag);
     }
 
     @Override
-    public Artist selectArtistByName(String name) {
-        return adao.getArtistByName(name);
+    public Artist selectArtistByName(String name, boolean flag) {
+        return adao.getArtistByName(name, flag);
     }
 
     @Override
-    public Artist selectArtistById(int id) {
-        return adao.getArtistById(id);
+    public Artist selectArtistById(int id, boolean flag) {
+        return adao.getArtistById(id, flag);
     }
 
 
     @Override
-    public List<Artist> selectArtistByNationality(String nationality) {
-        return adao.getArtistByNationality(nationality);
+    public List<Artist> selectArtistByNationality(String nationality, boolean flag) {
+        return adao.getArtistByNationality(nationality, flag);
     }
 
     @Override
@@ -198,36 +198,41 @@ public class AppController implements IAppController {
 
     @Override
     public boolean addUser(User user) {
-        return false;
+        return udao.addUser(user);
     }
 
     @Override
-    public boolean deleteUser(String email) {
-        return false;
+    public boolean deleteUser(User user) {
+        return udao.deleteUser(user);
     }
 
     @Override
     public boolean deleteAllPlayListOfUser(int id_user) {
-        return false;
+        return udao.deleteAllPlaylistOfUser(id_user);
     }
 
     @Override
     public boolean updateUser(User user) {
-        return false;
+        return udao.updateUser(user);
     }
 
     @Override
-    public List<User> selectAllUser() {
-        return null;
+    public User selectUserById(int id, boolean flag) {
+        return udao.getUserById(id, flag);
     }
 
     @Override
-    public User selectUserByEmail(String email) {
-        return null;
+    public List<User> selectAllUser(boolean flag) {
+        return udao.getAllUser(flag);
     }
 
     @Override
-    public List<User> selectUserByName(String name) {
-        return null;
+    public User selectUserByEmail(String email, boolean flag) {
+        return udao.getUserByEmail(email, flag);
+    }
+
+    @Override
+    public List<User> selectUserByName(String name, boolean flag) {
+        return udao.getUserByName(name, flag);
     }
 }

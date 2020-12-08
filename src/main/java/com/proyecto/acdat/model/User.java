@@ -19,11 +19,11 @@ public class User implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     protected int id;
-    @Column(name = "nombre")
+    @Column(name = "nombre", nullable = false)
     protected String name;
-    @Column(name = "correo", unique = true)
+    @Column(name = "correo", unique = true, nullable = false)
     protected String email;
-    @Column(name = "foto")
+    @Column(name = "foto", nullable = false)
     protected String photo;
     @OneToMany(mappedBy = "creator", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     protected List<PlayList> playLists;

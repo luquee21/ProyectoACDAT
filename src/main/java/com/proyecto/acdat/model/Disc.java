@@ -22,14 +22,14 @@ public class Disc implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     protected int id;
-    @Column(name = "nombre")
+    @Column(name = "nombre", nullable = false)
     protected String name;
-    @Column(name = "foto")
+    @Column(name = "foto", nullable = false)
     protected String photo;
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id_artista")
+    @JoinColumn(name = "id_artista", nullable = false)
     protected Artist artist;
-    @Column(name = "fecha_prod")
+    @Column(name = "fecha_prod", nullable = false)
     protected Date date;
     @OneToMany(mappedBy = "disc", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     protected List<Song> songs;

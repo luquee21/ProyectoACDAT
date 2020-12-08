@@ -1,6 +1,7 @@
 package com.proyecto.acdat.model;
 
 import com.proyecto.acdat.utils.Connection;
+import org.hibernate.Hibernate;
 
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
@@ -69,13 +70,18 @@ public class ArtistDAO extends Artist {
         return result;
     }
 
-    public List<Artist> getAllArtists() {
+    public List<Artist> getAllArtists(boolean flag) {
         List<Artist> artists = null;
         manager = Connection.getManager();
         try {
             manager.getTransaction().begin();
             TypedQuery query = manager.createNamedQuery("Artist.selectAll", Artist.class);
             artists = (List<Artist>) query.getResultList();
+            if (flag) {
+                for (Artist a : artists) {
+                    Hibernate.initialize(a.getDisc());
+                }
+            }
             manager.getTransaction().commit();
 
         } catch (Exception e) {
@@ -85,7 +91,7 @@ public class ArtistDAO extends Artist {
         return artists;
     }
 
-    public Artist getArtistByName(String name) {
+    public Artist getArtistByName(String name, boolean flag) {
         Artist artist = null;
         manager = Connection.getManager();
         try {
@@ -93,6 +99,9 @@ public class ArtistDAO extends Artist {
             TypedQuery query = manager.createNamedQuery("Artist.selectByName", Artist.class);
             query.setParameter("name", name);
             artist = (Artist) query.getSingleResult();
+            if (flag) {
+                Hibernate.initialize(artist.getDisc());
+            }
             manager.getTransaction().commit();
         } catch (Exception e) {
             manager.getTransaction().rollback();
@@ -102,12 +111,15 @@ public class ArtistDAO extends Artist {
     }
 
 
-    public Artist getArtistById(int id) {
+    public Artist getArtistById(int id, boolean flag) {
         Artist artist = null;
         manager = Connection.getManager();
         try {
             manager.getTransaction().begin();
             artist = manager.find(Artist.class, id);
+            if (flag) {
+                Hibernate.initialize(artist.getDisc());
+            }
             manager.getTransaction().commit();
         } catch (Exception e) {
             manager.getTransaction().rollback();
@@ -116,7 +128,7 @@ public class ArtistDAO extends Artist {
         return artist;
     }
 
-    public List<Artist> getArtistByNationality(String nationality) {
+    public List<Artist> getArtistByNationality(String nationality, boolean flag) {
         List<Artist> artists = null;
         manager = Connection.getManager();
         try {
@@ -124,6 +136,11 @@ public class ArtistDAO extends Artist {
             TypedQuery query = manager.createNamedQuery("Artist.selectByNationality", Artist.class);
             query.setParameter("nationality", nationality);
             artists = (List<Artist>) query.getResultList();
+            if (flag) {
+                for (Artist a : artists) {
+                    Hibernate.initialize(a.getDisc());
+                }
+            }
             manager.getTransaction().commit();
         } catch (Exception e) {
             manager.getTransaction().rollback();
