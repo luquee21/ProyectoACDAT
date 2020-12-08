@@ -194,7 +194,7 @@ public class SubMenuPlayList {
                 Utilities.P("La PlayList introducida no existe");
             } else {
                 List<User> users = MyInstance.getInstance().selectSubOfPlaylist(id);
-                if (users.isEmpty()) {
+                if (users == null || users.isEmpty()) {
                     Utilities.P("No tiene suscriptores");
                 } else {
                     for (User u : users) {

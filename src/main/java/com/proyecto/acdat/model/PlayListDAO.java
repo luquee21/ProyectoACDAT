@@ -38,12 +38,11 @@ public class PlayListDAO extends PlayList {
         manager = Connection.getManager();
         try {
             manager.getTransaction().begin();
-            PlayList a = manager.find(PlayList.class, playList.id);
-            manager.remove(a);
+            manager.remove(playList);
             manager.getTransaction().commit();
             flag = true;
         } catch (Exception e) {
-            manager.getTransaction().rollback();
+            System.out.println(e);
         }
         manager.close();
         return flag;
@@ -74,6 +73,11 @@ public class PlayListDAO extends PlayList {
             manager.getTransaction().begin();
             TypedQuery query = manager.createNamedQuery("Playlist.selectAll", PlayList.class);
             playLists = (List<PlayList>) query.getResultList();
+            for(PlayList p : playLists){
+                Hibernate.initialize(p.getSubscribers());
+                Hibernate.initialize(p.getCreator());
+                Hibernate.initialize(p.getSongs());
+            }
             manager.getTransaction().commit();
 
         } catch (Exception e) {
@@ -187,14 +191,14 @@ public class PlayListDAO extends PlayList {
         manager = Connection.getManager();
         try {
             manager.getTransaction().begin();
-            Query query = manager.createNativeQuery("Playlist.addSong");
-            query.setParameter("id_playlist", id_playlist);
-            query.setParameter("id_song", id_sub);
+            Query query = manager.createNativeQuery("Playlist.addSub");
+            query.setParameter(1, id_playlist);
+            query.setParameter(2, id_sub);
             query.executeUpdate();
             manager.getTransaction().commit();
             flag = true;
         } catch (Exception e) {
-            manager.getTransaction().rollback();
+            System.out.println(e);
         }
         manager.close();
         return flag;

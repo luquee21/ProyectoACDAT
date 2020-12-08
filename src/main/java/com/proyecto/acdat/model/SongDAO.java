@@ -90,7 +90,7 @@ public class SongDAO extends Song {
         manager = Connection.getManager();
         try {
             manager.getTransaction().begin();
-            TypedQuery query = manager.createNamedQuery("Disc.selectByName", Song.class);
+            TypedQuery query = manager.createNamedQuery("Song.selectByName", Song.class);
             query.setParameter("name", name);
             song = (List<Song>) query.getResultList();
             manager.getTransaction().commit();
