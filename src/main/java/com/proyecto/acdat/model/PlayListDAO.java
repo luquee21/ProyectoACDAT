@@ -1,6 +1,7 @@
 package com.proyecto.acdat.model;
 
 import com.proyecto.acdat.utils.Connection;
+import org.hibernate.Hibernate;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -90,6 +91,11 @@ public class PlayListDAO extends PlayList {
             TypedQuery query = manager.createNamedQuery("Playlist.selectByName", PlayList.class);
             query.setParameter("name", name);
             playLists = (List<PlayList>) query.getResultList();
+            for(PlayList p : playLists){
+                Hibernate.initialize(p.getSubscribers());
+                Hibernate.initialize(p.getCreator());
+                Hibernate.initialize(p.getSongs());
+            }
             manager.getTransaction().commit();
         } catch (Exception e) {
             manager.getTransaction().rollback();
@@ -104,6 +110,9 @@ public class PlayListDAO extends PlayList {
         try {
             manager.getTransaction().begin();
             playList = manager.find(PlayList.class, id);
+            Hibernate.initialize(playList.getSubscribers());
+            Hibernate.initialize(playList.getSongs());
+            Hibernate.initialize(playList.getCreator());
             manager.getTransaction().commit();
         } catch (Exception e) {
             manager.getTransaction().rollback();
@@ -120,6 +129,11 @@ public class PlayListDAO extends PlayList {
             TypedQuery query = manager.createNamedQuery("Playlist.selectByIdUser", PlayList.class);
             query.setParameter("id_user", user);
             playLists = (List<PlayList>) query.getResultList();
+            for(PlayList p : playLists){
+                Hibernate.initialize(p.getSubscribers());
+                Hibernate.initialize(p.getCreator());
+                Hibernate.initialize(p.getSongs());
+            }
             manager.getTransaction().commit();
         } catch (Exception e) {
             manager.getTransaction().rollback();
@@ -137,6 +151,11 @@ public class PlayListDAO extends PlayList {
             query.setParameter("id_playlist", id);
             query.executeUpdate();
             subs = (List<User>) query.getResultList();
+            for(User u : subs){
+                for(PlayList p : u.getPlayLists()){
+                    Hibernate.initialize(p.getSubscribers());
+                }
+            }
             manager.getTransaction().commit();
         } catch (Exception e) {
             manager.getTransaction().rollback();

@@ -23,10 +23,13 @@ public class Menu {
                     SubMenuArtist.artist();
                     break;
                 case 2:
+                    SubMenuDisc.disc();
                     break;
                 case 3:
+                    SubMenuPlayList.playlist();
                     break;
                 case 4:
+                    SubMenuSong.song();
                     break;
                 case 5:
                     SubMenuUser.user();

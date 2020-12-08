@@ -11,7 +11,7 @@ import java.util.List;
         @NamedQuery(name = "Song.selectAll", query = "SELECT s FROM Song s"),
         @NamedQuery(name = "Song.selectByName", query = "SELECT s FROM Song s WHERE s.name = :name"),
         @NamedQuery(name = "Song.selectById", query = "SELECT s FROM Song s WHERE s.id = :id"),
-        @NamedQuery(name = "Song.deleteAllSongOfDisc", query = "DELETE FROM Cancion WHERE Disc.id= :id_disc"),
+       // @NamedQuery(name = "Song.deleteAllSongOfDisc", query = "DELETE FROM Song s WHERE Disc.id= :id_disc"),
 })
 @NamedNativeQueries({
         @NamedNativeQuery(name = "Song.selectByArtist", query = "SELECT s FROM Song s INNER JOIN Disc ON Song.id_disco = Disc.id INNER JOIN Artist ON Artist.id=Disc.id_artista WHERE Artist.name= :artist_name"),
@@ -30,7 +30,7 @@ public class Song implements Serializable {
     protected String name;
     @Column(name = "duracion", nullable = false)
     protected int duration;
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinColumn(name = "id_disco", nullable = false)
     protected Disc disc;
 

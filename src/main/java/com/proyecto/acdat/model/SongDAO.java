@@ -27,7 +27,7 @@ public class SongDAO extends Song {
             manager.getTransaction().commit();
             flag = true;
         } catch (Exception e) {
-            manager.getTransaction().rollback();
+            System.out.println("dao" + e);
         }
 
         manager.close();
