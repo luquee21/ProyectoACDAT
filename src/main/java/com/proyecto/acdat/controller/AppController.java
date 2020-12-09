@@ -147,15 +147,8 @@ public class AppController implements IAppController {
 
     @Override
     public boolean deleteSubOfPlayList(User user, int id) {
-        PlayList playList = playListDAO.getPlaylistById(id);
-        List<User> subs = playList.getSubscribers();
-        for(User u : subs){
-            if(u.getId() == user.getId()){
-                subs.remove(u);
-            }
-        }
-        playList.setSubscribers(subs);
-        return playListDAO.updatePlaylist(playList);
+
+        return playListDAO.deleteSubOfPlaylist(user,id);
     }
 
     @Override

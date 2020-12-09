@@ -13,7 +13,8 @@ import java.util.List;
 public class PlayListDAO extends PlayList {
 
     private EntityManager manager;
-    private String addSub = "INSERT INTO subscribers VALUES (?, ?)";
+    private String addSub = "INSERT INTO Suscripcion (id_lista,id_usuario) VALUES (?, ?)";
+    private String deleteSub = "DELETE FROM Suscripcion WHERE id_lista=? and id_usuario=?";
 
     public PlayListDAO(String name, String description) {
         super(name, description);
@@ -186,13 +187,10 @@ public class PlayListDAO extends PlayList {
         manager = Connection.getManager();
         try {
             manager.getTransaction().begin();
-            PlayList pl = getPlaylistById(id_playlist);
-            User u = MyInstance.getInstance().selectUserById(id_sub, true);
-
-            List<User> users = pl.getSubscribers();
-            users.add(u);
-            pl.setSubscribers(users);
-
+            Query query = manager.createNativeQuery(addSub);
+            query.setParameter(1,id_playlist);
+            query.setParameter(2, id_sub);
+            query.executeUpdate();
             manager.getTransaction().commit();
             flag = true;
         } catch (Exception e) {
@@ -224,9 +222,9 @@ public class PlayListDAO extends PlayList {
         manager = Connection.getManager();
         try {
             manager.getTransaction().begin();
-            Query query = manager.createNativeQuery("Playlist.deleteSub");
-            query.setParameter("id_playlist", id);
-            query.setParameter("id_user", user.id);
+            Query query = manager.createNativeQuery(deleteSub);
+            query.setParameter(1, id);
+            query.setParameter(2, user.id);
             query.executeUpdate();
             manager.getTransaction().commit();
             flag = true;

@@ -40,15 +40,7 @@ public class User implements Serializable {
 
     public void setSubscription(List<PlayList> subscription) {
         this.subscription = subscription;
-        for(PlayList p : subscription){
-            List<User> users = p.getSubscribers();
-            if(users == null){
-                users = new ArrayList<>();
-            }
-            if(!users.contains(this)){
-                users.add(this);
-            }
-        }
+
 
     }
 

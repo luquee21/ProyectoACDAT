@@ -300,7 +300,7 @@ public class SubMenuPlayList {
         }
         int idPlaylist = Utilities.getInt("Introduce el id de la Playlist que deseas");
         String email = Utilities.getString("Introduce el email del usuario que deseas borrar de la Playlist");
-        User user = MyInstance.getInstance().selectUserByEmail(email, false);
+        User user = MyInstance.getInstance().selectUserByEmail(email, true);
         if (MyInstance.getInstance().deleteSubOfPlayList(user, idPlaylist)) {
             Utilities.P("Usuario borrado con éxito");
         } else {

@@ -20,7 +20,7 @@ import java.util.Objects;
         @NamedNativeQuery(name = "Playlist.addSong", query = "INSERT INTO Lista_cancion VALUES (:id_playlist, :id_song)"),
        // @NamedNativeQuery(name = "Playlist.addSub", query = "INSERT INTO subscribers  VALUES (?, ?)"),
      //   @NamedNativeQuery(name = "Playlist.deleteSong", query = "DELETE FROM Lista_cancion l WHERE id_playlist=:id_playlist and id_song=:id_song"),
-     //   @NamedNativeQuery(name = "Playlist.deleteSub", query = "DELETE FROM Suscripcion s WHERE id_playlist=:id_playlist and id_user=:id_user")
+     //
 })
 public class PlayList implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -102,16 +102,6 @@ public class PlayList implements Serializable {
 
     public void setSubscribers(List<User> subscribers) {
         this.subscribers = subscribers;
-        for(User u : subscribers){
-            List<PlayList> pls = u.getSubscription();
-            if(pls == null){
-                pls = new ArrayList<>();
-            }
-            if(!pls.contains(this)){
-                pls.add(this);
-            }
-        }
-
     }
 
 

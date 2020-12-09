@@ -81,6 +81,7 @@ public class Artist implements Serializable {
     }
 
     public List<Disc> getDisc() {
+        System.out.println("Hola,no fallo");
         return disc;
     }
 
