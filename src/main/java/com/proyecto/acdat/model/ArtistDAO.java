@@ -29,7 +29,6 @@ public class ArtistDAO extends Artist {
             manager.getTransaction().commit();
             result = true;
         } catch (Exception e) {
-            manager.getTransaction().rollback();
         }
         manager.close();
         return result;
@@ -45,7 +44,6 @@ public class ArtistDAO extends Artist {
             manager.getTransaction().commit();
             result = true;
         } catch (Exception e) {
-            manager.getTransaction().rollback();
         }
         manager.close();
         return result;
@@ -64,7 +62,6 @@ public class ArtistDAO extends Artist {
             manager.getTransaction().commit();
             result = true;
         } catch (Exception e) {
-            manager.getTransaction().rollback();
         }
         manager.close();
         return result;
@@ -85,7 +82,6 @@ public class ArtistDAO extends Artist {
             manager.getTransaction().commit();
 
         } catch (Exception e) {
-            manager.getTransaction().rollback();
         }
         manager.close();
         return artists;
@@ -104,7 +100,6 @@ public class ArtistDAO extends Artist {
             }
             manager.getTransaction().commit();
         } catch (Exception e) {
-            manager.getTransaction().rollback();
         }
         manager.close();
         return artist;
@@ -122,7 +117,6 @@ public class ArtistDAO extends Artist {
             }
             manager.getTransaction().commit();
         } catch (Exception e) {
-            manager.getTransaction().rollback();
         }
         manager.close();
         return artist;
@@ -143,7 +137,6 @@ public class ArtistDAO extends Artist {
             }
             manager.getTransaction().commit();
         } catch (Exception e) {
-            manager.getTransaction().rollback();
         }
         manager.close();
         return artists;

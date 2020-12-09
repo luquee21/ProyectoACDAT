@@ -34,6 +34,26 @@ public class Song implements Serializable {
     @JoinColumn(name = "id_disco", nullable = false)
     protected Disc disc;
 
+    @ManyToMany(mappedBy = "songs", cascade = CascadeType.MERGE)
+    protected List<PlayList> songsOfPlayList;
+
+    public List<PlayList> getSongsOfPlayList() {
+        return songsOfPlayList;
+    }
+
+    public void setSongsOfPlayList(List<PlayList> songsOfPlayList) {
+        this.songsOfPlayList = songsOfPlayList;
+        for(PlayList p : songsOfPlayList){
+            List<Song> songs = p.getSongs();
+            if(songs == null){
+                songs = new ArrayList<>();
+            }
+            if(!songs.contains(this)){
+                songs.add(this);
+            }
+        }
+    }
+
     public Song() {
     }
 

@@ -29,7 +29,6 @@ public class DiscDAO extends Disc {
             manager.getTransaction().commit();
             flag = true;
         } catch (Exception e) {
-            System.out.println(e);
         }
 
         manager.close();
@@ -47,7 +46,6 @@ public class DiscDAO extends Disc {
             flag = true;
 
         } catch (Exception e) {
-            manager.getTransaction().rollback();
         }
         manager.close();
         return flag;
@@ -66,7 +64,6 @@ public class DiscDAO extends Disc {
             manager.getTransaction().commit();
             flag = true;
         } catch (Exception e) {
-            manager.getTransaction().rollback();
         }
         manager.close();
         return flag;
@@ -87,7 +84,6 @@ public class DiscDAO extends Disc {
             manager.getTransaction().commit();
 
         } catch (Exception e) {
-            manager.getTransaction().rollback();
         }
         manager.close();
         return disc;
@@ -108,7 +104,6 @@ public class DiscDAO extends Disc {
             }
             manager.getTransaction().commit();
         } catch (Exception e) {
-            manager.getTransaction().rollback();
         }
         manager.close();
         return disc;
@@ -125,7 +120,6 @@ public class DiscDAO extends Disc {
             }
             manager.getTransaction().commit();
         } catch (Exception e) {
-            manager.getTransaction().rollback();
         }
         manager.close();
         return disc;
@@ -161,7 +155,6 @@ public class DiscDAO extends Disc {
             manager.getTransaction().commit();
             flag = true;
         } catch (Exception e) {
-            manager.getTransaction().rollback();
         }
         manager.close();
         return flag;
@@ -176,7 +169,6 @@ public class DiscDAO extends Disc {
             manager.getTransaction().commit();
             flag=true;
         }catch (Exception e){
-            System.out.println(e);
         }
         manager.close();
         return flag;

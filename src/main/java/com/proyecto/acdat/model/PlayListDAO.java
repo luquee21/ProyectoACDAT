@@ -1,16 +1,20 @@
 package com.proyecto.acdat.model;
 
+import com.proyecto.acdat.instance.MyInstance;
 import com.proyecto.acdat.utils.Connection;
 import org.hibernate.Hibernate;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
+import java.util.ArrayList;
 import java.util.List;
 
 public class PlayListDAO extends PlayList {
 
     private EntityManager manager;
+    private String addSub = "INSERT INTO subscribers VALUES (?, ?)";
+
     public PlayListDAO(String name, String description) {
         super(name, description);
     }
@@ -27,7 +31,6 @@ public class PlayListDAO extends PlayList {
             manager.getTransaction().commit();
             flag = true;
         } catch (Exception e) {
-            manager.getTransaction().rollback();
         }
         manager.close();
         return flag;
@@ -42,7 +45,6 @@ public class PlayListDAO extends PlayList {
             manager.getTransaction().commit();
             flag = true;
         } catch (Exception e) {
-            System.out.println(e);
         }
         manager.close();
         return flag;
@@ -60,7 +62,6 @@ public class PlayListDAO extends PlayList {
             manager.getTransaction().commit();
             flag = true;
         } catch (Exception e) {
-            manager.getTransaction().rollback();
         }
         manager.close();
         return flag;
@@ -81,7 +82,6 @@ public class PlayListDAO extends PlayList {
             manager.getTransaction().commit();
 
         } catch (Exception e) {
-            manager.getTransaction().rollback();
         }
         manager.close();
         return playLists;
@@ -102,7 +102,6 @@ public class PlayListDAO extends PlayList {
             }
             manager.getTransaction().commit();
         } catch (Exception e) {
-            manager.getTransaction().rollback();
         }
         manager.close();
         return playLists;
@@ -119,7 +118,6 @@ public class PlayListDAO extends PlayList {
             Hibernate.initialize(playList.getCreator());
             manager.getTransaction().commit();
         } catch (Exception e) {
-            manager.getTransaction().rollback();
         }
         manager.close();
         return playList;
@@ -140,7 +138,6 @@ public class PlayListDAO extends PlayList {
             }
             manager.getTransaction().commit();
         } catch (Exception e) {
-            manager.getTransaction().rollback();
         }
         manager.close();
         return playLists;
@@ -162,7 +159,6 @@ public class PlayListDAO extends PlayList {
             }
             manager.getTransaction().commit();
         } catch (Exception e) {
-            manager.getTransaction().rollback();
         }
         manager.close();
         return subs;
@@ -180,7 +176,6 @@ public class PlayListDAO extends PlayList {
             manager.getTransaction().commit();
             flag = true;
         } catch (Exception e) {
-            manager.getTransaction().rollback();
         }
         manager.close();
         return flag;
@@ -191,10 +186,13 @@ public class PlayListDAO extends PlayList {
         manager = Connection.getManager();
         try {
             manager.getTransaction().begin();
-            Query query = manager.createNativeQuery("Playlist.addSub");
-            query.setParameter(1, id_playlist);
-            query.setParameter(2, id_sub);
-            query.executeUpdate();
+            PlayList pl = getPlaylistById(id_playlist);
+            User u = MyInstance.getInstance().selectUserById(id_sub, true);
+
+            List<User> users = pl.getSubscribers();
+            users.add(u);
+            pl.setSubscribers(users);
+
             manager.getTransaction().commit();
             flag = true;
         } catch (Exception e) {
@@ -216,7 +214,6 @@ public class PlayListDAO extends PlayList {
             manager.getTransaction().commit();
             flag = true;
         } catch (Exception e) {
-            manager.getTransaction().rollback();
         }
         manager.close();
         return flag;
@@ -234,7 +231,6 @@ public class PlayListDAO extends PlayList {
             manager.getTransaction().commit();
             flag = true;
         } catch (Exception e) {
-            manager.getTransaction().rollback();
         }
         manager.close();
         return flag;
