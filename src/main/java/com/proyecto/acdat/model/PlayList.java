@@ -15,13 +15,6 @@ import java.util.Objects;
         @NamedQuery(name = "Playlist.selectById", query = "SELECT l FROM PlayList l WHERE l.id = :id"),
         @NamedQuery(name = "Playlist.selectByIdUser", query = "SELECT l FROM PlayList l WHERE l.creator= :id_user")
 })
-@NamedNativeQueries({
-        @NamedNativeQuery(name = "Playlist.selectBySub", query = "SELECT s FROM Suscripcion s INNER JOIN User u ON s.id_usuario=u.id WHERE s.id_lista= :id_playlist"),
-        @NamedNativeQuery(name = "Playlist.addSong", query = "INSERT INTO Lista_cancion VALUES (:id_playlist, :id_song)"),
-       // @NamedNativeQuery(name = "Playlist.addSub", query = "INSERT INTO subscribers  VALUES (?, ?)"),
-     //   @NamedNativeQuery(name = "Playlist.deleteSong", query = "DELETE FROM Lista_cancion l WHERE id_playlist=:id_playlist and id_song=:id_song"),
-     //
-})
 public class PlayList implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -46,7 +39,7 @@ public class PlayList implements Serializable {
     protected List<User> subscribers;
 
     @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_usuario", nullable = false)
+    @JoinColumn(name = "id_usuario")
     protected User creator;
 
     public PlayList() {

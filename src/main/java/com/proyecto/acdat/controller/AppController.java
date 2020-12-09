@@ -134,15 +134,7 @@ public class AppController implements IAppController {
 
     @Override
     public boolean deleteSongOfPlayList(int idSong, int idPlaylist) {
-        PlayList playList = playListDAO.getPlaylistById(idPlaylist);
-        List<Song> songs = playList.getSongs();
-        for(Song s : songs){
-            if(s.getId() == idSong){
-                songs.remove(s);
-            }
-        }
-        playList.setSongs(songs);
-        return playListDAO.updatePlaylist(playList);
+        return playListDAO.deleteSongOfPlaylist(idSong, idPlaylist);
     }
 
     @Override

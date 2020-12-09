@@ -38,11 +38,12 @@ public class UserDAO extends User {
         manager = Connection.getManager();
         try {
             manager.getTransaction().begin();
-            User u = getUserById(id, false);
+            User u = manager.find(User.class, user.id);
             manager.remove(u);
             manager.getTransaction().commit();
             result = true;
         } catch (Exception e) {
+            System.out.println(e);
         }
         manager.close();
         return result;

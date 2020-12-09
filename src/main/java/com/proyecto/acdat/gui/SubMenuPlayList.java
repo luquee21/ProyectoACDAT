@@ -199,7 +199,7 @@ public class SubMenuPlayList {
                 } else {
                     for (User u : users) {
                         Utilities.P(u.toString());
-                    }
+                   }
                 }
             }
         }
