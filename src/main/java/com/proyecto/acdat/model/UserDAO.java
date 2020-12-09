@@ -43,7 +43,6 @@ public class UserDAO extends User {
             manager.getTransaction().commit();
             result = true;
         } catch (Exception e) {
-            manager.getTransaction().rollback();
         }
         manager.close();
         return result;
@@ -60,7 +59,6 @@ public class UserDAO extends User {
             manager.getTransaction().commit();
             result = true;
         } catch (Exception e) {
-            System.out.println(e);
         }
         manager.close();
         return result;
@@ -78,7 +76,6 @@ public class UserDAO extends User {
             manager.getTransaction().commit();
             result = true;
         } catch (Exception e) {
-            manager.getTransaction().rollback();
         }
         manager.close();
         return result;
@@ -94,11 +91,11 @@ public class UserDAO extends User {
             if (flag) {
                 for (User u : users) {
                     Hibernate.initialize(u.getPlayLists());
+                    Hibernate.initialize(u.getSubscription());
                 }
             }
             manager.getTransaction().commit();
         } catch (Exception e) {
-            manager.getTransaction().rollback();
         }
         manager.close();
         return users;
@@ -112,10 +109,10 @@ public class UserDAO extends User {
             user = manager.find(User.class, id);
             if (flag) {
                 Hibernate.initialize(user.getPlayLists());
+                Hibernate.initialize(user.getSubscription());
             }
             manager.getTransaction().commit();
         } catch (Exception e) {
-            manager.getTransaction().rollback();
         }
         manager.close();
         return user;
@@ -131,10 +128,10 @@ public class UserDAO extends User {
             user = (User) query.getSingleResult();
             if (flag) {
                 Hibernate.initialize(user.getPlayLists());
+                Hibernate.initialize(user.getSubscription());
             }
             manager.getTransaction().commit();
         } catch (Exception e) {
-            manager.getTransaction().rollback();
         }
         manager.close();
         return user;
@@ -151,11 +148,11 @@ public class UserDAO extends User {
             if (flag) {
                 for (User u : users) {
                     Hibernate.initialize(u.getPlayLists());
+                    Hibernate.initialize(u.getSubscription());
                 }
             }
             manager.getTransaction().commit();
         } catch (Exception e) {
-            manager.getTransaction().rollback();
         }
         manager.close();
         return users;

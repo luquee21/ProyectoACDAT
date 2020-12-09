@@ -27,7 +27,6 @@ public class SongDAO extends Song {
             manager.getTransaction().commit();
             flag = true;
         } catch (Exception e) {
-            manager.getTransaction().rollback();
         }
 
         manager.close();
@@ -45,7 +44,6 @@ public class SongDAO extends Song {
             flag = true;
 
         } catch (Exception e) {
-            manager.getTransaction().rollback();
         }
         manager.close();
         return flag;
@@ -63,7 +61,6 @@ public class SongDAO extends Song {
             manager.getTransaction().commit();
             flag = true;
         } catch (Exception e) {
-            manager.getTransaction().rollback();
         }
         manager.close();
         return flag;
@@ -79,7 +76,6 @@ public class SongDAO extends Song {
             manager.getTransaction().commit();
 
         } catch (Exception e) {
-            manager.getTransaction().rollback();
         }
         manager.close();
         return song;
@@ -90,12 +86,11 @@ public class SongDAO extends Song {
         manager = Connection.getManager();
         try {
             manager.getTransaction().begin();
-            TypedQuery query = manager.createNamedQuery("Disc.selectByName", Song.class);
+            TypedQuery query = manager.createNamedQuery("Song.selectByName", Song.class);
             query.setParameter("name", name);
             song = (List<Song>) query.getResultList();
             manager.getTransaction().commit();
         } catch (Exception e) {
-            manager.getTransaction().rollback();
         }
         manager.close();
         return song;
@@ -109,7 +104,6 @@ public class SongDAO extends Song {
             song = manager.find(Song.class,id);
             manager.getTransaction().commit();
         } catch (Exception e) {
-            manager.getTransaction().rollback();
         }
         manager.close();
         return song;
@@ -125,7 +119,6 @@ public class SongDAO extends Song {
             song = query.getResultList();
             manager.getTransaction().commit();
         } catch (Exception e) {
-            manager.getTransaction().rollback();
         }
         manager.close();
         return song;
@@ -141,7 +134,6 @@ public class SongDAO extends Song {
             song = query.getResultList();
             manager.getTransaction().commit();
         } catch (Exception e) {
-            manager.getTransaction().rollback();
         }
         manager.close();
         return song;
@@ -157,7 +149,6 @@ public class SongDAO extends Song {
             song = (Song) query.getResultList();
             manager.getTransaction().commit();
         } catch (Exception e) {
-            manager.getTransaction().rollback();
         }
         manager.close();
         return song;
@@ -174,7 +165,6 @@ public class SongDAO extends Song {
             manager.getTransaction().commit();
             flag = true;
         } catch (Exception e) {
-            manager.getTransaction().rollback();
         }
         manager.close();
         return flag;

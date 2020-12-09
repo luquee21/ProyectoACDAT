@@ -2,7 +2,9 @@ package com.proyecto.acdat.model;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "Usuario")
@@ -25,8 +27,30 @@ public class User implements Serializable {
     protected String email;
     @Column(name = "foto", nullable = false)
     protected String photo;
-    @OneToMany(mappedBy = "creator", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "creator", cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
     protected List<PlayList> playLists;
+
+    @ManyToMany(mappedBy = "subscribers", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    protected List<PlayList> subscription;
+
+
+    public List<PlayList> getSubscription() {
+        return subscription;
+    }
+
+    public void setSubscription(List<PlayList> subscription) {
+        this.subscription = subscription;
+        for(PlayList p : subscription){
+            List<User> users = p.getSubscribers();
+            if(users == null){
+                users = new ArrayList<>();
+            }
+            if(!users.contains(this)){
+                users.add(this);
+            }
+        }
+
+    }
 
     public User() {
     }
@@ -98,7 +122,14 @@ public class User implements Serializable {
 
     @Override
     public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof User)) return false;
         User user = (User) o;
-        return id == user.id && email.equals(user.getEmail()) && photo.equals(user.getPhoto());
+        return id == user.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }

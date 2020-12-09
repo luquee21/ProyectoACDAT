@@ -54,9 +54,9 @@ public class AppController implements IAppController {
     @Override
     public boolean addDisc(Disc disc,String artist) {
         manager = Connection.getManager();
+        Artist aux = adao.getArtistByName(artist, true);
         try {
             manager.getTransaction().begin();
-            Artist aux = adao.getArtistByName(artist);
             disc.setArtist(aux);
             manager.getTransaction().commit();
 
@@ -68,7 +68,7 @@ public class AppController implements IAppController {
 
     @Override
     public boolean deleteDisc(int id) {
-        Disc disc = discDAO.getDiscById(id);
+        Disc disc = discDAO.getDiscById(id, false);
         return discDAO.deleteDisc(disc);
     }
 
@@ -85,23 +85,27 @@ public class AppController implements IAppController {
 
     @Override
     public List<Disc> selectAllDisc() {
-        return discDAO.getAllDisc();
+        return discDAO.getAllDisc(true);
     }
 
     @Override
     public List<Disc> selectDiscByName(String name) {
-        return discDAO.getDisc(name);
+        return discDAO.getDisc(name, true);
     }
 
     @Override
-    public List<Disc> selectDiscByArtist(int id) {
-        Artist artist = adao.getArtistById(id);
-        return discDAO.getDiscByArtist(artist);
+    public List<Disc> selectDiscByArtist(Artist a) {
+        return discDAO.getDiscByArtist(a, true);
     }
 
     @Override
     public Disc selectDiscById(int id) {
-        return discDAO.getDiscById(id);
+        return discDAO.getDiscById(id, true);
+    }
+
+    @Override
+    public boolean removeSongOfDisc(Disc d) {
+        return discDAO.removeSongs(d);
     }
 
     @Override
@@ -130,12 +134,28 @@ public class AppController implements IAppController {
 
     @Override
     public boolean deleteSongOfPlayList(int idSong, int idPlaylist) {
-        return playListDAO.deleteSongOfPlaylist(idSong, idPlaylist);
+        PlayList playList = playListDAO.getPlaylistById(idPlaylist);
+        List<Song> songs = playList.getSongs();
+        for(Song s : songs){
+            if(s.getId() == idSong){
+                songs.remove(s);
+            }
+        }
+        playList.setSongs(songs);
+        return playListDAO.updatePlaylist(playList);
     }
 
     @Override
     public boolean deleteSubOfPlayList(User user, int id) {
-        return playListDAO.deleteSubOfPlaylist(user, id);
+        PlayList playList = playListDAO.getPlaylistById(id);
+        List<User> subs = playList.getSubscribers();
+        for(User u : subs){
+            if(u.getId() == user.getId()){
+                subs.remove(u);
+            }
+        }
+        playList.setSubscribers(subs);
+        return playListDAO.updatePlaylist(playList);
     }
 
     @Override
@@ -181,7 +201,7 @@ public class AppController implements IAppController {
             song.setDisc(disc);
             manager.getTransaction().commit();
         }catch (Exception e){
-            manager.getTransaction().rollback();
+            System.out.println("appControlle" + e);
         }
         manager.close();
         return songDAO.addSong(song);
@@ -215,13 +235,13 @@ public class AppController implements IAppController {
 
     @Override
     public List<Song> selectAllSongOfArtist(String name) {
-        Artist artist = adao.getArtistByName(name);
+        Artist artist = adao.getArtistByName(name, false);
         return songDAO.getSongByArtist(artist);
     }
 
     @Override
     public List<Song> selectAllSongByDisc(int id) {
-        Disc disc = discDAO.getDiscById(id);
+        Disc disc = discDAO.getDiscById(id, true);
         return songDAO.getSongByDisc(disc);
     }
 

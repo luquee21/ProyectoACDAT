@@ -49,12 +49,10 @@ public class SubMenuDisc {
 
     public static void addDisc() {
         Utilities.P("---- Añadir Disco ----");
-        String name = Utilities.getString("Inserte el nombre del disco");
-        String photo = Utilities.getString("Introduce la foto");
-        int year = Utilities.getInt("Introduce el año del disco");
-        int mounth = Utilities.getInt("Introduce el mes del disco");
-        int day = Utilities.getInt("Introduce el día del disco");
-        Date date = new Date(year, mounth,day);
+        String name = Utilities.getString("Inserte el nombre del disco: ");
+        String photo = Utilities.getString("Introduce la foto: ");
+        String userDate = Utilities.getString("Introduce la fecha (Formato aaaa-mm-dd): ");
+        Date date = Date.valueOf(userDate);
         String artist = Utilities.getString("Introduce el nombre del artista");
         Disc disc = new Disc(name, photo,date);
             if (MyInstance.getInstance().addDisc(disc, artist)) {
@@ -92,16 +90,34 @@ public class SubMenuDisc {
                             Utilities.P(disc.toString());
                         }
                         int id = Utilities.getInt("Por favor, inserte la id del disco a borrar");
-                        if (MyInstance.getInstance().deleteDisc(id)) {
-                            Utilities.P("Disco borrado con éxito");
+                        Disc toDelete = MyInstance.getInstance().selectDiscById(id);
+                        if(toDelete!=null && !toDelete.getSongs().isEmpty()){
+                            Utilities.P("El disco contiene canciones ¿Desea borrarlas todas para borrar el disco?");
+                            option = Utilities.getInt("1 si 0 no");
+                            if(option==1){
+                                if(MyInstance.getInstance().removeSongOfDisc(toDelete)){
+                                    if (MyInstance.getInstance().deleteDisc(id)) {
+                                        Utilities.P("Disco borrado con éxito");
+                                    } else {
+                                        Utilities.P("No se ha podido borrar el disco");
+                                    }
+                                }
+                            }else{
+
+                            }
                         } else {
-                            Utilities.P("No se ha podido borrar el disco");
+                            if (MyInstance.getInstance().deleteDisc(id)) {
+                                Utilities.P("Disco borrado con éxito");
+                            } else {
+                                Utilities.P("No se ha podido borrar el disco");
+                            }
                         }
+
                     }
                     break;
                 case 3:
                     String artistName = Utilities.getString("Introduce el nombre del artista para borrar todos sus discos");
-                    Artist artist = MyInstance.getInstance().selectArtistByName(artistName);
+                    Artist artist = MyInstance.getInstance().selectArtistByName(artistName, true);
                     if (artist == null) {
                         Utilities.P("El artista introducido no existe, compruebe el nombre");
                     } else {
@@ -140,7 +156,7 @@ public class SubMenuDisc {
                         Utilities.P("No hay ningún disco creado");
                     } else {
                         for (Disc disc : discs) {
-                            Utilities.P(disc.toString() + " | " + disc.getArtist());
+                            Utilities.P(disc.toString() + " | " + disc.getArtist() + " | " + disc.getSongs());
                         }
                     }
                     break;
@@ -151,19 +167,19 @@ public class SubMenuDisc {
                         Utilities.P("No hay ningún disco con ese nombre");
                     } else {
                         for (Disc a : listDiscs) {
-                            Utilities.P(a.toString() + " | " + a.getArtist());
+                            Utilities.P(a.toString() + " | " + a.getArtist() + " | " + a.getSongs());
                         }
                     }
                     break;
                 case 3:
                     String artistName = Utilities.getString("Introduce el nombre del artista");
-                    Artist artist = MyInstance.getInstance().selectArtistByName(artistName);
-                    discs = MyInstance.getInstance().selectDiscByArtist(artist.getId());
+                    Artist artist = MyInstance.getInstance().selectArtistByName(artistName, false);
+                    discs = MyInstance.getInstance().selectDiscByArtist(artist);
                     if (discs == null) {
                         Utilities.P("No hay ningún disco de ese artista");
                     } else {
                         for (Disc a : discs) {
-                            Utilities.P(a.toString() + " | " + a.getArtist());
+                            Utilities.P(a.toString() + " | " + a.getArtist() + " | " + a.getSongs());
                         }
                     }
                     break;
@@ -201,7 +217,7 @@ public class SubMenuDisc {
             String name = Utilities.getString("Introduce el nuevo nombre del disco: ");
             String photo = Utilities.getString("Introduce la nueva foto: ");
             Disc newDisc = new Disc(oldDisc.getId(), name, photo, oldDisc.getDate());
-            newDisc.setArtist(oldDisc.getArtist());
+
 
             if (oldDisc.equals(newDisc)) {
                 Utilities.P("No puede ser igual");

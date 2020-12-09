@@ -2,6 +2,7 @@ package com.proyecto.acdat.model;
 
 
 import com.proyecto.acdat.utils.Connection;
+import org.hibernate.Hibernate;
 
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
@@ -27,9 +28,7 @@ public class DiscDAO extends Disc {
             manager.persist(d);
             manager.getTransaction().commit();
             flag = true;
-
         } catch (Exception e) {
-            manager.getTransaction().rollback();
         }
 
         manager.close();
@@ -47,7 +46,6 @@ public class DiscDAO extends Disc {
             flag = true;
 
         } catch (Exception e) {
-            manager.getTransaction().rollback();
         }
         manager.close();
         return flag;
@@ -66,29 +64,32 @@ public class DiscDAO extends Disc {
             manager.getTransaction().commit();
             flag = true;
         } catch (Exception e) {
-            manager.getTransaction().rollback();
         }
         manager.close();
         return flag;
     }
 
-    public List<Disc> getAllDisc() {
+    public List<Disc> getAllDisc(Boolean flag) {
         List<Disc> disc = null;
         manager = Connection.getManager();
         try {
             manager.getTransaction().begin();
             TypedQuery query = manager.createNamedQuery("Disc.selectAll", Disc.class);
             disc = (List<Disc>) query.getResultList();
+            if(flag){
+                for(Disc d : disc){
+                    Hibernate.initialize(d.getArtist());
+                }
+            }
             manager.getTransaction().commit();
 
         } catch (Exception e) {
-            manager.getTransaction().rollback();
         }
         manager.close();
         return disc;
     }
 
-    public List<Disc> getDisc(String name) {
+    public List<Disc> getDisc(String name, Boolean flag) {
         List<Disc> disc = null;
         manager = Connection.getManager();
         try {
@@ -96,29 +97,35 @@ public class DiscDAO extends Disc {
             TypedQuery query = manager.createNamedQuery("Disc.selectByName", Disc.class);
             query.setParameter("name", name);
             disc = (List<Disc>) query.getResultList();
+            if(flag){
+                for(Disc d : disc){
+                    Hibernate.initialize(d.getArtist());
+                }
+            }
             manager.getTransaction().commit();
         } catch (Exception e) {
-            manager.getTransaction().rollback();
         }
         manager.close();
         return disc;
     }
 
-    public Disc getDiscById(int id) {
+    public Disc getDiscById(int id, Boolean flag) {
         Disc disc = null;
         manager = Connection.getManager();
         try {
             manager.getTransaction().begin();
             disc = manager.find(Disc.class,id);
+            if(flag){
+                    Hibernate.initialize(disc.getArtist());
+            }
             manager.getTransaction().commit();
         } catch (Exception e) {
-            manager.getTransaction().rollback();
         }
         manager.close();
         return disc;
     }
 
-    public List<Disc> getDiscByArtist(Artist artist) {
+    public List<Disc> getDiscByArtist(Artist artist, Boolean flag) {
         List<Disc>disc = null;
         manager = Connection.getManager();
         try {
@@ -126,9 +133,13 @@ public class DiscDAO extends Disc {
             TypedQuery query = manager.createNamedQuery("Disc.selectByArtist", Disc.class);
             query.setParameter("id_artist", artist.id);
             disc = query.getResultList();
+            if(flag){
+                for(Disc d : disc){
+                    Hibernate.initialize(d.getArtist());
+                }
+            }
             manager.getTransaction().commit();
         } catch (Exception e) {
-            manager.getTransaction().rollback();
         }
         manager.close();
         return disc;
@@ -144,7 +155,20 @@ public class DiscDAO extends Disc {
             manager.getTransaction().commit();
             flag = true;
         } catch (Exception e) {
-            manager.getTransaction().rollback();
+        }
+        manager.close();
+        return flag;
+    }
+
+    public boolean removeSongs(Disc d){
+        boolean flag = false;
+        manager = Connection.getManager();
+        try{
+            manager.getTransaction().begin();
+            d.songs = null;
+            manager.getTransaction().commit();
+            flag=true;
+        }catch (Exception e){
         }
         manager.close();
         return flag;

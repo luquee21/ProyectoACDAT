@@ -1,6 +1,8 @@
 package com.proyecto.acdat.model;
 
 
+import org.hibernate.annotations.OnDelete;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Date;
@@ -13,8 +15,8 @@ import java.util.List;
         @NamedQuery(name = "Disc.selectAll", query = "SELECT d FROM Disc d"),
         @NamedQuery(name = "Disc.selectByName", query = "SELECT d FROM Disc d WHERE d.name = :name"),
         @NamedQuery(name = "Disc.selectById", query = "SELECT d FROM Disc d WHERE d.id = :id"),
-        @NamedQuery(name = "Disc.selectByArtist", query = "SELECT d FROM Disc d WHERE d.artist = :id_artist"),
-        @NamedQuery(name = "Disc.deleteAllDiscOfArtist", query = "DELETE FROM Disc WHERE Artist.id= :id_artist"),
+        @NamedQuery(name = "Disc.selectByArtist", query = "SELECT d FROM Disc d WHERE d.artist.id = :id_artist"),
+        //@NamedQuery(name = "Disc.deleteAllDiscOfArtist", query = "DELETE FROM Disc d WHERE Artist.id= :id_artist"),
 })
 public class Disc implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -27,12 +29,12 @@ public class Disc implements Serializable {
     protected String name;
     @Column(name = "foto", nullable = false)
     protected String photo;
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
     @JoinColumn(name = "id_artista", nullable = false)
     protected Artist artist;
     @Column(name = "fecha_prod", nullable = false)
     protected Date date;
-    @OneToMany(mappedBy = "disc", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "disc", cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     protected List<Song> songs;
 
     public Disc() {
@@ -115,6 +117,8 @@ public class Disc implements Serializable {
     public void setName(String name) {
         this.name = name;
     }
+
+
 
 
     @Override

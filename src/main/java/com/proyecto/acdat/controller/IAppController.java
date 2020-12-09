@@ -35,9 +35,11 @@ public interface IAppController {
 
     List<Disc> selectDiscByName(String name);
 
-    List<Disc> selectDiscByArtist(int id);
+    List<Disc> selectDiscByArtist(Artist a);
 
     Disc selectDiscById(int id);
+
+    boolean removeSongOfDisc(Disc d);
 
     //PlayList
     boolean addPlayList(PlayList playList, User user);
